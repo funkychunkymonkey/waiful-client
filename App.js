@@ -23,8 +23,11 @@ import {
   DebugInstructions,
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
+import {NavigationContainer} from '@react-navigation/native';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-const App: () => React$Node = () => {
+const Home: () => React$Node = () => {
   return (
     <>
       <StatusBar barStyle="dark-content" />
@@ -41,10 +44,7 @@ const App: () => React$Node = () => {
           <View style={styles.body}>
             <View style={styles.sectionContainer}>
               <Text style={styles.sectionTitle}>Step One</Text>
-              <Text style={styles.sectionDescription}>
-                Edit <Text style={styles.highlight}>App.js</Text> to change this
-                screen and then come back to see your edits.
-              </Text>
+              <Text style={styles.sectionDescription}>!!!!!!</Text>
             </View>
             <View style={styles.sectionContainer}>
               <Text style={styles.sectionTitle}>See Your Changes</Text>
@@ -69,6 +69,64 @@ const App: () => React$Node = () => {
         </ScrollView>
       </SafeAreaView>
     </>
+  );
+};
+
+const Settings: () => React$Node = () => {
+  return (
+    <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+      <Text>Settings!</Text>
+    </View>
+  );
+};
+
+const Tab = createBottomTabNavigator();
+const Tabs: () => React$Node = () => {
+  return (
+    <Tab.Navigator
+      initialRouteName="Home"
+      tabBarOptions={{
+        activeTintColor: '#e91e63',
+      }}>
+      <Tab.Screen
+        name="Home"
+        component={Home}
+        options={{
+          tabBarLabel: 'Home',
+          tabBarIcon: ({color, size}) => (
+            <Icon name="home" color={color} size={size} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Gacha"
+        component={Home}
+        options={{
+          tabBarLabel: 'Gacha',
+          tabBarIcon: ({color, size}) => (
+            <Icon name="gift-outline" color={color} size={size} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Settings"
+        component={Settings}
+        options={{
+          tabBarLabel: 'Settings',
+          tabBarIcon: ({color, size}) => (
+            <Icon name="settings" color={color} size={size} />
+          ),
+        }}
+      />
+    </Tab.Navigator>
+  );
+};
+
+const App: () => React$Node = () => {
+  return (
+    <NavigationContainer>
+      <Tabs />
+    </NavigationContainer>
   );
 };
 
