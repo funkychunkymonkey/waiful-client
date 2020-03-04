@@ -5,36 +5,22 @@
  * @format
  * @flow
  */
-
-import React from 'react';
-// import {
-//   SafeAreaView,
-//   StyleSheet,
-//   ScrollView,
-//   View,
-//   Text,
-//   StatusBar,
-// } from 'react-native';
+import 'react-native-gesture-handler';
+import * as React from 'react';
+import {NavigationContainer} from '@react-navigation/native';
 import {StyleSheet} from 'react-native';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
-// import {
-//   Header,
-//   LearnMoreLinks,
-//   Colors,
-//   DebugInstructions,
-//   ReloadInstructions,
-// } from 'react-native/Libraries/NewAppScreen';
-import {NavigationContainer} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import HomeScreen from './screens/home/HomeScreen';
 import GachaScreen from './screens/gacha/GachaScreen';
 import SettingsScreen from './screens/settings/SettingsScreen';
 import CollectionScreen from './screens/collection/Collection';
+import Navigator from './routes/homeStack';
 
 const Home: () => React$Node = () => {
-  const home = new HomeScreen();
-  return <>{home}</>;
+  const navigator = new Navigator();
+  return <>{navigator}</>;
 };
 
 const Settings: () => React$Node = () => {
