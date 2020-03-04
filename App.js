@@ -26,6 +26,9 @@ import {
 import {NavigationContainer} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import GachaScreen from './screens/gacha/GachaScreen';
+import SettingsScreen from './screens/settings/SettingsScreen';
+import CollectionScreen from './screens/collection/Collection';
 
 const Home: () => React$Node = () => {
   return (
@@ -73,11 +76,16 @@ const Home: () => React$Node = () => {
 };
 
 const Settings: () => React$Node = () => {
-  return (
-    <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-      <Text>Settings!</Text>
-    </View>
-  );
+  const screen = new SettingsScreen();
+  return <>{screen}</>;
+};
+const Collection: () => React$Node = () => {
+  const screen = new CollectionScreen();
+  return <>{screen}</>;
+};
+const Gacha: () => React$Node = () => {
+  const screen = new GachaScreen();
+  return <>{screen}</>;
 };
 
 const Tab = createBottomTabNavigator();
@@ -99,8 +107,18 @@ const Tabs: () => React$Node = () => {
         }}
       />
       <Tab.Screen
+        name="Collection"
+        component={Collection}
+        options={{
+          tabBarLabel: 'Collection',
+          tabBarIcon: ({color, size}) => (
+            <Icon name="md-apps" color={color} size={size} />
+          ),
+        }}
+      />
+      <Tab.Screen
         name="Gacha"
-        component={Home}
+        component={Gacha}
         options={{
           tabBarLabel: 'Gacha',
           tabBarIcon: ({color, size}) => (
