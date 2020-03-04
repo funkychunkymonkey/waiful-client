@@ -1,14 +1,67 @@
 import * as React from 'react';
 import {StyleSheet, Text} from 'react-native';
-import {ScrollView} from 'react-native-gesture-handler';
+
+import {Container, Header, Left, Body, Right, Title, Button} from 'native-base';
+import {Content, List, ListItem, Icon, Switch} from 'native-base';
 
 export default function SettingsScreen() {
   return (
-    <ScrollView
-      style={styles.container}
-      contentContainerStyle={styles.contentContainer}>
-      <Text>Setting</Text>
-    </ScrollView>
+    <Container>
+      <Header>
+        <Left />
+        <Body>
+          <Title>Settings</Title>
+        </Body>
+        <Right />
+      </Header>
+      <Content style={styles.body}>
+        <List>
+          <ListItem first>
+            <Left>
+              <Text>Accessory:none</Text>
+            </Left>
+          </ListItem>
+          <ListItem>
+            <Left>
+              <Text>Accessory:Disclosure Indicator</Text>
+            </Left>
+            <Right>
+              <Icon name="arrow-forward" />
+            </Right>
+          </ListItem>
+          <ListItem>
+            <Left>
+              <Text>Accessory:Checkmark</Text>
+            </Left>
+            <Right>
+              <Icon
+                type="Octicons"
+                name="check"
+                style={{fontSize: 20, color: 'blue'}}
+              />
+            </Right>
+          </ListItem>
+          <ListItem icon>
+            <Left>
+              <Button style={{backgroundColor: '#007AFF'}}>
+                <Icon active name="wifi" />
+              </Button>
+            </Left>
+            <Body>
+              <Text>Icon</Text>
+            </Body>
+            <Right>
+              <Switch value={false} />
+            </Right>
+          </ListItem>
+          <ListItem last>
+            <Left>
+              <Text>Last</Text>
+            </Left>
+          </ListItem>
+        </List>
+      </Content>
+    </Container>
   );
 }
 
@@ -17,26 +70,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fafafa',
   },
-  contentContainer: {
-    paddingTop: 15,
-  },
-  optionIconContainer: {
-    marginRight: 12,
-  },
-  option: {
-    backgroundColor: '#fdfdfd',
-    paddingHorizontal: 15,
-    paddingVertical: 15,
-    borderWidth: StyleSheet.hairlineWidth,
-    borderBottomWidth: 0,
-    borderColor: '#ededed',
-  },
-  lastOption: {
-    borderBottomWidth: StyleSheet.hairlineWidth,
-  },
-  optionText: {
-    fontSize: 15,
-    alignSelf: 'flex-start',
-    marginTop: 1,
+  body: {
+    backgroundColor: '#fff',
   },
 });
