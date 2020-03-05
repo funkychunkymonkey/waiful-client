@@ -32,8 +32,8 @@ import SettingsScreen from './components/Settings';
 import CollectionScreen from './components/Collection';
 
 const Home: () => React$Node = () => {
-  const homeScreen = new HomeScreen();
-  return <>{homeScreen}</>;
+  const home = new HomeScreen();
+  return <>{home}</>;
 };
 
 const Settings: () => React$Node = () => {
