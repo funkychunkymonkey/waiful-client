@@ -5,7 +5,7 @@
  * @format
  * @flow
  */
-
+import 'react-native-gesture-handler';
 import React from 'react';
 import {
   SafeAreaView,
@@ -25,6 +25,7 @@ import {
 } from 'react-native/Libraries/NewAppScreen';
 import {NavigationContainer} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import HomeScreen from './components/Home';
 import GachaScreen from './components/Gacha';
@@ -48,7 +49,6 @@ const Gacha: () => React$Node = () => {
   const gacha = new GachaScreen();
   return <>{gacha}</>;
 };
-
 const Tab = createBottomTabNavigator();
 const Tabs: () => React$Node = () => {
   return (
