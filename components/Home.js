@@ -1,17 +1,35 @@
 import * as React from 'react';
-import {StyleSheet, Text, TouchableOpacity} from 'react-native';
-import {ScrollView} from 'react-native-gesture-handler';
+import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {createStackNavigator} from '@react-navigation/stack';
+import WorkoutScreen from './Workout.js';
+import CardioScreen from './Cardio.js';
 
-export default function Home() {
+const Stack = createStackNavigator();
+
+export default function({navigation}) {
   return (
-    <ScrollView contentContainerStyle={styles.container}>
-      <TouchableOpacity style={styles.circle}>
+    <Stack.Navigator initialRouteName="Home">
+      <Stack.Screen name="Home" component={HomeScreen} />
+      <Stack.Screen name="Workout" component={WorkoutScreen} />
+      <Stack.Screen name="Cardio" component={CardioScreen} />
+    </Stack.Navigator>
+  );
+}
+
+function HomeScreen({navigation}) {
+  return (
+    <View contentContainerStyle={styles.container}>
+      <TouchableOpacity
+        style={styles.circle}
+        onPress={() => navigation.navigate('Workout')}>
         <Text style={styles.text}> Workout </Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.circle}>
+      <TouchableOpacity
+        style={styles.circle}
+        onPress={() => navigation.navigate('Cardio')}>
         <Text style={styles.text}> Cardio </Text>
       </TouchableOpacity>
-    </ScrollView>
+    </View>
   );
 }
 

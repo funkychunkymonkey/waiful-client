@@ -1,11 +1,3 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow
- */
-
 import React from 'react';
 import {
   SafeAreaView,
@@ -23,6 +15,7 @@ import {
   DebugInstructions,
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
+
 import {NavigationContainer} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -31,77 +24,56 @@ import GachaScreen from './components/Gacha';
 import SettingsScreen from './components/Settings';
 import CollectionScreen from './components/Collection';
 
-const Home: () => React$Node = () => {
-  const home = new HomeScreen();
-  return <>{home}</>;
-};
-
-const Settings: () => React$Node = () => {
-  const settings = new SettingsScreen();
-  return <>{settings}</>;
-};
-
-const Gacha: () => React$Node = () => {
-  const gacha = new GachaScreen();
-  return <>{gacha}</>;
-};
-
 const Tab = createBottomTabNavigator();
-const Tabs: () => React$Node = () => {
-  return (
-    <Tab.Navigator
-      initialRouteName="Home"
-      tabBarOptions={{
-        activeTintColor: '#e91e63',
-      }}>
-      <Tab.Screen
-        name="Home"
-        component={Home}
-        options={{
-          tabBarLabel: 'Home',
-          tabBarIcon: ({color, size}) => (
-            <Icon name="home" color={color} size={size} />
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="Collection"
-        component={CollectionScreen}
-        options={{
-          tabBarLabel: 'Collection',
-          tabBarIcon: ({color, size}) => (
-            <Icon name="grid" color={color} size={size} />
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="Gacha"
-        component={Gacha}
-        options={{
-          tabBarLabel: 'Gacha',
-          tabBarIcon: ({color, size}) => (
-            <Icon name="gift-outline" color={color} size={size} />
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="Settings"
-        component={Settings}
-        options={{
-          tabBarLabel: 'Settings',
-          tabBarIcon: ({color, size}) => (
-            <Icon name="settings" color={color} size={size} />
-          ),
-        }}
-      />
-    </Tab.Navigator>
-  );
-};
-
 const App: () => React$Node = () => {
   return (
     <NavigationContainer>
-      <Tabs />
+      <Tab.Navigator
+        initialRouteName="Home"
+        tabBarOptions={{
+          activeTintColor: '#e91e63',
+        }}>
+        <Tab.Screen
+          name="Home"
+          component={HomeScreen}
+          options={{
+            tabBarLabel: 'Home',
+            tabBarIcon: ({color, size}) => (
+              <Icon name="home" color={color} size={size} />
+            ),
+          }}
+        />
+        <Tab.Screen
+          name="Collection"
+          component={CollectionScreen}
+          options={{
+            tabBarLabel: 'Collection',
+            tabBarIcon: ({color, size}) => (
+              <Icon name="md-apps" color={color} size={size} />
+            ),
+          }}
+        />
+        <Tab.Screen
+          name="Gacha"
+          component={GachaScreen}
+          options={{
+            tabBarLabel: 'Gacha',
+            tabBarIcon: ({color, size}) => (
+              <Icon name="gift-outline" color={color} size={size} />
+            ),
+          }}
+        />
+        <Tab.Screen
+          name="Settings"
+          component={SettingsScreen}
+          options={{
+            tabBarLabel: 'Settings',
+            tabBarIcon: ({color, size}) => (
+              <Icon name="settings" color={color} size={size} />
+            ),
+          }}
+        />
+      </Tab.Navigator>
     </NavigationContainer>
   );
 };
