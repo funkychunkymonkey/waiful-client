@@ -40,10 +40,7 @@ const Settings: () => React$Node = () => {
   const settings = new SettingsScreen();
   return <>{settings}</>;
 };
-const Collection: () => React$Node = () => {
-  const collection = new CollectionScreen();
-  return <>{collection}</>;
-};
+
 const Gacha: () => React$Node = () => {
   const gacha = new GachaScreen();
   return <>{gacha}</>;
@@ -69,7 +66,7 @@ const Tabs: () => React$Node = () => {
       />
       <Tab.Screen
         name="Collection"
-        component={Collection}
+        component={CollectionScreen}
         options={{
           tabBarLabel: 'Collection',
           tabBarIcon: ({color, size}) => (
