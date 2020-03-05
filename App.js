@@ -26,9 +26,9 @@ import {
 import {NavigationContainer} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import GachaScreen from './screens/gacha/GachaScreen';
-import SettingsScreen from './screens/settings/SettingsScreen';
-import CollectionScreen from './screens/collection/Collection';
+import GachaScreen from './components/Gacha';
+import SettingsScreen from './components/Settings';
+import CollectionScreen from './components/Collection';
 
 const Home: () => React$Node = () => {
   return (
@@ -76,16 +76,16 @@ const Home: () => React$Node = () => {
 };
 
 const Settings: () => React$Node = () => {
-  const screen = new SettingsScreen();
-  return <>{screen}</>;
+  const settings = new SettingsScreen();
+  return <>{settings}</>;
 };
 const Collection: () => React$Node = () => {
-  const screen = new CollectionScreen();
-  return <>{screen}</>;
+  const collection = new CollectionScreen();
+  return <>{collection}</>;
 };
 const Gacha: () => React$Node = () => {
-  const screen = new GachaScreen();
-  return <>{screen}</>;
+  const gacha = new GachaScreen();
+  return <>{gacha}</>;
 };
 
 const Tab = createBottomTabNavigator();
