@@ -1,43 +1,34 @@
-// import * as React from 'react';
-// import {StyleSheet, Text, TouchableOpacity, ScrollView} from 'react-native';
-// import {createStackNavigator} from '@react-navigation/stack';
-
-// export default function Home() {
-//   // const goWorkout =
-//   return (
-//     <ScrollView contentContainerStyle={styles.container} style={styles.body}>
-
-/* <TouchableOpacity style={styles.circle}>
-  <Text style={styles.text}> Workout </Text>
-</TouchableOpacity>; */
-
-//       <Workout />
-//       <TouchableOpacity style={styles.circle}>
-//         <Text style={styles.text}> Cardio </Text>
-//       </TouchableOpacity>
-//     </ScrollView>
-//   );
-// }
 import * as React from 'react';
-import {Button, View, Text, StyleSheet, TouchableOpacity} from 'react-native';
+import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {createStackNavigator} from '@react-navigation/stack';
-import WorkoutScreen from './Workout';
-import CardioScreen from './Cardio';
+import WorkoutScreen from './Workout.js';
+import CardioScreen from './Cardio.js';
 
-const Workout: () => React$Node = () => {
-  return <WorkoutScreen />;
-};
-const Cardio: () => React$Node = () => {
-  return <CardioScreen />;
-};
 const Stack = createStackNavigator();
 
-function Home() {
+export default function({navigation}) {
   return (
     <Stack.Navigator initialRouteName="Home">
-      <Stack.Screen name="Workout" component={Workout} />
-      <Stack.Screen name="Cardio" component={Cardio} />
+      <Stack.Screen name="Workout" component={WorkoutScreen} />
+      <Stack.Screen name="Cardio" component={CardioScreen} />
     </Stack.Navigator>
+  );
+}
+
+function HomeScreen({navigation}) {
+  return (
+    <View contentContainerStyle={styles.container}>
+      <TouchableOpacity
+        style={styles.circle}
+        onPress={() => navigation.navigate('Workout')}>
+        <Text style={styles.text}> Workout </Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={styles.circle}
+        onPress={() => navigation.navigate('Cardio')}>
+        <Text style={styles.text}> Cardio </Text>
+      </TouchableOpacity>
+    </View>
   );
 }
 const styles = StyleSheet.create({
@@ -58,4 +49,3 @@ const styles = StyleSheet.create({
   },
   text: {fontSize: 40, color: '#fed14dff'},
 });
-export default Home;

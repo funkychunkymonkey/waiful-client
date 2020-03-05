@@ -1,13 +1,10 @@
-import React from 'react';
-import {FlatList, StyleSheet, Text, View} from 'react-native';
+import * as React from 'react';
+import {StyleSheet, Text, View} from 'react-native';
 
-export default function Cardio() {
+export default function CardioScreen() {
   return (
-    <View style={styles.container}>
-      <FlatList
-        data={[{key: 'Running'}, {key: 'Walking'}]}
-        renderItem={({item}) => <Text style={styles.item}>{item.key}</Text>}
-      />
+    <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+      <Text>Cardio Screen</Text>
     </View>
   );
 }
@@ -15,11 +12,9 @@ export default function Cardio() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 22,
+    backgroundColor: '#fafafa',
   },
-  item: {
-    padding: 10,
-    fontSize: 18,
-    height: 44,
+  contentContainer: {
+    paddingTop: 50,
   },
 });
