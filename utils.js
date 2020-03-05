@@ -9,6 +9,12 @@ const gacha = function() {
   ).then(data => data.gacha);
 };
 
+const getExercises = function() {
+  return q(
+    'query{exercises{id name description muscles{name} equipments{name} exerciseImages{path}}}',
+  ).then(data => data.exercises);
+};
+
 const q = async function(query) {
   const result = await axios.post('http://localhost:3000/graphql', {query});
   return result.data.data;
@@ -17,4 +23,5 @@ const q = async function(query) {
 export default {
   getUser,
   gacha,
+  getExercises,
 };
