@@ -1,16 +1,27 @@
 import * as React from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {createStackNavigator} from '@react-navigation/stack';
-import WorkoutScreen from './Workout.js';
+import WorkoutList from './WorkoutList.js';
+import WorkoutDetail from './WorkoutDetail.js';
+import WorkoutLog from './WorkoutLog.js';
 import CardioScreen from './Cardio.js';
 
 const Stack = createStackNavigator();
 
-export default function({navigation}) {
+export default function({exercises}) {
+  function Workout() {
+    return <WorkoutScreen exercises={exercises} />;
+  }
   return (
     <Stack.Navigator initialRouteName="Home">
       <Stack.Screen name="Home" component={HomeScreen} />
-      <Stack.Screen name="Workout" component={WorkoutScreen} />
+      <Stack.Screen
+        name="WorkoutList"
+        component={WorkoutList}
+        initialParams={{exercises}}
+      />
+      <Stack.Screen name="WorkoutDetail" component={WorkoutDetail} />
+      <Stack.Screen name="WorkoutLog" component={WorkoutLog} />
       <Stack.Screen name="Cardio" component={CardioScreen} />
     </Stack.Navigator>
   );
@@ -21,7 +32,7 @@ function HomeScreen({navigation}) {
     <View contentContainerStyle={styles.container}>
       <TouchableOpacity
         style={styles.circle}
-        onPress={() => navigation.navigate('Workout')}>
+        onPress={() => navigation.navigate('WorkoutList')}>
         <Text style={styles.text}> Workout </Text>
       </TouchableOpacity>
       <TouchableOpacity
