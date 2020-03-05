@@ -49,7 +49,7 @@ const App: () => React$Node = () => {
           options={{
             tabBarLabel: 'Collection',
             tabBarIcon: ({color, size}) => (
-              <Icon name="md-apps" color={color} size={size} />
+              <Icon name="grid" color={color} size={size} />
             ),
           }}
         />
