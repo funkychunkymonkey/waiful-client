@@ -22,6 +22,24 @@ const getWaifus = function() {
 };
 
 /**********************************************
+ * RUNS
+ **********************************************/
+const getRuns = function() {
+  return q('query{user{runs{distance data createdAt endedAt}}}').then(
+    data => data.user.runs,
+  );
+};
+const startRun = function() {
+  return q(`mutation{createRun(input:{}){id}}`).then(data => data.createRun);
+};
+const stopRun = function(distance, data) {
+  return q(
+    `mutation{stopRun(input:{data:"${JSON.stringify(
+      data,
+    )}", distance: ${parseInt(distance)}}){id}}`,
+  ).then(data => data.stopRun);
+};
+/**********************************************
  * EXERCISE
  **********************************************/
 const getExercises = function() {
@@ -61,4 +79,7 @@ export default {
   logExercise,
   getWorkouts,
   getWaifus,
+  getRuns,
+  startRun,
+  stopRun,
 };
