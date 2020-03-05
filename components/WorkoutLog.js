@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {useState} from 'react';
-import {StyleSheet, Text, View, FlatList, Container} from 'react-native';
+import {StyleSheet, Text, View, FlatList} from 'react-native';
 import utils from '../utils.js';
 import {useFocusEffect, useIsFocused} from '@react-navigation/native';
 
