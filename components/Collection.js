@@ -1,8 +1,13 @@
 import * as React from 'react';
 import {StyleSheet, Text} from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
+import {useFocusEffect} from '@react-navigation/native';
 
 export default function Collection() {
+  useFocusEffect(() => {
+    alert('alert');
+  });
+
   return (
     <ScrollView
       style={styles.container}
