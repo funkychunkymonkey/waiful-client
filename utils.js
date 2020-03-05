@@ -15,6 +15,12 @@ const getExercises = function() {
   ).then(data => data.exercises);
 };
 
+const getWorkouts = function() {
+  return q(
+    'query{user{id email workouts{reps exercise{name} createdAt}}}',
+  ).then(data => data.user.workouts);
+};
+
 const logExercise = function(exercise, reps) {
   return q(
     `mutation{createWorkout(input:{exerciseId:${parseInt(
@@ -37,4 +43,5 @@ export default {
   gacha,
   getExercises,
   logExercise,
+  getWorkouts,
 };
