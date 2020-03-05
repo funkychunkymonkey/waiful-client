@@ -4,7 +4,7 @@ import {StyleSheet, Text} from 'react-native';
 import {Container, Header, Left, Body, Right, Title, Button} from 'native-base';
 import {Content, List, ListItem, Icon, Switch} from 'native-base';
 
-export default function SettingsScreen() {
+export default function Settings() {
   return (
     <Container>
       <Header>
