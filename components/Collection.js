@@ -4,7 +4,7 @@ import {ScrollView} from 'react-native-gesture-handler';
 import {StyleSheet, Text, TouchableOpacity, Image, View} from 'react-native';
 import {Container, Header, Left, Body, Right, Title} from 'native-base';
 import {Content} from 'native-base';
-import LottieView from 'lottie-react-native';
+//import LottieView from 'lottie-react-native';
 import {useFocusEffect} from '@react-navigation/native';
 
 export default function Collection() {
