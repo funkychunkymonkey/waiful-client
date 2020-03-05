@@ -4,8 +4,12 @@ import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import utils from '../utils.js';
 
 export default function CardioScreen() {
-  const [running, setRunning] = useState(false);
-  return running ? <Running /> : <NotRunning />;
+  const [currentRun, setCurrentRun] = useState(null);
+  const [panel, setPanel] = useState('LOADING');
+  return currentRun ? <Running /> : <NotRunning />;
+
+  // TODO: run logs
+  // TODO: load any runs the user is currently on
 
   function NotRunning() {
     return (
@@ -26,14 +30,13 @@ export default function CardioScreen() {
     );
   }
   function startRun() {
-    utils.startRun();
-    setRunning(true);
+    utils.startRun().then(data => setCurrentRun(data));
   }
   function endRun() {
     const data = [];
     const distance = 2000;
     utils.stopRun(distance, data);
-    setRunning(false);
+    setCurrentRun(null);
   }
 }
 

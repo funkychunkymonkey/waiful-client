@@ -2,6 +2,7 @@ import * as React from 'react';
 import {useState} from 'react';
 import {StyleSheet, Text, View, FlatList} from 'react-native';
 import utils from '../utils.js';
+import Loading from './Loading.js';
 import {useFocusEffect, useIsFocused} from '@react-navigation/native';
 
 export default function WorkoutLog({navigation}) {
@@ -21,12 +22,7 @@ export default function WorkoutLog({navigation}) {
     }, []),
   );
 
-  if (loading)
-    return (
-      <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-        <Text>Loading...</Text>
-      </View>
-    );
+  if (loading) return <Loading />;
   if (logs.length === 0)
     return (
       <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>

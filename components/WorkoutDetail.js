@@ -1,6 +1,8 @@
 import * as React from 'react';
 import {StyleSheet, Text, View, Button, TextInput} from 'react-native';
+import WebView from 'react-native-webview';
 import {useState} from 'react';
+import Loading from './Loading.js';
 import utils from '../utils.js';
 
 export default function WorkoutDetail({route, navigation}, y) {
@@ -20,19 +22,23 @@ export default function WorkoutDetail({route, navigation}, y) {
     });
   };
 
-  if (loading)
-    return (
-      <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-        <Text>Loading...</Text>
-      </View>
-    );
+  if (loading) return <Loading />;
+  console.log(exercise);
 
   return (
-    <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+    <>
       <Text>{exercise.name}</Text>
+      <WebView
+        source={{html: exercise.description}}
+        scalesPageToFit={false}
+        style={{
+          flex: 1,
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}></WebView>
       <TextInput placeholder="Number of Reps" onChangeText={x => setReps(x)} />
       <Button title="Submit Workout" onPress={() => submit(reps)} />
-    </View>
+    </>
   );
 }
 
