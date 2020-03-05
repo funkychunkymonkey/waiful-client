@@ -37,16 +37,16 @@ const Home: () => React$Node = () => {
 };
 
 const Settings: () => React$Node = () => {
-  const screen = new SettingsScreen();
-  return <>{screen}</>;
+  const settings = new SettingsScreen();
+  return <>{settings}</>;
 };
 const Collection: () => React$Node = () => {
-  const screen = new CollectionScreen();
-  return <>{screen}</>;
+  const collection = new CollectionScreen();
+  return <>{collection}</>;
 };
 const Gacha: () => React$Node = () => {
-  const screen = new GachaScreen();
-  return <>{screen}</>;
+  const gacha = new GachaScreen();
+  return <>{gacha}</>;
 };
 
 const Tab = createBottomTabNavigator();

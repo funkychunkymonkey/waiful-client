@@ -5,7 +5,7 @@ import {StyleSheet, Text, TouchableOpacity, Image} from 'react-native';
 import {Container, Header, Left, Body, Right, Title} from 'native-base';
 import {Content} from 'native-base';
 
-export default function GachaScreen() {
+export default function Gacha() {
   const [images, setImages] = useState([]);
   const [image, setImage] = useState(
     'https://1.bp.blogspot.com/-sZbaFXJ4y0A/UnyGKAJjwbI/AAAAAAAAacE/RYDWRq73Hsc/s400/gachagacha.png',
