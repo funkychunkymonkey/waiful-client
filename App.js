@@ -74,7 +74,7 @@ const App: () => React$Node = () => {
           options={{
             tabBarLabel: 'Collection',
             tabBarIcon: ({color, size}) => (
-              <Icon name="gift" color={color} size={size} />
+              <Icon name="grid" color={color} size={size} />
             ),
           }}
         />
