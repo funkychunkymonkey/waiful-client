@@ -25,8 +25,13 @@ const getWaifus = function() {
  * RUNS
  **********************************************/
 const getRuns = function() {
-  return q('query{user{runs{distance data createdAt endedAt}}}').then(
+  return q('query{user{runs{distance data startedAt endedAt}}}').then(
     data => data.user.runs,
+  );
+};
+const getRun = function() {
+  return q('query{user{currentRun{startedAt}}}').then(
+    data => data.user.currentRun,
   );
 };
 const startRun = function() {
@@ -80,6 +85,7 @@ export default {
   getWorkouts,
   getWaifus,
   getRuns,
+  getRun,
   startRun,
   stopRun,
 };
