@@ -39,6 +39,11 @@ export default function WorkoutList({route, navigation}) {
       filterEquipment === '' && filterMuscle === ''
         ? allExercises
         : allExercises.filter(exercise => {
+            if (filterMuscle && filterEquipment) {
+              return exercise.equipments.some(
+                equipment => equipment.name === filterEquipment,
+              );
+            }
             if (filterMuscle === '') {
               return exercise.equipments.some(
                 equipment => equipment.name === filterEquipment,
@@ -61,19 +66,24 @@ export default function WorkoutList({route, navigation}) {
   return (
     <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
       <RNPickerSelect
-        onValueChange={value => setFilterMuscle(value)}
+        onValueChange={value => setFilterEquipment(value)}
         items={[
           {label: 'Incline bench', value: 'Incline bench'},
           {label: 'Dumbbell', value: 'Dumbbell'},
+          {label: 'Kettlebell', value: 'Kettlebell'},
+          {label: 'Barbell', value: 'Barbell'},
+          {label: 'SZ-Bar', value: 'SZ-Bar'},
+          {label: 'Gym mat', value: 'Gym mat'},
+          {label: 'Pull-up bar', value: 'Pull-up bar'},
+          {label: 'No equipment', value: 'none (bodyweight exercise)'},
         ]}
         style={styles.selector}
-        placeholder={{label: 'Select the equipment', value: ''}}
+        placeholder={{label: 'Select the equipment you want to use', value: ''}}
         Icon={() => (
           <Text
             style={{
               position: 'absolute',
               right: 95,
-              top: 10,
               fontSize: 18,
               color: '#789',
             }}>
@@ -81,22 +91,44 @@ export default function WorkoutList({route, navigation}) {
           </Text>
         )}
       />
-      {allEquipments.map(eq => (
-        <TouchableOpacity
-          onPress={() => {
-            setFilterEquipment(eq);
-          }}>
-          <Text>{eq}</Text>
-        </TouchableOpacity>
-      ))}
-      {allMuscles.map(muscle => (
-        <TouchableOpacity
-          onPress={() => {
-            setFilterMuscle(muscle);
-          }}>
-          <Text>{muscle}</Text>
-        </TouchableOpacity>
-      ))}
+      <RNPickerSelect
+        onValueChange={value => setFilterMuscle(value)}
+        items={[
+          {
+            label: 'Obliquus externus abdominis',
+            value: 'Obliquus externus abdominis',
+          },
+          {label: 'Anterior deltoid', value: 'Anterior deltoid'},
+          {label: 'Trapezius', value: 'Trapezius'},
+          {label: 'Rectus abdominis', value: 'Rectus abdominis'},
+          {label: 'Quadriceps', value: 'Quadriceps'},
+          {label: 'Gluteus maximus', value: 'Glutes maximus'},
+          {label: 'Biceps brachii', value: 'Biceps brachii'},
+          {label: 'Triceps brachii', value: 'triceps brachi'},
+          {label: 'Pectorails major', value: 'Pectorails major'},
+          {label: 'Serratus anterior', value: 'Serratus anterior'},
+          {label: 'Soleus', value: 'Soleus'},
+          {label: 'Latissimus dorsi', value: 'Latissimus dorsi'},
+          {label: 'Bicps femoris', value: 'Biceps femoris'},
+          {label: 'Brachialis', value: 'Brachialis'},
+        ]}
+        style={styles.selector}
+        placeholder={{
+          label: 'Select the muscle you want to work on',
+          value: '',
+        }}
+        Icon={() => (
+          <Text
+            style={{
+              position: 'absolute',
+              right: 95,
+              fontSize: 18,
+              color: '#789',
+            }}>
+            ▼
+          </Text>
+        )}
+      />
       <FlatList
         data={exercises}
         renderItem={({item}) => {

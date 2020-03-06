@@ -33,7 +33,7 @@ export default function WorkoutLog({navigation}) {
     <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
       <FlatList
         data={logs}
-        renderItem={d => {
+        renderItem={(d, i) => {
           const workout = d.item;
           return (
             <Text style={styles.item}>
