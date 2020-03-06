@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import {
   StyleSheet,
   Text,
@@ -10,6 +10,7 @@ import {
   Button,
 } from 'react-native';
 import {set, eq} from 'react-native-reanimated';
+import RNPickerSelect from 'react-native-picker-select';
 
 export default function WorkoutList({route, navigation}) {
   const allExercises = route.params.exercises;
@@ -59,6 +60,27 @@ export default function WorkoutList({route, navigation}) {
     );
   return (
     <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+      <RNPickerSelect
+        onValueChange={value => setFilterMuscle(value)}
+        items={[
+          {label: 'Incline bench', value: 'Incline bench'},
+          {label: 'Dumbbell', value: 'Dumbbell'},
+        ]}
+        style={styles.selector}
+        placeholder={{label: 'Select the equipment', value: ''}}
+        Icon={() => (
+          <Text
+            style={{
+              position: 'absolute',
+              right: 95,
+              top: 10,
+              fontSize: 18,
+              color: '#789',
+            }}>
+            ▼
+          </Text>
+        )}
+      />
       {allEquipments.map(eq => (
         <TouchableOpacity
           onPress={() => {
@@ -67,7 +89,6 @@ export default function WorkoutList({route, navigation}) {
           <Text>{eq}</Text>
         </TouchableOpacity>
       ))}
-      <Text>11111111111111</Text>
       {allMuscles.map(muscle => (
         <TouchableOpacity
           onPress={() => {
@@ -123,5 +144,17 @@ const styles = StyleSheet.create({
     fontSize: 10,
     padding: 10,
     backgroundColor: 'red',
+  },
+  selector: {
+    fontSize: 16,
+    paddingVertical: 12,
+    paddingHorizontal: 10,
+    borderWidth: 1,
+    borderColor: '#789',
+    borderRadius: 4,
+    color: '#789',
+    paddingRight: 30,
+    width: 300,
+    marginLeft: 30,
   },
 });

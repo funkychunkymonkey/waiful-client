@@ -1,7 +1,16 @@
 import * as React from 'react';
-import {StyleSheet, Text, View, Button, TextInput} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  TextInput,
+  SegmentedControlIOS,
+} from 'react-native';
+import WebView from 'react-native-webview';
 import {useState} from 'react';
+import Loading from './Loading.js';
 import utils from '../utils.js';
+import {Button, ThemeProvider} from 'react-native-elements';
 
 export default function WorkoutDetail({route, navigation}, y) {
   const exercise = route.params.exercise;
@@ -20,19 +29,33 @@ export default function WorkoutDetail({route, navigation}, y) {
     });
   };
 
-  if (loading)
-    return (
-      <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-        <Text>Loading...</Text>
-      </View>
-    );
+  if (loading) return <Loading />;
+  console.log(exercise);
 
   return (
-    <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+    <>
       <Text>{exercise.name}</Text>
-      <TextInput placeholder="Number of Reps" onChangeText={x => setReps(x)} />
+      <WebView
+        source={{html: exercise.description}}
+        scalesPageToFit={false}
+        style={{
+          flex: 1,
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}></WebView>
+      <TextInput
+        style={{
+          height: 40,
+          borderColor: 'gray',
+          borderWidth: 1,
+          padding: 10,
+          textAlign: 'center',
+        }}
+        placeholder="Number of Reps"
+        onChangeText={x => setReps(x)}
+      />
       <Button title="Submit Workout" onPress={() => submit(reps)} />
-    </View>
+    </>
   );
 }
 

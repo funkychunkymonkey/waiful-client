@@ -7,6 +7,7 @@ import {Content} from 'native-base';
 //import LottieView from 'lottie-react-native';
 import {useFocusEffect} from '@react-navigation/native';
 import utils from '../utils.js';
+import Loading from './Loading.js';
 
 export default function Collection() {
   const [loading, setLoading] = useState(true);
@@ -25,12 +26,7 @@ export default function Collection() {
     }, []),
   );
 
-  if (loading)
-    return (
-      <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-        <Text>Loading...</Text>
-      </View>
-    );
+  if (loading) return <Loading />;
   return (
     <Container>
       <Header>

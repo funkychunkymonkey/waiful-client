@@ -6,13 +6,12 @@ import Loading from './Loading.js';
 import {useFocusEffect, useIsFocused} from '@react-navigation/native';
 
 export default function WorkoutLog({navigation}) {
-  const isFocused = useIsFocused();
   const [logs, setLogs] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useFocusEffect(
     React.useCallback(() => {
-      utils.getWorkouts().then(data => {
+      utils.getRuns().then(data => {
         setLoading(false);
         setLogs(data);
       });
@@ -26,7 +25,7 @@ export default function WorkoutLog({navigation}) {
   if (logs.length === 0)
     return (
       <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-        <Text>No workouts found.</Text>
+        <Text>No runs found.</Text>
       </View>
     );
   return (
@@ -34,12 +33,12 @@ export default function WorkoutLog({navigation}) {
       <FlatList
         data={logs}
         renderItem={d => {
-          const workout = d.item;
+          const run = d.item;
           return (
             <Text style={styles.item}>
-              <Text>{workout.exercise.name} </Text>
-              <Text>{workout.reps} times </Text>
-              <Text>{workout.createdAt}</Text>
+              <Text>{run.distance}m</Text>
+              <Text>{run.startedAt}</Text>
+              <Text>{run.endedAt}</Text>
             </Text>
           );
         }}
@@ -69,6 +68,6 @@ const styles = StyleSheet.create({
   },
   equipment: {
     fontSize: 10,
-    backgroundColor: '#f00',
+    backgroundColor: '#0f0',
   },
 });
