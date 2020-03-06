@@ -39,11 +39,6 @@ export default function WorkoutList({route, navigation}) {
       filterEquipment === '' && filterMuscle === ''
         ? allExercises
         : allExercises.filter(exercise => {
-            if (filterMuscle && filterEquipment) {
-              return exercise.equipments.some(
-                equipment => equipment.name === filterEquipment,
-              );
-            }
             if (filterMuscle === '') {
               return exercise.equipments.some(
                 equipment => equipment.name === filterEquipment,
