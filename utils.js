@@ -33,6 +33,35 @@ const setUnfavWaifu = function(malId) {
 };
 
 /**********************************************
+ * SERIES
+ **********************************************/
+const getSeries = function() {
+  return q('query{user{ series{id malId malType name imageUrl url} }}').then(
+    data => data.user.series,
+  );
+};
+const addSeries = function(malType, malId) {
+  return q(
+    `mutation{addSeries(input:{malType:"${malType}",malId:${parseInt(
+      malId,
+    )}}){id}}`,
+  ).then(data => data.addSeries);
+};
+const removeSeries = function(malType, malId) {
+  return q(
+    `mutation{removeSeries(input:{malType:"${malType}",malId:${parseInt(
+      malId,
+    )}})}`,
+  ).then(data => data.removeSeries);
+};
+const getTopSeries = function(malType, search) {
+  return q(
+    `query($search: String!){ series(malType:"${malType}", search: $search){id malId name imageUrl url} }`,
+    {search},
+  ).then(data => data.series);
+};
+
+/**********************************************
  * RUNS
  **********************************************/
 const getRuns = function() {
@@ -101,4 +130,8 @@ export default {
   stopRun,
   setFavWaifu,
   setUnfavWaifu,
+  getSeries,
+  getTopSeries,
+  addSeries,
+  removeSeries,
 };
