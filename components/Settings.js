@@ -3,65 +3,58 @@ import {StyleSheet, Text} from 'react-native';
 
 import {Container, Header, Left, Body, Right, Title, Button} from 'native-base';
 import {Content, List, ListItem, Icon, Switch} from 'native-base';
+import {createStackNavigator} from '@react-navigation/stack';
 
-export default function Settings() {
+import SettingsSeries from './SettingsSeries.js';
+import SettingsSeriesAdd from './SettingsSeriesAdd.js';
+
+const Stack = createStackNavigator();
+
+export default function() {
   return (
-    <Container>
-      <Header>
-        <Left />
-        <Body>
-          <Title>Settings</Title>
-        </Body>
-        <Right />
-      </Header>
-      <Content style={styles.body}>
-        <List>
-          <ListItem first>
-            <Left>
-              <Text>Accessory:none</Text>
-            </Left>
-          </ListItem>
-          <ListItem>
-            <Left>
-              <Text>Accessory:Disclosure Indicator</Text>
-            </Left>
-            <Right>
-              <Icon name="arrow-forward" />
-            </Right>
-          </ListItem>
-          <ListItem>
-            <Left>
-              <Text>Accessory:Checkmark</Text>
-            </Left>
-            <Right>
-              <Icon
-                type="Octicons"
-                name="check"
-                style={{fontSize: 20, color: 'blue'}}
-              />
-            </Right>
-          </ListItem>
-          <ListItem icon>
-            <Left>
-              <Button style={{backgroundColor: '#007AFF'}}>
-                <Icon active name="wifi" />
-              </Button>
-            </Left>
-            <Body>
-              <Text>Icon</Text>
-            </Body>
-            <Right>
-              <Switch value={false} />
-            </Right>
-          </ListItem>
-          <ListItem last>
-            <Left>
-              <Text>Last</Text>
-            </Left>
-          </ListItem>
-        </List>
-      </Content>
-    </Container>
+    <Stack.Navigator initialRouteName="Settings">
+      <Stack.Screen name="Settings" component={Settings} />
+      <Stack.Screen
+        name="SettingsAnime"
+        component={SettingsSeries}
+        initialParams={{malType: 'anime'}}
+      />
+      <Stack.Screen
+        name="SettingsManga"
+        component={SettingsSeries}
+        initialParams={{malType: 'manga'}}
+      />
+      <Stack.Screen
+        name="SettingsSeriesAdd"
+        component={SettingsSeriesAdd}
+        initialParams={{malType: 'anime'}}
+      />
+    </Stack.Navigator>
+  );
+}
+
+function Settings({navigation}) {
+  return (
+    <Content style={styles.body}>
+      <List>
+        <ListItem onPress={() => navigation.navigate('SettingsAnime')}>
+          <Left>
+            <Text>Anime Settings</Text>
+          </Left>
+          <Right>
+            <Icon name="arrow-forward" />
+          </Right>
+        </ListItem>
+        <ListItem onPress={() => navigation.navigate('SettingsManga')}>
+          <Left>
+            <Text>Manga Settings</Text>
+          </Left>
+          <Right>
+            <Icon name="arrow-forward" />
+          </Right>
+        </ListItem>
+      </List>
+    </Content>
   );
 }
 
