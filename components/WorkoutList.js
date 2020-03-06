@@ -21,21 +21,36 @@ export default function WorkoutList({route, navigation}) {
       return a;
     }, []),
   );
+  const [allMuscles] = React.useState(
+    allExercises.reduce((a, b) => {
+      b.muscles.forEach(muscle => {
+        if (!a.includes(muscle.name)) a.push(muscle.name);
+      });
+      return a;
+    }, []),
+  );
   const [exercises, setExercises] = React.useState(allExercises);
   const [filterEquipment, setFilterEquipment] = React.useState('');
+  const [filterMuscle, setFilterMuscle] = React.useState('');
 
   React.useEffect(() => {
     setExercises(
-      filterEquipment === ''
+      filterEquipment === '' && filterMuscle === ''
         ? allExercises
-        : allExercises.filter(exercise =>
-            exercise.equipments.some(
-              equipment => equipment.name === filterEquipment,
-            ),
-          ),
+        : allExercises.filter(exercise => {
+            if (filterMuscle === '') {
+              return exercise.equipments.some(
+                equipment => equipment.name === filterEquipment,
+              );
+            }
+            if (filterEquipment === '') {
+              return exercise.muscles.some(
+                muscle => muscle.name === filterMuscle,
+              );
+            }
+          }),
     );
-  }, [filterEquipment, allExercises]);
-
+  }, [filterEquipment, filterMuscle, allExercises]);
   if (exercises.length === 0)
     return (
       <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
@@ -45,12 +60,21 @@ export default function WorkoutList({route, navigation}) {
   return (
     <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
       {allEquipments.map(eq => (
-        <Button
-          title={eq}
+        <TouchableOpacity
           onPress={() => {
             setFilterEquipment(eq);
-          }}
-        />
+          }}>
+          <Text>{eq}</Text>
+        </TouchableOpacity>
+      ))}
+      <Text>11111111111111</Text>
+      {allMuscles.map(muscle => (
+        <TouchableOpacity
+          onPress={() => {
+            setFilterMuscle(muscle);
+          }}>
+          <Text>{muscle}</Text>
+        </TouchableOpacity>
       ))}
       <FlatList
         data={exercises}
