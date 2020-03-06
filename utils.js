@@ -41,7 +41,7 @@ const stopRun = function(distance, data) {
   return q(
     `mutation{stopRun(input:{data:"${JSON.stringify(
       data,
-    )}", distance: ${parseInt(distance)}}){id}}`,
+    )}", distance: ${parseInt(distance)}}){distance data startedAt endedAt}}`,
   ).then(data => data.stopRun);
 };
 /**********************************************

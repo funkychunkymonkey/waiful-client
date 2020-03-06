@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {useState} from 'react';
-import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
+import {StyleSheet, Text, View, TouchableOpacity, Button} from 'react-native';
 import {useFocusEffect} from '@react-navigation/native';
 import Loading from './Loading.js';
 import utils from '../utils.js';
@@ -62,6 +62,7 @@ export default function CardioScreen() {
         <Text style={styles.text}>
           You ran {currentRun.distance}m! Good work.
         </Text>
+        <Button title="Good work!" onPress={() => endResult()} />
       </View>
     );
   }
@@ -69,13 +70,24 @@ export default function CardioScreen() {
   /******** UTILS ********/
 
   function startRun() {
-    utils.startRun().then(data => setCurrentRun(data));
+    setPanel('LOADING');
+    utils.startRun().then(data => {
+      setPanel('RUNNING');
+      setCurrentRun(data);
+    });
   }
   function endRun() {
     const data = [];
     const distance = 2000;
-    utils.stopRun(distance, data);
+    setPanel('LOADING');
+    utils.stopRun(distance, data).then(data => {
+      setPanel('RESULT');
+      setCurrentRun(data);
+    });
+  }
+  function endResult() {
     setCurrentRun(null);
+    setPanel('WAITING');
   }
 }
 
