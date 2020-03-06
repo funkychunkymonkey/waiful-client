@@ -1,9 +1,16 @@
 import * as React from 'react';
-import {useState, useEffect} from 'react';
+import {useState} from 'react';
 import {ScrollView} from 'react-native-gesture-handler';
 import {StyleSheet, Text, TouchableOpacity, Image, View} from 'react-native';
-import {Container, Header, Left, Body, Right, Title} from 'native-base';
-import {Content} from 'native-base';
+import {
+  Container,
+  Content,
+  Header,
+  Left,
+  Body,
+  Right,
+  Title,
+} from 'native-base';
 //import LottieView from 'lottie-react-native';
 import {useFocusEffect} from '@react-navigation/native';
 import utils from '../utils.js';
@@ -26,6 +33,19 @@ export default function Collection() {
     }, []),
   );
 
+  const fav = waifu => {
+    //    alert('press Fav');
+    if (!waifu.isFavorite) {
+      utils.setFavWaifu(waifu.malId);
+      waifu.isFavorite = true;
+      alert(`expected true:  ${waifu.isFavorite}`);
+    } else {
+      utils.setUnfavWaifu(waifu.malid);
+      waifu.isFavorite = false;
+      alert(`expected false:  ${waifu.isFavorite}`);
+    }
+  };
+
   if (loading) return <Loading />;
   return (
     <Container>
@@ -39,13 +59,18 @@ export default function Collection() {
       <Content style={styles.body}>
         <View style={styles.showView}>
           {selectedWaifu ? (
-            <Image
-              style={styles.waifuImage}
-              source={{
-                uri: selectedWaifu.imageUrl,
-              }}
-              resizeMode="contain"
-            />
+            <>
+              <Image
+                style={styles.waifuImage}
+                source={{
+                  uri: selectedWaifu.imageUrl,
+                }}
+                resizeMode="contain"
+              />
+              <TouchableOpacity onPress={() => fav(selectedWaifu)}>
+                <Text style={styles.fav}>☆</Text>
+              </TouchableOpacity>
+            </>
           ) : (
             <></>
           )}
@@ -77,22 +102,30 @@ export default function Collection() {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fafafa',
-  },
   body: {
     backgroundColor: '#fed14dff',
   },
   waifuImage: {
+    position: 'relative',
+    zIndex: 0,
     width: 450,
     height: 400,
   },
+  fav: {
+    width: 100,
+    height: 100,
+    textAlign: 'center',
+    position: 'relative',
+    backgroundColor: '#fff',
+    fontSize: 30,
+    zIndex: 1,
+    top: -50,
+    left: 20,
+  },
   showView: {
-    height: 400,
+    height: 450,
   },
   gallery: {
-    display: 'flex',
     justifyContent: 'center',
     alignContent: 'space-around',
     flexDirection: 'row',
@@ -101,7 +134,6 @@ const styles = StyleSheet.create({
   collection: {
     width: 100,
     height: 100,
-    display: 'flex',
     margin: 10,
   },
 });
