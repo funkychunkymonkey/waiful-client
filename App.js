@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -20,13 +20,38 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+
 import HomeScreen from './components/Home';
 import GachaScreen from './components/Gacha';
 import SettingsScreen from './components/Settings';
 import CollectionScreen from './components/Collection';
 
+import utils from './utils.js';
+
 const Tab = createBottomTabNavigator();
 const App: () => React$Node = () => {
+  const [exercises, setExercises] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    utils.getExercises().then(data => {
+      setLoading(false);
+      setExercises(data);
+    });
+  }, []);
+
+  if (loading) {
+    return (
+      <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+        <Text>Loading...</Text>
+      </View>
+    );
+  }
+
+  function Home() {
+    return <HomeScreen exercises={exercises} />;
+  }
+
   return (
     <NavigationContainer>
       <Tab.Navigator
@@ -36,7 +61,7 @@ const App: () => React$Node = () => {
         }}>
         <Tab.Screen
           name="Home"
-          component={HomeScreen}
+          component={Home}
           options={{
             tabBarLabel: 'Home',
             tabBarIcon: ({color, size}) => (
@@ -50,7 +75,7 @@ const App: () => React$Node = () => {
           options={{
             tabBarLabel: 'Collection',
             tabBarIcon: ({color, size}) => (
-              <Icon name="md-apps" color={color} size={size} />
+              <Icon name="grid" color={color} size={size} />
             ),
           }}
         />
