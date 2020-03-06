@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {
   StyleSheet,
   Text,
@@ -12,18 +12,30 @@ import {
 import {set, eq} from 'react-native-reanimated';
 
 export default function WorkoutList({route, navigation}) {
-  const [text, setText] = useState('');
-  const exercises = route.params.exercises;
-  const [exercisesData, setExercisesData] = useState(exercises);
-  const filterByEquipment = text => {
-    setExercisesData(prevData => {
-      return prevData.filter(exercise => {
-        console.log(text);
-        console.log(exercise.equipments.some(x => x.name === text));
-        return exercise.equipments.some(x => x.name === text);
+  const allExercises = route.params.exercises;
+  const [allEquipments] = React.useState(
+    allExercises.reduce((a, b) => {
+      b.equipments.forEach(eq => {
+        if (!a.includes(eq.name)) a.push(eq.name);
       });
-    });
-  };
+      return a;
+    }, []),
+  );
+  const [exercises, setExercises] = React.useState(allExercises);
+  const [filterEquipment, setFilterEquipment] = React.useState('');
+
+  React.useEffect(() => {
+    setExercises(
+      filterEquipment === ''
+        ? allExercises
+        : allExercises.filter(exercise =>
+            exercise.equipments.some(
+              equipment => equipment.name === filterEquipment,
+            ),
+          ),
+    );
+  }, [filterEquipment, allExercises]);
+
   if (exercises.length === 0)
     return (
       <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
@@ -32,31 +44,26 @@ export default function WorkoutList({route, navigation}) {
     );
   return (
     <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-      <TextInput
-        style={styles.input}
-        placeholder="search"
-        onChangeText={value => {
-          filterByEquipment(value);
-        }}
-        value={text}
-      />
-      <Button title="filter by equipment" />
+      {allEquipments.map(eq => (
+        <Button
+          title={eq}
+          onPress={() => {
+            setFilterEquipment(eq);
+          }}
+        />
+      ))}
       <FlatList
-        data={exercisesData}
-        renderItem={d => {
-          const exercise = d.item;
+        data={exercises}
+        renderItem={({item}) => {
           return (
             <TouchableOpacity
               style={styles.item}
               onPress={() => {
-                navigation.navigate('WorkoutDetail', {exercise});
+                navigation.navigate('WorkoutDetail', {exercise: item});
               }}>
-              <Text>{exercise.name}</Text>
-              {exercise.muscles.map(muscle => (
+              <Text>{item.name}</Text>
+              {item.muscles.map(muscle => (
                 <Button title={muscle.name} buttonStyle={styles.muscle} />
-              ))}
-              {exercise.equipments.map(equipment => (
-                <Button title={equipment.name} buttonStyle={styles.equipment} />
               ))}
             </TouchableOpacity>
           );
@@ -75,24 +82,22 @@ const styles = StyleSheet.create({
     paddingTop: 50,
   },
   item: {
+    borderRadius: 1,
     padding: 10,
     fontSize: 18,
     height: 44,
+    display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
   muscle: {
     fontSize: 10,
+    padding: 10,
     backgroundColor: '#f00',
   },
   equipment: {
     fontSize: 10,
-    backgroundColor: '#0f0',
-  },
-  input: {
-    marginBottom: 10,
-    padding: 20,
-    borderBottomColor: '#fff',
-    borderBottomWidth: 1,
+    padding: 10,
+    backgroundColor: 'red',
   },
 });
