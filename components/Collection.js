@@ -34,7 +34,7 @@ export default function Collection() {
   );
 
   const fav = waifu => {
-    //    alert('press Fav');
+    console.log(waifu);
     if (!waifu.isFavorite) {
       utils.setFavWaifu(waifu.malId);
       waifu.isFavorite = true;
@@ -44,6 +44,12 @@ export default function Collection() {
       waifu.isFavorite = false;
       alert(`expected false:  ${waifu.isFavorite}`);
     }
+    setCollection(
+      collection.map(w => {
+        if (w.id === waifu.id) w.isFavorite = waifu.isFavorite;
+        return w;
+      }),
+    );
   };
 
   if (loading) return <Loading />;
@@ -83,12 +89,15 @@ export default function Collection() {
                   onPress={() => {
                     setSelectedWaifu(waifu);
                   }}>
-                  <Image
-                    style={styles.collection}
-                    source={{
-                      uri: waifu.imageUrl,
-                    }}
-                  />
+                  <>
+                    <Image
+                      style={styles.collection}
+                      source={{
+                        uri: waifu.imageUrl,
+                      }}
+                    />
+                    {waifu.isFavorite ? <Text>★</Text> : <Text>☆</Text>}
+                  </>
                 </TouchableOpacity>
               );
             })
