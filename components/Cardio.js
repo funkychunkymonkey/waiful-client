@@ -1,15 +1,42 @@
 import * as React from 'react';
 import {useState} from 'react';
-import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
+import {StyleSheet, Text, View, TouchableOpacity, Button} from 'react-native';
+import {useFocusEffect} from '@react-navigation/native';
+import Loading from './Loading.js';
 import utils from '../utils.js';
 
-export default function CardioScreen() {
+export default function CardioScreen({navigation}) {
   const [currentRun, setCurrentRun] = useState(null);
   const [panel, setPanel] = useState('LOADING');
+  useFocusEffect(
+    React.useCallback(() => {
+      utils.getRun().then(data => {
+        if (data === null) {
+          setPanel('WAITING');
+        } else {
+          setPanel('RUNNING');
+          setCurrentRun(data);
+        }
+      });
+      return () => {
+        setPanel('LOADING');
+        setCurrentRun(null);
+      };
+    }, []),
+  );
+  switch (panel) {
+    case 'LOADING':
+      return <Loading />;
+    case 'WAITING':
+      return <NotRunning />;
+    case 'RUNNING':
+      return <Running />;
+    case 'RESULT':
+      return <Result />;
+  }
   return currentRun ? <Running /> : <NotRunning />;
 
-  // TODO: run logs
-  // TODO: load any runs the user is currently on
+  /******** PANELS ********/
 
   function NotRunning() {
     return (
@@ -17,6 +44,7 @@ export default function CardioScreen() {
         <TouchableOpacity style={styles.circle} onPress={() => startRun()}>
           <Text style={styles.text}> Start </Text>
         </TouchableOpacity>
+        <Button title="View Run Log" onPress={() => goLogs()} />
       </View>
     );
   }
@@ -29,14 +57,41 @@ export default function CardioScreen() {
       </View>
     );
   }
+  function Result() {
+    return (
+      <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+        <Text style={styles.text}>
+          You ran {currentRun.distance}m! Good work.
+        </Text>
+        <Button title="Good work!" onPress={() => endResult()} />
+      </View>
+    );
+  }
+
+  /******** UTILS ********/
+
   function startRun() {
-    utils.startRun().then(data => setCurrentRun(data));
+    setPanel('LOADING');
+    utils.startRun().then(data => {
+      setPanel('RUNNING');
+      setCurrentRun(data);
+    });
   }
   function endRun() {
     const data = [];
     const distance = 2000;
-    utils.stopRun(distance, data);
+    setPanel('LOADING');
+    utils.stopRun(distance, data).then(data => {
+      setPanel('RESULT');
+      setCurrentRun(data);
+    });
+  }
+  function endResult() {
     setCurrentRun(null);
+    setPanel('WAITING');
+  }
+  function goLogs() {
+    navigation.navigate('CardioLog');
   }
 }
 
