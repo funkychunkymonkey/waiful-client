@@ -5,13 +5,11 @@ import WorkoutList from './WorkoutList.js';
 import WorkoutDetail from './WorkoutDetail.js';
 import WorkoutLog from './WorkoutLog.js';
 import CardioScreen from './Cardio.js';
+import CardioLog from './CardioLog.js';
 
 const Stack = createStackNavigator();
 
 export default function({exercises}) {
-  function Workout() {
-    return <WorkoutScreen exercises={exercises} />;
-  }
   return (
     <Stack.Navigator initialRouteName="Home">
       <Stack.Screen name="Home" component={HomeScreen} />
@@ -23,6 +21,7 @@ export default function({exercises}) {
       <Stack.Screen name="WorkoutDetail" component={WorkoutDetail} />
       <Stack.Screen name="WorkoutLog" component={WorkoutLog} />
       <Stack.Screen name="Cardio" component={CardioScreen} />
+      <Stack.Screen name="CardioLog" component={CardioLog} />
     </Stack.Navigator>
   );
 }

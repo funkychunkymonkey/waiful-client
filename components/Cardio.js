@@ -5,7 +5,7 @@ import {useFocusEffect} from '@react-navigation/native';
 import Loading from './Loading.js';
 import utils from '../utils.js';
 
-export default function CardioScreen() {
+export default function CardioScreen({navigation}) {
   const [currentRun, setCurrentRun] = useState(null);
   const [panel, setPanel] = useState('LOADING');
   useFocusEffect(
@@ -44,6 +44,7 @@ export default function CardioScreen() {
         <TouchableOpacity style={styles.circle} onPress={() => startRun()}>
           <Text style={styles.text}> Start </Text>
         </TouchableOpacity>
+        <Button title="View Run Log" onPress={() => goLogs()} />
       </View>
     );
   }
@@ -88,6 +89,9 @@ export default function CardioScreen() {
   function endResult() {
     setCurrentRun(null);
     setPanel('WAITING');
+  }
+  function goLogs() {
+    navigation.navigate('CardioLog');
   }
 }
 
