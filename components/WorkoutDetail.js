@@ -23,7 +23,6 @@ export default function WorkoutDetail({route, navigation}, y) {
   };
 
   if (loading) return <Loading />;
-  console.log(exercise);
 
   return (
     <>
