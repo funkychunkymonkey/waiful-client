@@ -17,7 +17,7 @@ const gacha = function() {
 };
 const getWaifus = function() {
   return q(
-    'query{user{ waifus{id name imageUrl url series{id name imageUrl url}} }}',
+    'query{user{ waifus{id name imageUrl url isFavorite series{id name imageUrl url}} }}',
   ).then(data => data.user.waifus);
 };
 

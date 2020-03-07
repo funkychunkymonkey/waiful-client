@@ -3,37 +3,115 @@ import {StyleSheet, Text, Animated, View, Dimensions} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import {Container} from 'native-base';
 
-export default function(props) {
+export default function({options, onClose, isVisible}) {
+  let overlayBody = <></>,
+    overlayFooter = <></>;
+  if (options.gems) overlayBody = <GemOverlay gems={options.gems} />;
+  if (options.gacha) {
+    overlayBody = <GachaOverlay waifu={options.gacha} />;
+    overlayFooter = (
+      <DialogueOverlay waifu={options.gacha} dialogue={options.dialogue} />
+    );
+  } else if (options.waifu) {
+    overlayFooter = (
+      <DialogueOverlay waifu={options.waifu} dialogue={options.dialogue} />
+    );
+  }
+  function close() {
+    onClose();
+    if (options.onClose) options.onClose();
+  }
+  return (
+    <View
+      style={{
+        display: isVisible ? 'flex' : 'none',
+        ...styles.overlayWrapper,
+      }}
+      onStartShouldSetResponder={close}>
+      <View
+        style={{
+          ...styles.filler,
+          justifyContent: 'center',
+        }}>
+        {overlayBody}
+      </View>
+      {overlayFooter}
+    </View>
+  );
+}
+
+function DialogueOverlay({waifu, dialogue}) {
   const [dialogueSpringAnim] = React.useState(new Animated.Value(500));
   const [dialogueFadeAnim] = React.useState(new Animated.Value(0));
   const [dialogueBobAnim] = React.useState(new Animated.Value(10));
-  const [gemSpinAnim] = React.useState(new Animated.Value(0));
-  const [isVisible, setIsVisible] = React.useState(props.isVisible);
-
   const sizeMod = 0.5; // use this to control size of the dialogue box
 
+  dialogueSpringAnim.setValue(500);
+  dialogueFadeAnim.setValue(0);
+  dialogueBobAnim.setValue(10);
+  Animated.spring(dialogueSpringAnim, {
+    toValue: 0,
+    duration: 1000,
+  }).start();
+  Animated.timing(dialogueFadeAnim, {
+    toValue: 1,
+    duration: 1000,
+  }).start();
+  Animated.loop(
+    Animated.sequence([
+      Animated.timing(dialogueBobAnim, {
+        toValue: 15,
+        duration: 500,
+      }),
+      Animated.timing(dialogueBobAnim, {
+        toValue: 10,
+        duration: 500,
+      }),
+    ]),
+  ).start();
+
+  return (
+    <View style={{height: 350 * sizeMod}}>
+      <Container style={styles.overlayRow}>
+        <Animated.View
+          style={{
+            ...styles.dialogue,
+            opacity: dialogueFadeAnim,
+            top: dialogueSpringAnim,
+            height: 350 * sizeMod,
+          }}>
+          <View style={styles.dialogueRightArrow} />
+          <Animated.View
+            style={{
+              ...styles.dialogueDownArrow,
+              bottom: dialogueBobAnim,
+            }}
+          />
+          <Text adjustsFontSizeToFit style={styles.dialogueName}>
+            {waifu.name}
+          </Text>
+          <Text adjustsFontSizeToFit style={styles.dialogueText}>
+            {dialogue}
+          </Text>
+        </Animated.View>
+        <Animated.Image
+          style={{
+            ...styles.image,
+            opacity: dialogueFadeAnim,
+          }}
+          source={{
+            uri: waifu.imageUrl,
+          }}
+          resizeMode="contain"
+        />
+      </Container>
+    </View>
+  );
+}
+
+function GemOverlay({gems}) {
+  const [gemSpinAnim] = React.useState(new Animated.Value(0));
   React.useEffect(() => {
-    if (!isVisible) return;
-    Animated.spring(dialogueSpringAnim, {
-      toValue: 0,
-      duration: 1000,
-    }).start();
-    Animated.timing(dialogueFadeAnim, {
-      toValue: 1,
-      duration: 1000,
-    }).start();
-    Animated.loop(
-      Animated.sequence([
-        Animated.timing(dialogueBobAnim, {
-          toValue: 15,
-          duration: 500,
-        }),
-        Animated.timing(dialogueBobAnim, {
-          toValue: 10,
-          duration: 500,
-        }),
-      ]),
-    ).start();
     Animated.loop(
       Animated.sequence([
         Animated.timing(gemSpinAnim, {
@@ -46,79 +124,29 @@ export default function(props) {
         }),
       ]),
     ).start();
-  }, [isVisible]);
-
+  }, []);
   return (
-    <View
-      style={{
-        display: isVisible ? 'flex' : 'none',
-        ...styles.overlayWrapper,
-      }}
-      onStartShouldSetResponder={() => setIsVisible(false)}>
-      <View
+    <View style={styles.overlayBody}>
+      <Animated.View
         style={{
-          ...styles.filler,
-          justifyContent: 'center',
+          marginBottom: 10,
+          transform: [{scaleX: gemSpinAnim}],
         }}>
-        {props.gems ? (
-          <View
-            style={{
-              backgroundColor: '#0005',
-              alignItems: 'center',
-              paddingTop: 25,
-              paddingBottom: 25,
-            }}>
-            <Animated.View
-              style={{
-                marginBottom: 10,
-                transform: [{scaleX: gemSpinAnim}],
-              }}>
-              <Icon name="gem" color={'white'} size={100} />
-            </Animated.View>
-            <Text
-              style={{
-                color: 'white',
-                fontSize: 20,
-              }}>
-              + {props.gems} Gems
-            </Text>
-          </View>
-        ) : (
-          <></>
-        )}
-      </View>
-      <View style={{height: 350 * sizeMod}}>
-        <Container style={styles.overlayRow}>
-          <Animated.View
-            style={{
-              ...styles.dialogue,
-              opacity: dialogueFadeAnim,
-              top: dialogueSpringAnim,
-              height: 350 * sizeMod,
-            }}>
-            <View style={styles.dialogueRightArrow} />
-            <Animated.View
-              style={{
-                ...styles.dialogueDownArrow,
-                bottom: dialogueBobAnim,
-              }}
-            />
-            <Text adjustsFontSizeToFit style={{fontSize: 24}}>
-              {props.dialogue}
-            </Text>
-          </Animated.View>
-          <Animated.Image
-            style={{
-              ...styles.image,
-              opacity: dialogueFadeAnim,
-            }}
-            source={{
-              uri: 'https://cdn.myanimelist.net/images/characters/6/275276.jpg',
-            }}
-            resizeMode="contain"
-          />
-        </Container>
-      </View>
+        <Icon name="gem" color={'white'} size={100} />
+      </Animated.View>
+      <Text style={styles.overlayBodyText}>+ {gems} Gems</Text>
+    </View>
+  );
+}
+
+function GachaOverlay({waifu}) {
+  return (
+    <View style={styles.overlayBody}>
+      <Text style={styles.overlayBodyText}>You got</Text>
+      <Text style={styles.overlayBodyTitle}>{waifu.name}</Text>
+      <Text>
+        <Text style={styles.overlayBodySubtitle}>{waifu.series.name} </Text>
+      </Text>
     </View>
   );
 }
@@ -149,6 +177,24 @@ const styles = StyleSheet.create({
     paddingRight: 10,
     paddingLeft: 10,
   },
+  overlayBody: {
+    backgroundColor: '#0005',
+    alignItems: 'center',
+    paddingTop: 25,
+    paddingBottom: 25,
+  },
+  overlayBodyText: {
+    color: 'white',
+    fontSize: 16,
+  },
+  overlayBodyTitle: {
+    color: '#fed14d',
+    fontSize: 60,
+  },
+  overlayBodySubtitle: {
+    color: '#fed14d',
+    fontSize: 20,
+  },
   // waifu dialogue
   dialogue: {
     backgroundColor: 'white',
@@ -164,6 +210,14 @@ const styles = StyleSheet.create({
     height: 350 * 0.5,
     position: 'relative',
     zIndex: 0,
+  },
+  dialogueName: {
+    fontSize: 16,
+    textTransform: 'uppercase',
+    color: '#ffa880',
+  },
+  dialogueText: {
+    fontSize: 24,
   },
   dialogueRightArrow: {
     position: 'absolute',
