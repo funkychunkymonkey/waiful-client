@@ -78,7 +78,7 @@ const stopRun = function(distance, data) {
  **********************************************/
 const getExercises = function() {
   return q(
-    'query{exercises{id name description muscles{name} equipments{name} exerciseImages{path}}}',
+    'query{exercises{id name description muscles{name muscleGroups{name}} equipments{name} exerciseImages{path}}}',
   ).then(data => data.exercises);
 };
 const getWorkouts = function() {

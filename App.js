@@ -42,7 +42,7 @@ const App: () => React$Node = () => {
   useEffect(() => {
     utils.getExercises().then(data => {
       setLoading(false);
-      setExercises(data);
+      setExercises(data.slice(0, 100));
     });
   }, []);
 
@@ -78,13 +78,10 @@ const App: () => React$Node = () => {
         <Tab.Navigator
           initialRouteName="Home"
           tabBarOptions={{
-            activeTintColor: '#e91e63',
+            activeTintColor: '#000',
             inactiveTintColor: '#fff',
             activeBackgroundColor: '#fed14d',
             inactiveBackgroundColor: '#fed14d',
-            style: {
-              backgroundColor: '#fed14d',
-            },
           }}>
           <Tab.Screen
             name="Home"
