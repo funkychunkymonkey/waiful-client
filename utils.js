@@ -22,14 +22,17 @@ const getWaifus = function() {
 };
 
 const setFavWaifu = function(malId) {
-  return q(
-    `{"query":"mutation{favoriteWaifu(input:{malId:${parseInt(malId)}})}"}`,
-  ).then(data => data.favoriteWaifu);
+  return q(`mutation{favoriteWaifu(input:{malId:${parseInt(malId)}})}`).then(
+    data => {
+      console.log('ssss', data);
+      return data.favoriteWaifu;
+    },
+  );
 };
 const setUnfavWaifu = function(malId) {
-  return q(
-    `{"query":"mutation{unfavoriteWaifu(input:{malId:${parseInt(malId)}})}"}`,
-  ).then(data => data.unfavoriteWaifu);
+  return q(`mutation{unfavoriteWaifu(input:{malId:${parseInt(malId)}})}`).then(
+    data => data.unfavoriteWaifu,
+  );
 };
 
 /**********************************************
