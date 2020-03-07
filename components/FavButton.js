@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
   favTouchArea: {
     width: 300,
     top: -200,
-    left: -80,
+    left: -100,
     position: 'relative',
     zIndex: 1,
   },

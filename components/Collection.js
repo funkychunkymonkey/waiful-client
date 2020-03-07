@@ -88,10 +88,10 @@ export default function Collection() {
   if (loading) return <Loading />;
   return (
     <Container>
-      <Header>
+      <Header style={styles.header}>
         <Left />
         <Body>
-          <Title>Collection</Title>
+          <Title style={styles.title}>Collection</Title>
         </Body>
         <Right />
       </Header>
@@ -129,17 +129,27 @@ export default function Collection() {
 }
 
 const styles = StyleSheet.create({
+  header: {
+    backgroundColor: '#fed14d',
+    borderBottomWidth: 0,
+    shadowColor: 'transparent',
+  },
+  title: {
+    fontWeight: 'bold',
+    color: 'white',
+  },
   body: {
-    backgroundColor: '#fed14dff',
+    backgroundColor: '#fafafa',
+  },
+  showView: {
+    height: 400,
   },
   waifuImage: {
     position: 'relative',
     zIndex: 0,
-    width: 450,
+    width: 414,
     height: 380,
-  },
-  showView: {
-    height: 400,
+    marginTop: 5,
   },
   gallery: {
     justifyContent: 'center',
