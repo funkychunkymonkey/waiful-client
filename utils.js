@@ -79,7 +79,21 @@ const stopRun = function(distance, data) {
 const getExercises = function() {
   return q(
     'query{exercises{id name description muscles{name muscleGroups{name}} equipments{name} exerciseImages{path}}}',
-  ).then(data => data.exercises);
+  ).then(data => {
+    const exercises = data.exercises;
+    exercises.forEach(exercise => {
+      exercise.equipments = exercise.equipments.map(x => x.name);
+      exercise.muscleGroups = Array.from(
+        new Set(
+          exercise.muscles.reduce(
+            (a, b) => [...a, ...b.muscleGroups.map(x => x.name)],
+            [],
+          ),
+        ),
+      );
+    });
+    return exercises;
+  });
 };
 const getWorkouts = function() {
   return q(

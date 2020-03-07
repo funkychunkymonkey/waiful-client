@@ -25,6 +25,8 @@ export default function({exercises, popUpWaifu}) {
       screenOptions={{
         headerStyle: {
           backgroundColor: '#fed14d',
+          borderBottomWidth: 0,
+          shadowColor: 'transparent',
         },
         headerTintColor: '#fff',
         headerTitleStyle: {

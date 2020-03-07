@@ -42,7 +42,7 @@ const App: () => React$Node = () => {
   useEffect(() => {
     utils.getExercises().then(data => {
       setLoading(false);
-      setExercises(data.slice(0, 100));
+      setExercises(data);
     });
   }, []);
 
@@ -74,7 +74,7 @@ const App: () => React$Node = () => {
         key={overlayKey}
         gems={overlayGems}
       />
-      <NavigationContainer>
+      <NavigationContainer options={{}}>
         <Tab.Navigator
           initialRouteName="Home"
           tabBarOptions={{
@@ -82,6 +82,11 @@ const App: () => React$Node = () => {
             inactiveTintColor: '#fff',
             activeBackgroundColor: '#fed14d',
             inactiveBackgroundColor: '#fed14d',
+            style: {
+              borderTopWidth: 0,
+              paddingTop: 10,
+              backgroundColor: '#fed14d',
+            },
           }}>
           <Tab.Screen
             name="Home"
