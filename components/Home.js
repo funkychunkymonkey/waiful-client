@@ -56,7 +56,6 @@ function HomeScreen({route, navigation}) {
     </View>
   );
 }
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -64,6 +63,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#fed14dff',
   },
+  body: {backgroundColor: '#fed14dff'},
   circle: {
     width: 200,
     height: 200,
