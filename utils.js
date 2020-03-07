@@ -23,10 +23,7 @@ const getWaifus = function() {
 
 const setFavWaifu = function(malId) {
   return q(`mutation{favoriteWaifu(input:{malId:${parseInt(malId)}})}`).then(
-    data => {
-      console.log('ssss', data);
-      return data.favoriteWaifu;
-    },
+    data => data.favoriteWaifu,
   );
 };
 const setUnfavWaifu = function(malId) {
@@ -92,8 +89,22 @@ const stopRun = function(distance, data) {
  **********************************************/
 const getExercises = function() {
   return q(
-    'query{exercises{id name description muscles{name} equipments{name} exerciseImages{path}}}',
-  ).then(data => data.exercises);
+    'query{exercises{id name description muscles{name muscleGroups{name}} equipments{name} exerciseImages{path}}}',
+  ).then(data => {
+    const exercises = data.exercises;
+    exercises.forEach(exercise => {
+      exercise.equipments = exercise.equipments.map(x => x.name);
+      exercise.muscleGroups = Array.from(
+        new Set(
+          exercise.muscles.reduce(
+            (a, b) => [...a, ...b.muscleGroups.map(x => x.name)],
+            [],
+          ),
+        ),
+      );
+    });
+    return exercises;
+  });
 };
 const getWorkouts = function() {
   return q(

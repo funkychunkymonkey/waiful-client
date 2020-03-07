@@ -12,7 +12,19 @@ const Stack = createStackNavigator();
 
 export default function() {
   return (
-    <Stack.Navigator initialRouteName="Settings">
+    <Stack.Navigator
+      initialRouteName="Settings"
+      screenOptions={{
+        headerStyle: {
+          backgroundColor: '#fed14d',
+          borderBottomWidth: 0,
+          shadowColor: 'transparent',
+        },
+        headerTintColor: '#fff',
+        headerTitleStyle: {
+          fontWeight: 'bold',
+        },
+      }}>
       <Stack.Screen name="Settings" component={Settings} />
       <Stack.Screen
         name="SettingsAnime"

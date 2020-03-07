@@ -6,17 +6,32 @@ import WorkoutDetail from './WorkoutDetail.js';
 import WorkoutLog from './WorkoutLog.js';
 import CardioScreen from './Cardio.js';
 import CardioLog from './CardioLog.js';
+import LinearGradient from 'react-native-linear-gradient';
+
+import Icon from 'react-native-vector-icons/FontAwesome5';
 
 const Stack = createStackNavigator();
 
-export default function({exercises}) {
+export default function({route, navigation}) {
   return (
-    <Stack.Navigator initialRouteName="Home">
+    <Stack.Navigator
+      initialRouteName="Home"
+      screenOptions={{
+        headerStyle: {
+          backgroundColor: '#fed14d',
+          borderBottomWidth: 0,
+          shadowColor: 'transparent',
+        },
+        headerTintColor: '#fff',
+        headerTitleStyle: {
+          fontWeight: 'bold',
+        },
+      }}>
       <Stack.Screen name="Home" component={HomeScreen} />
       <Stack.Screen
         name="WorkoutList"
         component={WorkoutList}
-        initialParams={{exercises}}
+        initialParams={{exercises: route.params.exercises}}
       />
       <Stack.Screen name="WorkoutDetail" component={WorkoutDetail} />
       <Stack.Screen name="WorkoutLog" component={WorkoutLog} />
@@ -26,37 +41,48 @@ export default function({exercises}) {
   );
 }
 
-function HomeScreen({navigation}) {
+function HomeScreen({route, navigation}) {
   return (
-    <View contentContainerStyle={styles.container}>
+    <View style={styles.container}>
       <TouchableOpacity
         style={styles.circle}
         onPress={() => navigation.navigate('WorkoutList')}>
-        <Text style={styles.text}> Workout </Text>
+        <LinearGradient colors={['#fed14d', '#ffa880']} style={styles.circle}>
+          <Icon name="dumbbell" size={100} color="#fff" />
+          <Text style={styles.text}> Workout </Text>
+        </LinearGradient>
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.circle}
         onPress={() => navigation.navigate('Cardio')}>
-        <Text style={styles.text}> Cardio </Text>
+        <LinearGradient colors={['#fed14d', '#ffa880']} style={styles.circle}>
+          <Icon name="running" size={100} color="#fff" />
+          <Text style={styles.text}> Cardio </Text>
+        </LinearGradient>
       </TouchableOpacity>
     </View>
   );
 }
-
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    justifyContent: 'space-around',
+    justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#fed14dff',
+    alignContent: 'center',
+    flexDirection: 'column',
+    height: '100%',
   },
   circle: {
+    margin: 10,
     width: 200,
     height: 200,
     borderRadius: 200 / 2,
-    backgroundColor: '#ffa880ff',
+    backgroundColor: '#fed14d',
     justifyContent: 'center',
     alignItems: 'center',
   },
-  text: {fontSize: 40, color: '#fed14dff'},
+  text: {
+    fontSize: 28,
+    color: '#fff',
+    textTransform: 'uppercase',
+  },
 });

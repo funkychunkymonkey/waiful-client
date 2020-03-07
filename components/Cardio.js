@@ -4,6 +4,8 @@ import {StyleSheet, Text, View, TouchableOpacity, Button} from 'react-native';
 import {useFocusEffect} from '@react-navigation/native';
 import Loading from './Loading.js';
 import utils from '../utils.js';
+import MapView, {Marker} from 'react-native-maps';
+import Geolocation from '@react-native-community/geolocation';
 
 export default function CardioScreen({navigation}) {
   const [currentRun, setCurrentRun] = useState(null);
@@ -49,8 +51,42 @@ export default function CardioScreen({navigation}) {
     );
   }
   function Running() {
+    const [location, setLocation] = useState({});
+    useFocusEffect(() => {
+      Geolocation.getCurrentPosition(position => {
+        console.log(position);
+        setLocation({
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude,
+          latitudeDelta: 0.01,
+          longitudeDelta: 0.0125,
+        }),
+          error => {
+            console.log(error.code, error.message);
+          };
+      });
+    });
     return (
       <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+        <View
+          style={{
+            height: 400,
+            width: 400,
+            justifyContent: 'flex-end',
+            alignItems: 'center',
+          }}>
+          <MapView
+            showsUserLocation={true}
+            followsUserLocation={true}
+            style={styles.map}
+            region={location}>
+            <Marker
+              coordinate={{latitude: 35.657966, longitude: 139.727667}}
+              title="Team Funky Chunky Monkey"
+              description="Waiful HQ"
+            />
+          </MapView>
+        </View>
         <TouchableOpacity style={styles.circle} onPress={() => endRun()}>
           <Text style={styles.text}> Stop </Text>
         </TouchableOpacity>
@@ -110,5 +146,17 @@ const styles = StyleSheet.create({
     backgroundColor: '#ffa880ff',
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  //for map
+  container: {
+    ...StyleSheet.absoluteFillObject,
+    height: 400,
+    width: 400,
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+  },
+  //map
+  map: {
+    ...StyleSheet.absoluteFillObject,
   },
 });

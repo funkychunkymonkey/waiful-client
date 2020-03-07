@@ -33,12 +33,12 @@ export default function WorkoutLog({navigation}) {
     <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
       <FlatList
         data={logs}
-        renderItem={d => {
+        renderItem={(d, i) => {
           const workout = d.item;
           return (
             <Text style={styles.item}>
-              <Text>{workout.exercise.name}</Text>
-              <Text>{workout.reps}</Text>
+              <Text>{workout.exercise.name} </Text>
+              <Text>{workout.reps} times </Text>
               <Text>{workout.createdAt}</Text>
             </Text>
           );
@@ -69,6 +69,6 @@ const styles = StyleSheet.create({
   },
   equipment: {
     fontSize: 10,
-    backgroundColor: '#0f0',
+    backgroundColor: '#f00',
   },
 });

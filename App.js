@@ -1,105 +1,142 @@
 import React, {useEffect, useState} from 'react';
-import {
-  SafeAreaView,
-  StyleSheet,
-  ScrollView,
-  View,
-  Text,
-  StatusBar,
-} from 'react-native';
+import {StyleSheet, View, Text} from 'react-native';
 
-import {
-  Header,
-  LearnMoreLinks,
-  Colors,
-  DebugInstructions,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+import {Colors} from 'react-native/Libraries/NewAppScreen';
 
 import {NavigationContainer} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import HomeScreen from './components/Home';
 import GachaScreen from './components/Gacha';
 import SettingsScreen from './components/Settings';
 import CollectionScreen from './components/Collection';
+import WaifuOverlay from './components/WaifuOverlay';
+import Loading from './components/Loading';
 
 import utils from './utils.js';
 
 const Tab = createBottomTabNavigator();
 const App: () => React$Node = () => {
   const [exercises, setExercises] = useState([]);
+  const [waifus, setWaifus] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  const [overlayKey, setOverlayKey] = React.useState(0);
+  const [overlayIsVisible, setOverlayIsVisible] = React.useState(false);
+  const [overlayOptions, setOverlayOptions] = React.useState({});
+
   useEffect(() => {
-    utils.getExercises().then(data => {
-      setLoading(false);
-      setExercises(data);
-    });
+    Promise.all([reloadExercises(), reloadWaifus()]).then(() =>
+      setLoading(false),
+    );
   }, []);
 
-  if (loading) {
-    return (
-      <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-        <Text>Loading...</Text>
-      </View>
-    );
-  }
+  if (loading) return <Loading />;
 
-  function Home() {
-    return <HomeScreen exercises={exercises} />;
+  async function reloadExercises() {
+    setExercises((await utils.getExercises()).slice(0, 100));
+  }
+  async function reloadWaifus() {
+    setWaifus(await utils.getWaifus());
+  }
+  function popUpWaifu(options) {
+    // generate waifu
+    let waifu = null;
+    if (options.gacha) waifu = options.gacha;
+    else {
+      const faves = waifus.filter(x => x.isFavorite);
+      waifu = faves.length
+        ? faves[Math.floor(Math.random() * faves.length)]
+        : null;
+    }
+    // if it's a generic dialogue with no waifu, return immediately
+    if (!options.gems && !options.gacha && !waifu) return;
+    // otherwise pop
+    setOverlayKey(overlayKey + 1);
+    setOverlayIsVisible(true);
+    setOverlayOptions({
+      ...options,
+      waifu,
+    });
   }
 
   return (
-    <NavigationContainer>
-      <Tab.Navigator
-        initialRouteName="Home"
-        tabBarOptions={{
-          activeTintColor: '#e91e63',
-        }}>
-        <Tab.Screen
-          name="Home"
-          component={Home}
-          options={{
-            tabBarLabel: 'Home',
-            tabBarIcon: ({color, size}) => (
-              <Icon name="home" color={color} size={size} />
-            ),
-          }}
-        />
-        <Tab.Screen
-          name="Collection"
-          component={CollectionScreen}
-          options={{
-            tabBarLabel: 'Collection',
-            tabBarIcon: ({color, size}) => (
-              <Icon name="grid" color={color} size={size} />
-            ),
-          }}
-        />
-        <Tab.Screen
-          name="Gacha"
-          component={GachaScreen}
-          options={{
-            tabBarLabel: 'Gacha',
-            tabBarIcon: ({color, size}) => (
-              <Icon name="gift-outline" color={color} size={size} />
-            ),
-          }}
-        />
-        <Tab.Screen
-          name="Settings"
-          component={SettingsScreen}
-          options={{
-            tabBarLabel: 'Settings',
-            tabBarIcon: ({color, size}) => (
-              <Icon name="settings" color={color} size={size} />
-            ),
-          }}
-        />
-      </Tab.Navigator>
-    </NavigationContainer>
+    <>
+      <WaifuOverlay
+        options={overlayOptions}
+        key={overlayKey}
+        onClose={() => {
+          setOverlayIsVisible(false);
+        }}
+        isVisible={overlayIsVisible}
+      />
+      <NavigationContainer options={{}}>
+        <Tab.Navigator
+          initialRouteName="Home"
+          tabBarOptions={{
+            activeTintColor: '#000',
+            inactiveTintColor: '#fff',
+            activeBackgroundColor: '#fed14d',
+            inactiveBackgroundColor: '#fed14d',
+            style: {
+              borderTopWidth: 0,
+              paddingTop: 10,
+              backgroundColor: '#fed14d',
+            },
+          }}>
+          <Tab.Screen
+            name="Home"
+            component={HomeScreen}
+            initialParams={{
+              exercises,
+              popUpWaifu,
+            }}
+            options={{
+              tabBarLabel: 'Home',
+              tabBarIcon: ({color, size}) => (
+                <Icon name="home" color={color} size={size} />
+              ),
+            }}
+          />
+          <Tab.Screen
+            name="Collection"
+            component={CollectionScreen}
+            options={{
+              tabBarLabel: 'Collection',
+              tabBarIcon: ({color, size}) => (
+                <Icon name="grid" color={color} size={size} />
+              ),
+            }}
+          />
+          <Tab.Screen
+            name="Gacha"
+            component={GachaScreen}
+            initialParams={{
+              popUpWaifu,
+              reloadWaifus,
+            }}
+            options={{
+              tabBarLabel: 'Gacha',
+              tabBarIcon: ({color, size}) => (
+                <Icon name="gift-outline" color={color} size={size} />
+              ),
+            }}
+          />
+          <Tab.Screen
+            name="Settings"
+            component={SettingsScreen}
+            options={{
+              tabBarLabel: 'Settings',
+              tabBarIcon: ({color, size}) => (
+                <Icon name="settings" color={color} size={size} />
+              ),
+            }}
+          />
+        </Tab.Navigator>
+      </NavigationContainer>
+    </>
   );
 };
 
