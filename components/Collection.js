@@ -1,8 +1,7 @@
 import * as React from 'react';
-import {useState, useRef, useEffect} from 'react';
+import {useState} from 'react';
 import {ScrollView} from 'react-native-gesture-handler';
 import {StyleSheet, Text, TouchableOpacity, Image, View} from 'react-native';
-import LottieView from 'lottie-react-native';
 import {
   Container,
   Content,
@@ -15,13 +14,12 @@ import {
 import {useFocusEffect} from '@react-navigation/native';
 import utils from '../utils.js';
 import Loading from './Loading.js';
+import FavButton from './FavButton.js';
 
 export default function Collection() {
   const [loading, setLoading] = useState(true);
   const [collection, setCollection] = useState([]);
   const [selectedWaifuIdx, setSelectedWaifuIdx] = useState(-1);
-  const [favAnimation, setFavAnimation] = useState(false);
-  const lottieView = useRef(null);
 
   useFocusEffect(
     React.useCallback(() => {
@@ -35,18 +33,11 @@ export default function Collection() {
     }, []),
   );
 
-  useEffect(() => {
-    if (favAnimation) {
-      lottieView.current.play(30, 116);
-    }
-  }, [favAnimation]);
-
   const updateFavState = (waifuIdx, newFavState) => {
     const newWaifu = {...collection[selectedWaifuIdx], isFavorite: newFavState};
     const newCollection = [...collection];
     newCollection[waifuIdx] = newWaifu;
     setCollection(newCollection);
-    setFavAnimation(newFavState);
   };
 
   const fav = waifuIdx => {
@@ -68,10 +59,6 @@ export default function Collection() {
     return (
       <TouchableOpacity
         onPress={() => {
-          if (favAnimation) {
-            lottieView.current && lottieView.current.reset();
-          }
-          setFavAnimation(false);
           setSelectedWaifuIdx(i);
         }}>
         <Image
@@ -119,22 +106,11 @@ export default function Collection() {
                 }}
                 resizeMode="contain"
               />
-              <TouchableOpacity
-                style={styles.favTouchArea}
-                onPress={() => fav(selectedWaifuIdx)}>
-                <LottieView
-                  ref={lottieView}
-                  style={styles.fav}
-                  source={require('../src/2415-twitter-heart.json')}
-                  progress={
-                    collection[selectedWaifuIdx].isFavorite && !favAnimation
-                      ? 1
-                      : 0
-                  }
-                  onAnimationFinish={() => setFavAnimation(false)}
-                  loop={false}
-                />
-              </TouchableOpacity>
+              <FavButton
+                onPress={() => fav(selectedWaifuIdx)}
+                waifuIdx={selectedWaifuIdx}
+                isFavorite={collection[selectedWaifuIdx].isFavorite}
+              />
             </>
           ) : (
             <></>
@@ -161,18 +137,6 @@ const styles = StyleSheet.create({
     zIndex: 0,
     width: 450,
     height: 380,
-  },
-  favTouchArea: {
-    width: 300,
-    top: -200,
-    left: -80,
-    position: 'relative',
-    zIndex: 1,
-  },
-  fav: {
-    width: 300,
-    position: 'relative',
-    zIndex: 2,
   },
   showView: {
     height: 400,
