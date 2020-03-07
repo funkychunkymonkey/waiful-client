@@ -13,7 +13,7 @@ import GachaScreen from './components/Gacha';
 import SettingsScreen from './components/Settings';
 import CollectionScreen from './components/Collection';
 import WaifuOverlay from './components/WaifuOverlay';
-import Loading from './components/Loading';
+import Splash from './components/Splash';
 
 import utils from './utils.js';
 
@@ -33,7 +33,7 @@ const App: () => React$Node = () => {
     );
   }, []);
 
-  if (loading) return <Loading />;
+  if (loading) return <Splash />;
 
   async function reloadExercises() {
     setExercises((await utils.getExercises()).slice(0, 100));
