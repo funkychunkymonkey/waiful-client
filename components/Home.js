@@ -9,10 +9,14 @@ import CardioLog from './CardioLog.js';
 
 const Stack = createStackNavigator();
 
-export default function({exercises}) {
+export default function({exercises, popUpWaifu}) {
   return (
     <Stack.Navigator initialRouteName="Home">
-      <Stack.Screen name="Home" component={HomeScreen} />
+      <Stack.Screen
+        name="Home"
+        component={HomeScreen}
+        initialParams={{popUpWaifu}}
+      />
       <Stack.Screen
         name="WorkoutList"
         component={WorkoutList}
@@ -26,7 +30,7 @@ export default function({exercises}) {
   );
 }
 
-function HomeScreen({navigation}) {
+function HomeScreen({route, navigation}) {
   return (
     <View contentContainerStyle={styles.container}>
       <TouchableOpacity
@@ -38,6 +42,16 @@ function HomeScreen({navigation}) {
         style={styles.circle}
         onPress={() => navigation.navigate('Cardio')}>
         <Text style={styles.text}> Cardio </Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={styles.circle}
+        onPress={() => {
+          route.params.popUpWaifu({
+            dialogue: 'asdfasdf',
+            gems: 10,
+          });
+        }}>
+        <Text style={styles.text}> Waifu </Text>
       </TouchableOpacity>
     </View>
   );
