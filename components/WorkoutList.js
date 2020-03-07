@@ -1,148 +1,137 @@
 import * as React from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-  FlatList,
-  TouchableOpacity,
-  TextInput,
-  Image,
-  Button,
-} from 'react-native';
-import {set, eq} from 'react-native-reanimated';
-import RNPickerSelect from 'react-native-picker-select';
+import {StyleSheet, Text, View, TouchableOpacity, Button} from 'react-native';
+import {ListItem, SearchBar} from 'react-native-elements';
+import LinearGradient from 'react-native-linear-gradient';
+import {Content} from 'native-base';
 
 export default function WorkoutList({route, navigation}) {
   const allExercises = route.params.exercises;
-  const [allEquipments] = React.useState(
-    allExercises.reduce((a, b) => {
-      b.equipments.forEach(eq => {
-        if (!a.includes(eq.name)) a.push(eq.name);
-      });
-      return a;
-    }, []),
-  );
-  const [allMuscles] = React.useState(
-    allExercises.reduce((a, b) => {
-      b.muscles.forEach(muscle => {
-        if (!a.includes(muscle.name)) a.push(muscle.name);
-      });
-      return a;
-    }, []),
-  );
   const [exercises, setExercises] = React.useState(allExercises);
-  const [filterEquipment, setFilterEquipment] = React.useState('');
-  const [filterMuscle, setFilterMuscle] = React.useState('');
+  const [allData] = React.useState({
+    equipments: Array.from(
+      new Set(allExercises.reduce((a, b) => [...a, ...b.equipments], [])),
+    ),
+    muscles: Array.from(
+      new Set(allExercises.reduce((a, b) => [...a, ...b.muscleGroups], [])),
+    ),
+  });
+
+  const [filters, setFilters] = React.useState({muscles: [], equipments: []});
+  const [search, setSearch] = React.useState('');
+
+  function updateSearch(text) {
+    setSearch(text);
+  }
 
   React.useEffect(() => {
     setExercises(
-      filterEquipment === '' && filterMuscle === ''
-        ? allExercises
-        : allExercises.filter(exercise => {
-            if (filterMuscle === '') {
-              return exercise.equipments.some(
-                equipment => equipment.name === filterEquipment,
-              );
-            }
-            if (filterEquipment === '') {
-              return exercise.muscles.some(
-                muscle => muscle.name === filterMuscle,
-              );
-            }
-          }),
+      allExercises.filter(exercise => {
+        if (search !== '' && exercise.name.indexOf(search) === -1) {
+          return false;
+        }
+        if (
+          filters.muscles.length &&
+          !exercise.muscleGroups.some(group => filters.muscles.includes(group))
+        )
+          return false;
+        if (
+          filters.equipments.length &&
+          filters.equipments.includes('None') &&
+          exercise.equipments.length === 0
+        )
+          return true;
+        if (
+          filters.equipments.length &&
+          !exercise.equipments.some(eq => filters.equipments.includes(eq))
+        )
+          return false;
+        return true;
+      }),
     );
-  }, [filterEquipment, filterMuscle, allExercises]);
-  if (exercises.length === 0)
+  }, [filters, allExercises, search]);
+
+  return (
+    <Content>
+      <LinearGradient colors={['#fed14d', '#ffa880']}>
+        <Filters type="muscles" data={allData.muscles} />
+        <Filters type="equipments" data={['None', ...allData.equipments]} />
+      </LinearGradient>
+      <SearchBar
+        placeholder="Type Here..."
+        onChangeText={updateSearch}
+        value={search}
+      />
+      <Exercises />
+    </Content>
+  );
+
+  function Filters({type, data}) {
     return (
-      <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-        <Text>No exercises found.</Text>
+      <View style={{flexDirection: 'row'}}>
+        {data.map((x, i) => (
+          <View
+            key={i}
+            style={{
+              opacity: filters[type].includes(x) ? 1.0 : 0.5,
+            }}>
+            <FilterCircle onPress={() => filter(type, x)} text={x} />
+          </View>
+        ))}
       </View>
     );
-  return (
-    <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-      <RNPickerSelect
-        onValueChange={value => setFilterEquipment(value)}
-        items={[
-          {label: 'Incline bench', value: 'Incline bench'},
-          {label: 'Dumbbell', value: 'Dumbbell'},
-          {label: 'Kettlebell', value: 'Kettlebell'},
-          {label: 'Barbell', value: 'Barbell'},
-          {label: 'SZ-Bar', value: 'SZ-Bar'},
-          {label: 'Gym mat', value: 'Gym mat'},
-          {label: 'Pull-up bar', value: 'Pull-up bar'},
-          {label: 'No equipment', value: 'none (bodyweight exercise)'},
-        ]}
-        style={styles.selector}
-        placeholder={{label: 'Select the equipment you want to use', value: ''}}
-        Icon={() => (
-          <Text
-            style={{
-              position: 'absolute',
-              right: 95,
-              fontSize: 18,
-              color: '#789',
-            }}>
-            ▼
-          </Text>
-        )}
-      />
-      <RNPickerSelect
-        onValueChange={value => setFilterMuscle(value)}
-        items={[
-          {
-            label: 'Obliquus externus abdominis',
-            value: 'Obliquus externus abdominis',
-          },
-          {label: 'Anterior deltoid', value: 'Anterior deltoid'},
-          {label: 'Trapezius', value: 'Trapezius'},
-          {label: 'Rectus abdominis', value: 'Rectus abdominis'},
-          {label: 'Quadriceps', value: 'Quadriceps'},
-          {label: 'Gluteus maximus', value: 'Glutes maximus'},
-          {label: 'Biceps brachii', value: 'Biceps brachii'},
-          {label: 'Triceps brachii', value: 'triceps brachi'},
-          {label: 'Pectorails major', value: 'Pectorails major'},
-          {label: 'Serratus anterior', value: 'Serratus anterior'},
-          {label: 'Soleus', value: 'Soleus'},
-          {label: 'Latissimus dorsi', value: 'Latissimus dorsi'},
-          {label: 'Bicps femoris', value: 'Biceps femoris'},
-          {label: 'Brachialis', value: 'Brachialis'},
-        ]}
-        style={styles.selector}
-        placeholder={{
-          label: 'Select the muscle you want to work on',
-          value: '',
-        }}
-        Icon={() => (
-          <Text
-            style={{
-              position: 'absolute',
-              right: 95,
-              fontSize: 18,
-              color: '#789',
-            }}>
-            ▼
-          </Text>
-        )}
-      />
-      <FlatList
-        data={exercises}
-        renderItem={({item}) => {
-          return (
-            <TouchableOpacity
-              style={styles.item}
-              onPress={() => {
-                navigation.navigate('WorkoutDetail', {exercise: item});
-              }}>
-              <Text>{item.name}</Text>
-              {item.muscles.map(muscle => (
-                <Button title={muscle.name} buttonStyle={styles.muscle} />
-              ))}
-            </TouchableOpacity>
-          );
-        }}
-      />
-    </View>
-  );
+  }
+  function filter(type, x) {
+    if (filters[type].includes(x)) {
+      filters[type] = filters[type].filter(xx => xx !== x);
+      setFilters({...filters});
+    } else {
+      filters[type].push(x);
+      setFilters({...filters});
+    }
+  }
+
+  function FilterCircle({onPress, text}) {
+    return (
+      <TouchableOpacity
+        style={{...styles.filterCircle}}
+        onPress={onPress ? onPress : () => {}}>
+        <Text style={{color: '#fff'}}>{text}</Text>
+      </TouchableOpacity>
+    );
+  }
+  function Exercises() {
+    if (exercises.length === 0)
+      return (
+        <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+          <Text>No exercises found.</Text>
+        </View>
+      );
+    return (
+      <View>
+        {exercises.map((exercise, i) => (
+          <ListItem
+            key={i}
+            style={{}}
+            title={exercise.name}
+            onPress={() => {
+              navigation.navigate('WorkoutDetail', {exercise});
+            }}
+            rightAvatar={
+              <View style={{flexDirection: 'row'}}>
+                {exercise.muscleGroups.map((x, i) => (
+                  <FilterCircle text={x} key={i} />
+                ))}
+                {exercise.equipments.map((x, i) => (
+                  <FilterCircle text={x} key={i} />
+                ))}
+              </View>
+            }
+            bottomDivider
+          />
+        ))}
+      </View>
+    );
+  }
 }
 
 const styles = StyleSheet.create({
@@ -162,26 +151,13 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
-  muscle: {
-    fontSize: 10,
-    padding: 10,
-    backgroundColor: '#f00',
-  },
-  equipment: {
-    fontSize: 10,
-    padding: 10,
-    backgroundColor: 'red',
-  },
-  selector: {
-    fontSize: 16,
-    paddingVertical: 12,
-    paddingHorizontal: 10,
-    borderWidth: 1,
-    borderColor: '#789',
-    borderRadius: 4,
-    color: '#789',
-    paddingRight: 30,
-    width: 300,
-    marginLeft: 30,
+  filterCircle: {
+    width: 50,
+    height: 50,
+    margin: 5,
+    borderRadius: 50,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#fc7349',
   },
 });

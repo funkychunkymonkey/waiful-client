@@ -80,9 +80,14 @@ export default function Gacha(props) {
 
   return (
     <Container>
-      <Header>
+      <Header
+        style={{
+          backgroundColor: '#fed14d',
+          borderBottomWidth: 0,
+          shadowColor: 'transparent',
+        }}>
         <Body>
-          <Title>Gacha</Title>
+          <Title style={{fontWeight: 'bold', color: 'white'}}>Gacha</Title>
         </Body>
       </Header>
       <Content style={styles.body}>

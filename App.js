@@ -74,15 +74,17 @@ const App: () => React$Node = () => {
         key={overlayKey}
         gems={overlayGems}
       />
-      <NavigationContainer>
+      <NavigationContainer options={{}}>
         <Tab.Navigator
           initialRouteName="Home"
           tabBarOptions={{
-            activeTintColor: '#e91e63',
+            activeTintColor: '#000',
             inactiveTintColor: '#fff',
             activeBackgroundColor: '#fed14d',
             inactiveBackgroundColor: '#fed14d',
             style: {
+              borderTopWidth: 0,
+              paddingTop: 10,
               backgroundColor: '#fed14d',
             },
           }}>
