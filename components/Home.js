@@ -1,11 +1,5 @@
 import * as React from 'react';
-import {
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-  Dimensions,
-} from 'react-native';
+import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {createStackNavigator} from '@react-navigation/stack';
 import WorkoutList from './WorkoutList.js';
 import WorkoutDetail from './WorkoutDetail.js';
@@ -18,7 +12,7 @@ import Icon from 'react-native-vector-icons/FontAwesome5';
 
 const Stack = createStackNavigator();
 
-export default function({exercises, popUpWaifu}) {
+export default function({route, navigation}) {
   return (
     <Stack.Navigator
       initialRouteName="Home"
@@ -33,15 +27,11 @@ export default function({exercises, popUpWaifu}) {
           fontWeight: 'bold',
         },
       }}>
-      <Stack.Screen
-        name="Home"
-        component={HomeScreen}
-        initialParams={{popUpWaifu}}
-      />
+      <Stack.Screen name="Home" component={HomeScreen} />
       <Stack.Screen
         name="WorkoutList"
         component={WorkoutList}
-        initialParams={{exercises}}
+        initialParams={{exercises: route.params.exercises}}
       />
       <Stack.Screen name="WorkoutDetail" component={WorkoutDetail} />
       <Stack.Screen name="WorkoutLog" component={WorkoutLog} />
@@ -68,19 +58,6 @@ function HomeScreen({route, navigation}) {
         <LinearGradient colors={['#fed14d', '#ffa880']} style={styles.circle}>
           <Icon name="running" size={100} color="#fff" />
           <Text style={styles.text}> Cardio </Text>
-        </LinearGradient>
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={styles.circle}
-        onPress={() => {
-          route.params.popUpWaifu({
-            dialogue: 'asdfasdf',
-            gems: 10,
-          });
-        }}>
-        <LinearGradient colors={['#fed14d', '#ffa880']} style={styles.circle}>
-          <Icon name="heart" size={100} color="#fff" />
-          <Text style={styles.text}> Waifu </Text>
         </LinearGradient>
       </TouchableOpacity>
     </View>

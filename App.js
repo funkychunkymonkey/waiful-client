@@ -1,20 +1,7 @@
 import React, {useEffect, useState} from 'react';
-import {
-  SafeAreaView,
-  StyleSheet,
-  ScrollView,
-  View,
-  Text,
-  StatusBar,
-} from 'react-native';
+import {StyleSheet, View, Text} from 'react-native';
 
-import {
-  Header,
-  LearnMoreLinks,
-  Colors,
-  DebugInstructions,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+import {Colors} from 'react-native/Libraries/NewAppScreen';
 
 import {NavigationContainer} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
@@ -26,53 +13,64 @@ import GachaScreen from './components/Gacha';
 import SettingsScreen from './components/Settings';
 import CollectionScreen from './components/Collection';
 import WaifuOverlay from './components/WaifuOverlay';
+import Loading from './components/Loading';
 
 import utils from './utils.js';
 
 const Tab = createBottomTabNavigator();
 const App: () => React$Node = () => {
   const [exercises, setExercises] = useState([]);
+  const [waifus, setWaifus] = useState([]);
   const [loading, setLoading] = useState(true);
 
   const [overlayKey, setOverlayKey] = React.useState(0);
   const [overlayIsVisible, setOverlayIsVisible] = React.useState(false);
-  const [overlayDialogue, setOverlayDialogue] = React.useState('');
-  const [overlayGems, setOverlayGems] = React.useState(0);
+  const [overlayOptions, setOverlayOptions] = React.useState({});
 
   useEffect(() => {
-    utils.getExercises().then(data => {
-      setLoading(false);
-      setExercises(data);
-    });
+    Promise.all([reloadExercises(), reloadWaifus()]).then(() =>
+      setLoading(false),
+    );
   }, []);
 
-  if (loading) {
-    return (
-      <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-        <Text>Loading...</Text>
-      </View>
-    );
-  }
+  if (loading) return <Loading />;
 
+  async function reloadExercises() {
+    setExercises((await utils.getExercises()).slice(0, 100));
+  }
+  async function reloadWaifus() {
+    setWaifus(await utils.getWaifus());
+  }
   function popUpWaifu(options) {
+    // generate waifu
+    let waifu = null;
+    if (options.gacha) waifu = options.gacha;
+    else {
+      const faves = waifus.filter(x => x.isFavorite);
+      waifu = faves.length
+        ? faves[Math.floor(Math.random() * faves.length)]
+        : null;
+    }
+    // if it's a generic dialogue with no waifu, return immediately
+    if (!options.gems && !options.gacha && !waifu) return;
+    // otherwise pop
     setOverlayKey(overlayKey + 1);
     setOverlayIsVisible(true);
-    setOverlayDialogue(options.dialogue || '');
-    setOverlayGems(options.gems || 0);
-    // generate waifu => get a list of all favorited waifus => pick a random one
-  }
-
-  function Home() {
-    return <HomeScreen exercises={exercises} popUpWaifu={popUpWaifu} />;
+    setOverlayOptions({
+      ...options,
+      waifu,
+    });
   }
 
   return (
     <>
       <WaifuOverlay
-        isVisible={overlayIsVisible}
-        dialogue={overlayDialogue}
+        options={overlayOptions}
         key={overlayKey}
-        gems={overlayGems}
+        onClose={() => {
+          setOverlayIsVisible(false);
+        }}
+        isVisible={overlayIsVisible}
       />
       <NavigationContainer options={{}}>
         <Tab.Navigator
@@ -90,7 +88,11 @@ const App: () => React$Node = () => {
           }}>
           <Tab.Screen
             name="Home"
-            component={Home}
+            component={HomeScreen}
+            initialParams={{
+              exercises,
+              popUpWaifu,
+            }}
             options={{
               tabBarLabel: 'Home',
               tabBarIcon: ({color, size}) => (
@@ -111,6 +113,10 @@ const App: () => React$Node = () => {
           <Tab.Screen
             name="Gacha"
             component={GachaScreen}
+            initialParams={{
+              popUpWaifu,
+              reloadWaifus,
+            }}
             options={{
               tabBarLabel: 'Gacha',
               tabBarIcon: ({color, size}) => (
