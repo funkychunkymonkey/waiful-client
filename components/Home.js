@@ -39,7 +39,11 @@ export default function({route, navigation}) {
         component={WorkoutList}
         initialParams={{exercises: route.params.exercises}}
       />
-      <Stack.Screen name="WorkoutDetail" component={WorkoutDetail} />
+      <Stack.Screen
+        name="WorkoutDetail"
+        component={WorkoutDetail}
+        initialParams={{popUpWaifu: route.params.popUpWaifu}}
+      />
       <Stack.Screen name="WorkoutLog" component={WorkoutLog} />
       <Stack.Screen name="Cardio" component={CardioScreen} />
       <Stack.Screen name="CardioLog" component={CardioLog} />
