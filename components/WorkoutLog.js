@@ -1,6 +1,6 @@
 import * as React from 'react';
-import {StyleSheet, Text, View, FlatList} from 'react-native';
-import {useFocusEffect, useIsFocused} from '@react-navigation/native';
+import {StyleSheet, Text, View} from 'react-native';
+import {useFocusEffect} from '@react-navigation/native';
 import {ListItem} from 'react-native-elements';
 import moment from 'moment';
 
@@ -47,27 +47,4 @@ export default function WorkoutLog({navigation}) {
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: COLORS.bgSecondary,
-  },
-  contentContainer: {
-    paddingTop: 50,
-  },
-  item: {
-    padding: 10,
-    fontSize: 18,
-    height: 44,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  muscle: {
-    fontSize: 10,
-    backgroundColor: '#f00',
-  },
-  equipment: {
-    fontSize: 10,
-    backgroundColor: '#f00',
-  },
-});
+const styles = StyleSheet.create({});

@@ -54,6 +54,9 @@ export default function({route, navigation}) {
         name="WorkoutDetail"
         component={WorkoutDetail}
         initialParams={{popUpWaifu: route.params.popUpWaifu}}
+        options={{
+          title: 'Workout',
+        }}
       />
       <Stack.Screen
         name="WorkoutLog"
@@ -62,8 +65,27 @@ export default function({route, navigation}) {
           title: 'Your Workouts',
         }}
       />
-      <Stack.Screen name="Cardio" component={CardioScreen} />
-      <Stack.Screen name="CardioLog" component={CardioLog} />
+      <Stack.Screen
+        name="Cardio"
+        component={CardioScreen}
+        options={{
+          title: 'Run',
+          headerRight: () => (
+            <Button
+              onPress={() => navigation.navigate('CardioLog')}
+              title="Logs"
+              color={COLORS.textTitle}
+            />
+          ),
+        }}
+      />
+      <Stack.Screen
+        name="CardioLog"
+        component={CardioLog}
+        options={{
+          title: 'Your Runs',
+        }}
+      />
     </Stack.Navigator>
   );
 }
