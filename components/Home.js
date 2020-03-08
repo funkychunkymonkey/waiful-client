@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {StyleSheet, Text, TouchableOpacity, View, Button} from 'react-native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {useFocusEffect} from '@react-navigation/native';
 
@@ -39,11 +39,54 @@ export default function({route, navigation}) {
         name="WorkoutList"
         component={WorkoutList}
         initialParams={{exercises: route.params.exercises}}
+        options={{
+          title: 'Exercises',
+          headerRight: () => (
+            <Button
+              onPress={() => navigation.navigate('WorkoutLog')}
+              title="Logs"
+              color={COLORS.textTitle}
+            />
+          ),
+        }}
       />
-      <Stack.Screen name="WorkoutDetail" component={WorkoutDetail} />
-      <Stack.Screen name="WorkoutLog" component={WorkoutLog} />
-      <Stack.Screen name="Cardio" component={CardioScreen} />
-      <Stack.Screen name="CardioLog" component={CardioLog} />
+      <Stack.Screen
+        name="WorkoutDetail"
+        component={WorkoutDetail}
+        initialParams={{popUpWaifu: route.params.popUpWaifu}}
+        options={{
+          title: 'Workout',
+        }}
+      />
+      <Stack.Screen
+        name="WorkoutLog"
+        component={WorkoutLog}
+        options={{
+          title: 'Your Workouts',
+        }}
+      />
+      <Stack.Screen
+        name="Cardio"
+        component={CardioScreen}
+        initialParams={{popUpWaifu: route.params.popUpWaifu}}
+        options={{
+          title: 'Run',
+          headerRight: () => (
+            <Button
+              onPress={() => navigation.navigate('CardioLog')}
+              title="Logs"
+              color={COLORS.textTitle}
+            />
+          ),
+        }}
+      />
+      <Stack.Screen
+        name="CardioLog"
+        component={CardioLog}
+        options={{
+          title: 'Your Runs',
+        }}
+      />
     </Stack.Navigator>
   );
 }

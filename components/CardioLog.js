@@ -1,14 +1,16 @@
 import * as React from 'react';
-import {useState} from 'react';
-import {StyleSheet, Text, View, FlatList} from 'react-native';
+import {StyleSheet, Text, View} from 'react-native';
+import {ListItem} from 'react-native-elements';
+import {useFocusEffect} from '@react-navigation/native';
+import moment from 'moment';
+
 import utils from '../utils.js';
 import COLORS from '../color';
 import Loading from './Loading.js';
-import {useFocusEffect, useIsFocused} from '@react-navigation/native';
 
 export default function WorkoutLog({navigation}) {
-  const [logs, setLogs] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [logs, setLogs] = React.useState([]);
+  const [loading, setLoading] = React.useState(true);
 
   useFocusEffect(
     React.useCallback(() => {
@@ -30,45 +32,18 @@ export default function WorkoutLog({navigation}) {
       </View>
     );
   return (
-    <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-      <FlatList
-        data={logs}
-        renderItem={d => {
-          const run = d.item;
-          return (
-            <Text style={styles.item}>
-              <Text>{run.distance}m</Text>
-              <Text>{run.startedAt}</Text>
-              <Text>{run.endedAt}</Text>
-            </Text>
-          );
-        }}
-      />
+    <View>
+      {logs.map((log, i) => (
+        <ListItem
+          key={i}
+          style={{}}
+          title={log.distance + 'm'}
+          rightAvatar={<Text>{moment(log.createdAt).fromNow()}</Text>}
+          bottomDivider
+        />
+      ))}
     </View>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: COLORS.bgSecondary,
-  },
-  contentContainer: {
-    paddingTop: 50,
-  },
-  item: {
-    padding: 10,
-    fontSize: 18,
-    height: 44,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  muscle: {
-    fontSize: 10,
-    backgroundColor: '#f00',
-  },
-  equipment: {
-    fontSize: 10,
-    backgroundColor: '#0f0',
-  },
-});
+const styles = StyleSheet.create({});

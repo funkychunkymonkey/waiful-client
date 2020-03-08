@@ -65,6 +65,7 @@ const App: () => React$Node = () => {
       <WaifuOverlay
         options={overlayOptions}
         key={overlayKey}
+        rerender={overlayKey}
         onClose={() => {
           setOverlayIsVisible(false);
         }}
