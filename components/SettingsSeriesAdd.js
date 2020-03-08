@@ -7,6 +7,7 @@ import {ListItem, SearchBar} from 'react-native-elements';
 
 import utils from '../utils.js';
 import Loading from './Loading.js';
+import COLORS from '../color';
 
 export default function({route, navigation}) {
   const [malType] = React.useState(route.params.malType);
@@ -98,9 +99,9 @@ export default function({route, navigation}) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fafafa',
+    backgroundColor: COLORS.bgSecondary,
   },
   body: {
-    backgroundColor: '#fff',
+    backgroundColor: COLORS.bgSecondary,
   },
 });

@@ -15,6 +15,7 @@ import {useFocusEffect} from '@react-navigation/native';
 import utils from '../utils.js';
 import Loading from './Loading.js';
 import FavButton from './FavButton.js';
+import COLORS from '../color';
 
 export default function Collection() {
   const [loading, setLoading] = useState(true);
@@ -130,7 +131,7 @@ export default function Collection() {
 
 const styles = StyleSheet.create({
   header: {
-    backgroundColor: '#fed14d',
+    backgroundColor: COLORS.bgPrimary,
     borderBottomWidth: 0,
     shadowColor: 'transparent',
   },
@@ -139,7 +140,7 @@ const styles = StyleSheet.create({
     color: 'white',
   },
   body: {
-    backgroundColor: '#fafafa',
+    backgroundColor: COLORS.bgSecondary,
   },
   showView: {
     height: 400,
@@ -171,6 +172,6 @@ const styles = StyleSheet.create({
     top: -30,
     left: 6,
     fontSize: 30,
-    color: '#D62D51',
+    color: COLORS.favHeart,
   },
 });

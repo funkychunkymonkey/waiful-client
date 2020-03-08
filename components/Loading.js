@@ -1,6 +1,7 @@
 import * as React from 'react';
 import {Text, View} from 'react-native';
 import LottieView from 'lottie-react-native';
+import COLORS from '../color';
 
 export default function Loading() {
   return (
@@ -12,7 +13,7 @@ export default function Loading() {
         colorFilters={[
           {
             keypath: 'Shape Layer 1 Comp 1',
-            color: '#ffa880',
+            color: COLORS.bgHighlight,
           },
         ]}
       />
