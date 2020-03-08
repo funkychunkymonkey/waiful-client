@@ -87,29 +87,54 @@ export default function Gacha({route}) {
     });
   }, []);
 
+  function ActiveGachaButton() {
+    return (
+      <TouchableOpacity onPress={gacha}>
+        <LinearGradient
+          colors={[COLORS.bgPrimary, COLORS.bgHighlight]}
+          start={{x: 1, y: 0.5}}
+          end={{x: 0, y: 0.5}}
+          style={styles.gachaPanelButton}>
+          <Text style={styles.gachaPanelHeaderTitle}>Gacha</Text>
+          <Text style={styles.gachaPanelHeaderSubtitle}>20 Gems</Text>
+        </LinearGradient>
+      </TouchableOpacity>
+    );
+  }
+  function InactiveGachaButton() {
+    return (
+      <LinearGradient
+        colors={[COLORS.bgPrimary, COLORS.bgHighlight]}
+        start={{x: 1, y: 0.5}}
+        end={{x: 0, y: 0.5}}
+        style={{
+          ...styles.gachaPanelButton,
+          ...styles.gachaPanelButtonInactive,
+        }}>
+        <Text style={styles.gachaPanelHeaderTitle}>20 Required</Text>
+      </LinearGradient>
+    );
+  }
+
   function GachaPanel() {
     const gachaImages = [
       'https://1.bp.blogspot.com/-sZbaFXJ4y0A/UnyGKAJjwbI/AAAAAAAAacE/RYDWRq73Hsc/s400/gachagacha.png',
       'https://cocoromembers.jp.sharp/contents/wp-content/uploads/2016/08/1.gif',
     ];
     return (
-      <View style={styles.contentContainer}>
-        <Image
-          source={{
-            uri: gachaStatus === 'GACHA' ? gachaImages[1] : gachaImages[0],
-          }}
-          style={styles.gachaImage}
-          resizeMode="contain"
-        />
-        <TouchableOpacity onPress={gacha} style={styles.button}>
+      <View style={styles.columnContainer}>
+        <View style={styles.rowContainer}>
           <Animated.View
             style={{
               opacity: buttonFadeAnim,
               bottom: buttonRiseAnim,
+              ...styles.gachaPanel,
             }}>
             <LinearGradient
-              colors={['#ffa880dd', '#fc7349ee']}
-              style={styles.buttonGradient}>
+              colors={[COLORS.bgPrimary, COLORS.bgHighlight]}
+              start={{x: 1, y: 0.5}}
+              end={{x: 0, y: 0.5}}
+              style={styles.gachaPanelHeader}>
               <Animated.View
                 style={{
                   transform: [{scaleX: buttonSpinAnim}],
@@ -117,16 +142,27 @@ export default function Gacha({route}) {
                 }}>
                 <Icon name="gem" size={60} color="#fff" />
               </Animated.View>
-              <Text style={styles.buttonText}> {gems} Gems </Text>
+              <Text style={styles.gachaPanelHeaderTitle}>Gems</Text>
             </LinearGradient>
+            <View style={styles.gachaPanelBody}>
+              <Text style={styles.gachaPanelText}>{gems}</Text>
+            </View>
+            {gems >= 20 ? <ActiveGachaButton /> : <InactiveGachaButton />}
           </Animated.View>
-        </TouchableOpacity>
+          <Image
+            source={{
+              uri: gachaStatus === 'GACHA' ? gachaImages[1] : gachaImages[0],
+            }}
+            style={styles.gachaImage}
+            resizeMode="contain"
+          />
+        </View>
       </View>
     );
   }
 
   return (
-    <Container style={styles.content}>
+    <Container style={styles.wrapper}>
       <Header style={styles.header}>
         <Body>
           <Title style={styles.title}>Gacha</Title>
@@ -136,13 +172,7 @@ export default function Gacha({route}) {
         style={{
           display: gachaStatus === 'WAITING' ? 'none' : 'flex',
           opacity: fadeScreenAnim,
-          height: Dimensions.get('window').height,
-          width: Dimensions.get('window').width,
-          backgroundColor: 'white',
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          zIndex: 10,
+          ...styles.screen,
         }}
       />
       <GachaPanel />
@@ -151,6 +181,7 @@ export default function Gacha({route}) {
 }
 
 const styles = StyleSheet.create({
+  // top bar & screen
   header: {
     backgroundColor: COLORS.bgPrimary,
     borderBottomWidth: 0,
@@ -161,46 +192,84 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: 'white',
   },
-  content: {
+  wrapper: {
     backgroundColor: COLORS.bgPrimary,
   },
-  contentContainer: {
-    justifyContent: 'center',
+  screen: {
+    height: Dimensions.get('window').height,
+    width: Dimensions.get('window').width,
+    backgroundColor: 'white',
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    zIndex: 10,
+  },
+  // content positioners
+  columnContainer: {
     backgroundColor: 'transparent',
     position: 'relative',
     height: Dimensions.get('window').height,
     width: Dimensions.get('window').width,
     flexDirection: 'column',
-    alignItems: 'center',
+    justifyContent: 'center',
     padding: 0,
     margin: 0,
   },
-  button: {
-    position: 'absolute',
-    alignSelf: 'center',
-    top: '45%',
-    left: 50,
+  rowContainer: {
+    flexDirection: 'row',
   },
-  buttonGradient: {
+  // gacha panel
+  gachaPanel: {
+    position: 'relative',
+    zIndex: 10,
+    padding: 10,
+    alignSelf: 'center',
+    width: 300,
+  },
+  gachaPanelHeader: {
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 10,
+    padding: 10,
+    alignItems: 'center',
+  },
+  gachaPanelButton: {
     alignItems: 'center',
     justifyContent: 'center',
-    width: 200,
-    height: 200,
-    borderRadius: 100,
+    borderBottomLeftRadius: 10,
+    borderBottomRightRadius: 10,
+    padding: 10,
   },
-  buttonText: {
+  gachaPanelButtonInactive: {
+    padding: 20,
+    opacity: 0.9,
+  },
+  gachaPanelBody: {
+    backgroundColor: '#fffe',
+    padding: 10,
+    alignItems: 'center',
+  },
+  gachaPanelText: {
+    color: COLORS.textSecondary,
+    fontSize: 18,
+    textAlign: 'center',
+  },
+  gachaPanelHeaderTitle: {
     color: COLORS.textTitle,
-    marginTop: 10,
     fontSize: 24,
+    textAlign: 'center',
+    textTransform: 'uppercase',
   },
+  gachaPanelHeaderSubtitle: {
+    color: COLORS.textTitle,
+    fontSize: 18,
+    textAlign: 'center',
+  },
+  // gacha image
   gachaImage: {
     width: '100%',
     height: 400,
+    position: 'absolute',
+    top: -100,
     left: 80,
-  },
-  waifuImage: {
-    textAlign: 'center',
-    width: 275,
-    height: 350,
   },
 });
