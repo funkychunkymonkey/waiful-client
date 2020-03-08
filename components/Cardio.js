@@ -7,7 +7,7 @@ import utils from '../utils.js';
 import MapView, {Marker} from 'react-native-maps';
 import Geolocation from '@react-native-community/geolocation';
 
-export default function CardioScreen({navigation}) {
+export default function CardioScreen({navigation, route}) {
   const [currentRun, setCurrentRun] = useState(null);
   const [panel, setPanel] = useState('LOADING');
   useFocusEffect(
@@ -46,7 +46,6 @@ export default function CardioScreen({navigation}) {
         <TouchableOpacity style={styles.circle} onPress={() => startRun()}>
           <Text style={styles.text}> Start </Text>
         </TouchableOpacity>
-        <Button title="View Run Log" onPress={() => goLogs()} />
       </View>
     );
   }
@@ -118,16 +117,15 @@ export default function CardioScreen({navigation}) {
     const distance = 2000;
     setPanel('LOADING');
     utils.stopRun(distance, data).then(data => {
-      setPanel('RESULT');
-      setCurrentRun(data);
+      setPanel('WAITING');
+      navigation.popToTop();
+      navigation.navigate('CardioLog');
+      route.params.popUpWaifu({
+        dialogue: 'Great work!!',
+        gems: data.gems,
+        auto: false,
+      });
     });
-  }
-  function endResult() {
-    setCurrentRun(null);
-    setPanel('WAITING');
-  }
-  function goLogs() {
-    navigation.navigate('CardioLog');
   }
 }
 

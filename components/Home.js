@@ -68,6 +68,7 @@ export default function({route, navigation}) {
       <Stack.Screen
         name="Cardio"
         component={CardioScreen}
+        initialParams={{popUpWaifu: route.params.popUpWaifu}}
         options={{
           title: 'Run',
           headerRight: () => (
