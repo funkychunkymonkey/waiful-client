@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {StyleSheet, Text, View, Image} from 'react-native';
-import {useFocusEffect} from '@react-navigation/native';
+import {useFocusEffect, useIsFocused} from '@react-navigation/native';
 import {Button, Input} from 'react-native-elements';
 
 import Icon from 'react-native-vector-icons/FontAwesome5';
@@ -11,16 +11,19 @@ import utils from '../utils.js';
 import COLORS from '../color';
 
 export default function WorkoutDetail({route, navigation}, y) {
+  const isFocused = useIsFocused();
   const exercise = route.params.exercise;
   const [reps, setReps] = React.useState('');
   const [loading, setLoading] = React.useState(false);
 
   useFocusEffect(
     React.useCallback(() => {
-      route.params.popUpWaifu({
-        dialogue: 'Ganbare!',
-        auto: true,
-      });
+      if (isFocused) {
+        route.params.popUpWaifu({
+          dialogue: 'Ganbare!',
+          auto: true,
+        });
+      }
       return () => {};
     }, []),
   );
@@ -36,10 +39,15 @@ export default function WorkoutDetail({route, navigation}, y) {
     if (isNaN(reps) || reps <= 0) return;
     setReps('');
     setLoading(true);
-    utils.logExercise(exercise, reps).then(() => {
+    utils.logExercise(exercise, reps).then(data => {
       setLoading(false);
       navigation.popToTop();
       navigation.navigate('WorkoutLog');
+      route.params.popUpWaifu({
+        dialogue: 'Great work!!',
+        gems: data.gems,
+        auto: false,
+      });
     });
   };
 

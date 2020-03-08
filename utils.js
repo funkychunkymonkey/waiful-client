@@ -81,7 +81,9 @@ const stopRun = function(distance, data) {
   return q(
     `mutation{stopRun(input:{data:"${JSON.stringify(
       data,
-    )}", distance: ${parseInt(distance)}}){distance data startedAt endedAt}}`,
+    )}", distance: ${parseInt(
+      distance,
+    )}}){distance data startedAt endedAt gems}}`,
   ).then(data => data.stopRun);
 };
 /**********************************************
@@ -115,7 +117,7 @@ const logExercise = function(exercise, reps) {
   return q(
     `mutation{createWorkout(input:{exerciseId:${parseInt(
       exercise.id,
-    )}, reps: ${parseInt(reps)}}){id}}`,
+    )}, reps: ${parseInt(reps)}}){id gems}}`,
   ).then(data => data.createWorkout);
 };
 

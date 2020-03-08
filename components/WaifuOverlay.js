@@ -5,12 +5,19 @@ import Icon from 'react-native-vector-icons/FontAwesome5';
 import LinearGradient from 'react-native-linear-gradient';
 import COLORS from '../color';
 
-export default function({options, onClose, isVisible}) {
+let closeTimeout = null;
+
+export default function({options, onClose, isVisible, rerender}) {
   let overlayBody = <></>,
     overlayFooter = <></>;
   const [overlayFadeAnim] = React.useState(new Animated.Value(0));
   const [dialogueSpringAnim] = React.useState(new Animated.Value(500));
   const [dialogueFadeAnim] = React.useState(new Animated.Value(0));
+
+  if (closeTimeout) {
+    clearTimeout(closeTimeout);
+    closeTimeout = null;
+  }
 
   // fade out
   function close() {
@@ -39,7 +46,9 @@ export default function({options, onClose, isVisible}) {
   }).start();
 
   // if auto option has been set we want to auto-close the dialogue after 2 seconds
-  if (options.auto) setTimeout(close, 1500);
+  if (options.auto && isVisible) {
+    closeTimeout = setTimeout(close, 1500);
+  }
 
   // display gem gain if provided
   if (options.gems) overlayBody = <GemOverlay gems={options.gems} />;
