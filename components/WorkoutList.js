@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {StyleSheet, Text, View, TouchableOpacity, Button} from 'react-native';
+import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import {ListItem, SearchBar} from 'react-native-elements';
 import LinearGradient from 'react-native-linear-gradient';
 import {Content} from 'native-base';
@@ -112,7 +112,6 @@ export default function WorkoutList({route, navigation}) {
         {exercises.map((exercise, i) => (
           <ListItem
             key={i}
-            style={{}}
             title={exercise.name}
             onPress={() => {
               navigation.navigate('WorkoutDetail', {exercise});

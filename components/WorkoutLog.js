@@ -1,15 +1,16 @@
 import * as React from 'react';
-import {useState} from 'react';
 import {StyleSheet, Text, View, FlatList} from 'react-native';
+import {useFocusEffect, useIsFocused} from '@react-navigation/native';
+import {ListItem} from 'react-native-elements';
+import moment from 'moment';
+
 import utils from '../utils.js';
 import Loading from './Loading.js';
-import {useFocusEffect, useIsFocused} from '@react-navigation/native';
 import COLORS from '../color.js';
 
 export default function WorkoutLog({navigation}) {
-  const isFocused = useIsFocused();
-  const [logs, setLogs] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [logs, setLogs] = React.useState([]);
+  const [loading, setLoading] = React.useState(true);
 
   useFocusEffect(
     React.useCallback(() => {
@@ -31,20 +32,17 @@ export default function WorkoutLog({navigation}) {
       </View>
     );
   return (
-    <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-      <FlatList
-        data={logs}
-        renderItem={(d, i) => {
-          const workout = d.item;
-          return (
-            <Text style={styles.item}>
-              <Text>{workout.exercise.name} </Text>
-              <Text>{workout.reps} times </Text>
-              <Text>{workout.createdAt}</Text>
-            </Text>
-          );
-        }}
-      />
+    <View>
+      {logs.map((log, i) => (
+        <ListItem
+          key={i}
+          style={{}}
+          title={log.exercise.name}
+          subtitle={log.reps + ' reps'}
+          rightAvatar={<Text>{moment(log.createdAt).fromNow()}</Text>}
+          bottomDivider
+        />
+      ))}
     </View>
   );
 }

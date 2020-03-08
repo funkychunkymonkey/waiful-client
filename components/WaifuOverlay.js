@@ -39,7 +39,7 @@ export default function({options, onClose, isVisible}) {
   }).start();
 
   // if auto option has been set we want to auto-close the dialogue after 2 seconds
-  if (options.auto) setTimeout(close, 2000);
+  if (options.auto) setTimeout(close, 1500);
 
   // display gem gain if provided
   if (options.gems) overlayBody = <GemOverlay gems={options.gems} />;
