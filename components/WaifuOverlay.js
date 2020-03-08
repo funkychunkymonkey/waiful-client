@@ -2,6 +2,7 @@ import * as React from 'react';
 import {StyleSheet, Text, Animated, View, Dimensions} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import {Container} from 'native-base';
+import COLORS from '../color';
 
 export default function({options, onClose, isVisible}) {
   let overlayBody = <></>,
@@ -188,11 +189,11 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   overlayBodyTitle: {
-    color: '#fed14d',
+    color: COLORS.textPrimary,
     fontSize: 60,
   },
   overlayBodySubtitle: {
-    color: '#fed14d',
+    color: COLORS.textPrimary,
     fontSize: 20,
   },
   // waifu dialogue
@@ -214,7 +215,7 @@ const styles = StyleSheet.create({
   dialogueName: {
     fontSize: 16,
     textTransform: 'uppercase',
-    color: '#ffa880',
+    color: COLORS.textHighlight,
   },
   dialogueText: {
     fontSize: 24,

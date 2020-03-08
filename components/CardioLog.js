@@ -2,6 +2,7 @@ import * as React from 'react';
 import {useState} from 'react';
 import {StyleSheet, Text, View, FlatList} from 'react-native';
 import utils from '../utils.js';
+import COLORS from '../color';
 import Loading from './Loading.js';
 import {useFocusEffect, useIsFocused} from '@react-navigation/native';
 
@@ -50,7 +51,7 @@ export default function WorkoutLog({navigation}) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fafafa',
+    backgroundColor: COLORS.bgSecondary,
   },
   contentContainer: {
     paddingTop: 50,
