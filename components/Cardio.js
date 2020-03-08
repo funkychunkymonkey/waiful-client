@@ -1,13 +1,6 @@
 import * as React from 'react';
 import {useState} from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-  TouchableOpacity,
-  Button,
-  Platform,
-} from 'react-native';
+import {StyleSheet, Text, View, TouchableOpacity, Button, Platform} from 'react-native';
 import {useFocusEffect} from '@react-navigation/native';
 import Loading from './Loading.js';
 import utils from '../utils.js';
@@ -18,7 +11,6 @@ import {request, PERMISSIONS} from 'react-native-permissions';
 export default function CardioScreen({navigation}) {
   const [currentRun, setCurrentRun] = useState(null);
   const [panel, setPanel] = useState('LOADING');
-  const [location, setLocation] = useState({});
   useFocusEffect(
     React.useCallback(() => {
       utils.getRun().then(data => {
@@ -62,7 +54,7 @@ export default function CardioScreen({navigation}) {
   function Running() {
     useFocusEffect(() => {
       requestLocationPermission();
-    }, []);
+    });
     return (
       <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
         <View
@@ -77,7 +69,12 @@ export default function CardioScreen({navigation}) {
             showsUserLocation={true}
             followsUserLocation={true}
             style={styles.map}
-            initialRegion={location}>
+            region={{ 
+              latitude: 35.6804,
+              longitude: 139.7690,
+              latitudeDelta: 0.0922,
+              longitudeDelta: 0.0421,
+            }}>
             <Marker
               coordinate={{latitude: 35.657966, longitude: 139.727667}}
               title="Team Funky Chunky Monkey"
@@ -89,7 +86,7 @@ export default function CardioScreen({navigation}) {
           <Text style={styles.text}> Stop </Text>
         </TouchableOpacity>
       </View>
-    );
+    )
   }
   function Result() {
     return (
@@ -128,11 +125,11 @@ export default function CardioScreen({navigation}) {
     navigation.navigate('CardioLog');
   }
   async function requestLocationPermission() {
-    if (Platform.OS === 'ios') {
+    if (Platform.OS ==='ios') {
       const response = await request(PERMISSIONS.IOS.LOCATION_WHEN_IN_USE);
       console.log('IOS' + response);
-      if (response === 'granted') {
-        console.log('hooray!');
+      if(response === 'granted') {
+        console.log("hooray!")
         locateCurrentPosition();
       }
     } else {
@@ -144,14 +141,6 @@ export default function CardioScreen({navigation}) {
   function locateCurrentPosition() {
     Geolocation.getCurrentPosition(position => {
       console.log(JSON.stringify(position));
-
-      let initialLocation = {
-        latitude: position.coords.latitude,
-        longitude: position.coords.longitude,
-        latitudeDelta: 0.0922,
-        longitudeDelta: 0.0421,
-      };
-      setLocation(initialLocation);
     });
   }
 }
