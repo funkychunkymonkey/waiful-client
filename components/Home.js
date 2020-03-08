@@ -1,15 +1,17 @@
 import * as React from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {createStackNavigator} from '@react-navigation/stack';
+import {useFocusEffect} from '@react-navigation/native';
+
+import Icon from 'react-native-vector-icons/FontAwesome5';
+import LinearGradient from 'react-native-linear-gradient';
+
 import WorkoutList from './WorkoutList.js';
 import WorkoutDetail from './WorkoutDetail.js';
 import WorkoutLog from './WorkoutLog.js';
 import CardioScreen from './Cardio.js';
 import CardioLog from './CardioLog.js';
-import LinearGradient from 'react-native-linear-gradient';
 import COLORS from '../color';
-
-import Icon from 'react-native-vector-icons/FontAwesome5';
 
 const Stack = createStackNavigator();
 
@@ -28,7 +30,11 @@ export default function({route, navigation}) {
           fontWeight: 'bold',
         },
       }}>
-      <Stack.Screen name="Home" component={HomeScreen} />
+      <Stack.Screen
+        name="Home"
+        component={HomeScreen}
+        initialParams={{popUpWaifu: route.params.popUpWaifu}}
+      />
       <Stack.Screen
         name="WorkoutList"
         component={WorkoutList}
@@ -43,6 +49,15 @@ export default function({route, navigation}) {
 }
 
 function HomeScreen({route, navigation}) {
+  useFocusEffect(
+    React.useCallback(() => {
+      route.params.popUpWaifu({
+        dialogue: 'Welcome back!',
+        auto: true,
+      });
+      return () => {};
+    }, []),
+  );
   return (
     <View style={styles.container}>
       <TouchableOpacity
