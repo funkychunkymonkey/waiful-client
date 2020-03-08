@@ -3,6 +3,7 @@ import {StyleSheet, Text, View, TouchableOpacity, Button} from 'react-native';
 import {ListItem, SearchBar} from 'react-native-elements';
 import LinearGradient from 'react-native-linear-gradient';
 import {Content} from 'native-base';
+import COLORS from '../color';
 
 export default function WorkoutList({route, navigation}) {
   const allExercises = route.params.exercises;
@@ -52,7 +53,7 @@ export default function WorkoutList({route, navigation}) {
 
   return (
     <Content>
-      <LinearGradient colors={['#fed14d', '#ffa880']}>
+      <LinearGradient colors={[COLORS.bgPrimary, COLORS.bgHighlight]}>
         <Filters type="muscles" data={allData.muscles} />
         <Filters type="equipments" data={['None', ...allData.equipments]} />
       </LinearGradient>
@@ -137,7 +138,7 @@ export default function WorkoutList({route, navigation}) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fafafa',
+    backgroundColor: COLORS.bgSecondary,
   },
   contentContainer: {
     paddingTop: 50,

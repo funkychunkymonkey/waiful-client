@@ -14,6 +14,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 
 import utils from '../utils.js';
+import COLORS from '../color';
 
 export default function Gacha({route}) {
   const [gems, setGems] = React.useState(0);
@@ -151,7 +152,7 @@ export default function Gacha({route}) {
 
 const styles = StyleSheet.create({
   header: {
-    backgroundColor: '#fed14d',
+    backgroundColor: COLORS.bgPrimary,
     borderBottomWidth: 0,
     shadowColor: 'transparent',
     position: 'absolute',
@@ -161,7 +162,7 @@ const styles = StyleSheet.create({
     color: 'white',
   },
   content: {
-    backgroundColor: '#fed14d',
+    backgroundColor: COLORS.bgPrimary,
   },
   contentContainer: {
     justifyContent: 'center',
@@ -188,7 +189,7 @@ const styles = StyleSheet.create({
     borderRadius: 100,
   },
   buttonText: {
-    color: '#fff',
+    color: COLORS.textTitle,
     marginTop: 10,
     fontSize: 24,
   },

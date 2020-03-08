@@ -4,6 +4,7 @@ import {StyleSheet, Text, View, FlatList} from 'react-native';
 import utils from '../utils.js';
 import Loading from './Loading.js';
 import {useFocusEffect, useIsFocused} from '@react-navigation/native';
+import COLORS from '../color.js';
 
 export default function WorkoutLog({navigation}) {
   const isFocused = useIsFocused();
@@ -51,7 +52,7 @@ export default function WorkoutLog({navigation}) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fafafa',
+    backgroundColor: COLORS.bgSecondary,
   },
   contentContainer: {
     paddingTop: 50,

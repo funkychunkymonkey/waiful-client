@@ -11,6 +11,7 @@ import WorkoutDetail from './WorkoutDetail.js';
 import WorkoutLog from './WorkoutLog.js';
 import CardioScreen from './Cardio.js';
 import CardioLog from './CardioLog.js';
+import COLORS from '../color';
 
 const Stack = createStackNavigator();
 
@@ -20,11 +21,11 @@ export default function({route, navigation}) {
       initialRouteName="Home"
       screenOptions={{
         headerStyle: {
-          backgroundColor: '#fed14d',
+          backgroundColor: COLORS.bgPrimary,
           borderBottomWidth: 0,
           shadowColor: 'transparent',
         },
-        headerTintColor: '#fff',
+        headerTintColor: COLORS.textTitle,
         headerTitleStyle: {
           fontWeight: 'bold',
         },
@@ -66,7 +67,9 @@ function HomeScreen({route, navigation}) {
       <TouchableOpacity
         style={styles.circle}
         onPress={() => navigation.navigate('WorkoutList')}>
-        <LinearGradient colors={['#fed14d', '#ffa880']} style={styles.circle}>
+        <LinearGradient
+          colors={[COLORS.bgPrimary, COLORS.bgHighlight]}
+          style={styles.circle}>
           <Icon name="dumbbell" size={100} color="#fff" />
           <Text style={styles.text}> Workout </Text>
         </LinearGradient>
@@ -74,7 +77,9 @@ function HomeScreen({route, navigation}) {
       <TouchableOpacity
         style={styles.circle}
         onPress={() => navigation.navigate('Cardio')}>
-        <LinearGradient colors={['#fed14d', '#ffa880']} style={styles.circle}>
+        <LinearGradient
+          colors={[COLORS.bgPrimary, COLORS.bgHighlight]}
+          style={styles.circle}>
           <Icon name="running" size={100} color="#fff" />
           <Text style={styles.text}> Cardio </Text>
         </LinearGradient>
@@ -95,13 +100,13 @@ const styles = StyleSheet.create({
     width: 200,
     height: 200,
     borderRadius: 200 / 2,
-    backgroundColor: '#fed14d',
+    backgroundColor: COLORS.bgPrimary,
     justifyContent: 'center',
     alignItems: 'center',
   },
   text: {
     fontSize: 28,
-    color: '#fff',
+    color: COLORS.textTitle,
     textTransform: 'uppercase',
   },
 });

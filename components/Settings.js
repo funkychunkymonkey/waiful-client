@@ -8,6 +8,8 @@ import {createStackNavigator} from '@react-navigation/stack';
 import SettingsSeries from './SettingsSeries.js';
 import SettingsSeriesAdd from './SettingsSeriesAdd.js';
 
+import COLORS from '../color';
+
 const Stack = createStackNavigator();
 
 export default function() {
@@ -16,11 +18,11 @@ export default function() {
       initialRouteName="Settings"
       screenOptions={{
         headerStyle: {
-          backgroundColor: '#fed14d',
+          backgroundColor: COLORS.bgPrimary,
           borderBottomWidth: 0,
           shadowColor: 'transparent',
         },
-        headerTintColor: '#fff',
+        headerTintColor: COLORS.textTitle,
         headerTitleStyle: {
           fontWeight: 'bold',
         },
@@ -73,9 +75,9 @@ function Settings({navigation}) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fafafa',
+    backgroundColor: COLORS.bgSecondary,
   },
   body: {
-    backgroundColor: '#fff',
+    backgroundColor: COLORS.bgSecondary,
   },
 });
