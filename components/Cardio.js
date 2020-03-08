@@ -1,15 +1,24 @@
 import * as React from 'react';
 import {useState} from 'react';
-import {StyleSheet, Text, View, TouchableOpacity, Button} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  Button,
+  Platform,
+} from 'react-native';
 import {useFocusEffect} from '@react-navigation/native';
 import Loading from './Loading.js';
 import utils from '../utils.js';
 import MapView, {Marker} from 'react-native-maps';
 import Geolocation from '@react-native-community/geolocation';
+import {request, PERMISSIONS} from 'react-native-permissions';
 
 export default function CardioScreen({navigation}) {
   const [currentRun, setCurrentRun] = useState(null);
   const [panel, setPanel] = useState('LOADING');
+  const [location, setLocation] = useState({});
   useFocusEffect(
     React.useCallback(() => {
       utils.getRun().then(data => {
@@ -51,24 +60,13 @@ export default function CardioScreen({navigation}) {
     );
   }
   function Running() {
-    const [location, setLocation] = useState({});
     useFocusEffect(() => {
-      Geolocation.getCurrentPosition(position => {
-        console.log(position);
-        setLocation({
-          latitude: position.coords.latitude,
-          longitude: position.coords.longitude,
-          latitudeDelta: 0.01,
-          longitudeDelta: 0.0125,
-        }),
-          error => {
-            console.log(error.code, error.message);
-          };
-      });
-    });
+      requestLocationPermission();
+    }, []);
     return (
       <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
         <View
+          // eslint-disable-next-line react-native/no-inline-styles
           style={{
             height: 400,
             width: 400,
@@ -79,7 +77,7 @@ export default function CardioScreen({navigation}) {
             showsUserLocation={true}
             followsUserLocation={true}
             style={styles.map}
-            region={location}>
+            initialRegion={location}>
             <Marker
               coordinate={{latitude: 35.657966, longitude: 139.727667}}
               title="Team Funky Chunky Monkey"
@@ -128,6 +126,33 @@ export default function CardioScreen({navigation}) {
   }
   function goLogs() {
     navigation.navigate('CardioLog');
+  }
+  async function requestLocationPermission() {
+    if (Platform.OS === 'ios') {
+      const response = await request(PERMISSIONS.IOS.LOCATION_WHEN_IN_USE);
+      console.log('IOS' + response);
+      if (response === 'granted') {
+        console.log('hooray!');
+        locateCurrentPosition();
+      }
+    } else {
+      const response = await request(PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION);
+      console.log('Android' + response);
+      locateCurrentPosition();
+    }
+  }
+  function locateCurrentPosition() {
+    Geolocation.getCurrentPosition(position => {
+      console.log(JSON.stringify(position));
+
+      let initialLocation = {
+        latitude: position.coords.latitude,
+        longitude: position.coords.longitude,
+        latitudeDelta: 0.0922,
+        longitudeDelta: 0.0421,
+      };
+      setLocation(initialLocation);
+    });
   }
 }
 
