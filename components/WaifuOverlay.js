@@ -1,69 +1,111 @@
 import * as React from 'react';
 import {StyleSheet, Text, Animated, View, Dimensions} from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome5';
 import {Container} from 'native-base';
+import Icon from 'react-native-vector-icons/FontAwesome5';
+import LinearGradient from 'react-native-linear-gradient';
 
 export default function({options, onClose, isVisible}) {
   let overlayBody = <></>,
     overlayFooter = <></>;
+  const [overlayFadeAnim] = React.useState(new Animated.Value(0));
+  const [dialogueSpringAnim] = React.useState(new Animated.Value(500));
+  const [dialogueFadeAnim] = React.useState(new Animated.Value(0));
+
+  // fade out
+  function close() {
+    Animated.timing(dialogueSpringAnim, {
+      toValue: 500,
+      duration: 1000,
+    }).start();
+    Animated.timing(dialogueFadeAnim, {
+      toValue: 0,
+      duration: 200,
+    }).start(() => {
+      Animated.timing(overlayFadeAnim, {
+        toValue: 0,
+        duration: 200,
+      }).start(() => {
+        onClose();
+        if (options.onClose) options.onClose();
+      });
+    });
+  }
+
+  // fade in
+  Animated.timing(overlayFadeAnim, {
+    toValue: 1,
+    duration: 200,
+  }).start();
+
+  // if auto option has been set we want to auto-close the dialogue after 2 seconds
+  if (options.auto) setTimeout(close, 2000);
+
+  // display gem gain if provided
   if (options.gems) overlayBody = <GemOverlay gems={options.gems} />;
+
+  // display gacha panel if provided
   if (options.gacha) {
     overlayBody = <GachaOverlay waifu={options.gacha} />;
+    options.waifu = options.gacha;
+  }
+
+  // display waifu & dialogue if provided
+  if (options.waifu) {
     overlayFooter = (
-      <DialogueOverlay waifu={options.gacha} dialogue={options.dialogue} />
-    );
-  } else if (options.waifu) {
-    overlayFooter = (
-      <DialogueOverlay waifu={options.waifu} dialogue={options.dialogue} />
+      <DialogueOverlay
+        waifu={options.waifu}
+        dialogue={options.dialogue}
+        fadeAnim={dialogueFadeAnim}
+        springAnim={dialogueSpringAnim}
+      />
     );
   }
-  function close() {
-    onClose();
-    if (options.onClose) options.onClose();
-  }
+
   return (
-    <View
+    <Animated.View
       style={{
         display: isVisible ? 'flex' : 'none',
+        opacity: overlayFadeAnim,
         ...styles.overlayWrapper,
       }}
+      pointerEvents={options.auto ? 'none' : 'auto'}
       onStartShouldSetResponder={close}>
-      <View
+      <LinearGradient
+        colors={options.auto ? ['#0000', '#0005'] : ['#0005', '#000f']}
         style={{
-          ...styles.filler,
-          justifyContent: 'center',
+          backgroundColor: 'transparent',
+          ...styles.overlayWrapperBackground,
         }}>
-        {overlayBody}
-      </View>
-      {overlayFooter}
-    </View>
+        <View style={styles.filler}>{overlayBody}</View>
+        {overlayFooter}
+      </LinearGradient>
+    </Animated.View>
   );
 }
 
-function DialogueOverlay({waifu, dialogue}) {
-  const [dialogueSpringAnim] = React.useState(new Animated.Value(500));
-  const [dialogueFadeAnim] = React.useState(new Animated.Value(0));
-  const [dialogueBobAnim] = React.useState(new Animated.Value(10));
+function DialogueOverlay({waifu, dialogue, springAnim, fadeAnim}) {
+  const [bobAnim] = React.useState(new Animated.Value(10));
   const sizeMod = 0.5; // use this to control size of the dialogue box
 
-  dialogueSpringAnim.setValue(500);
-  dialogueFadeAnim.setValue(0);
-  dialogueBobAnim.setValue(10);
-  Animated.spring(dialogueSpringAnim, {
+  // handle animating the dialogue in
+  springAnim.setValue(500);
+  fadeAnim.setValue(0);
+  bobAnim.setValue(10);
+  Animated.spring(springAnim, {
     toValue: 0,
     duration: 1000,
   }).start();
-  Animated.timing(dialogueFadeAnim, {
+  Animated.timing(fadeAnim, {
     toValue: 1,
     duration: 1000,
   }).start();
   Animated.loop(
     Animated.sequence([
-      Animated.timing(dialogueBobAnim, {
+      Animated.timing(bobAnim, {
         toValue: 15,
         duration: 500,
       }),
-      Animated.timing(dialogueBobAnim, {
+      Animated.timing(bobAnim, {
         toValue: 10,
         duration: 500,
       }),
@@ -76,15 +118,15 @@ function DialogueOverlay({waifu, dialogue}) {
         <Animated.View
           style={{
             ...styles.dialogue,
-            opacity: dialogueFadeAnim,
-            top: dialogueSpringAnim,
+            opacity: fadeAnim,
+            top: springAnim,
             height: 350 * sizeMod,
           }}>
           <View style={styles.dialogueRightArrow} />
           <Animated.View
             style={{
               ...styles.dialogueDownArrow,
-              bottom: dialogueBobAnim,
+              bottom: bobAnim,
             }}
           />
           <Text adjustsFontSizeToFit style={styles.dialogueName}>
@@ -97,7 +139,7 @@ function DialogueOverlay({waifu, dialogue}) {
         <Animated.Image
           style={{
             ...styles.image,
-            opacity: dialogueFadeAnim,
+            opacity: fadeAnim,
           }}
           source={{
             uri: waifu.imageUrl,
@@ -111,6 +153,8 @@ function DialogueOverlay({waifu, dialogue}) {
 
 function GemOverlay({gems}) {
   const [gemSpinAnim] = React.useState(new Animated.Value(0));
+
+  // spinning gem
   React.useEffect(() => {
     Animated.loop(
       Animated.sequence([
@@ -125,6 +169,7 @@ function GemOverlay({gems}) {
       ]),
     ).start();
   }, []);
+
   return (
     <View style={styles.overlayBody}>
       <Animated.View
@@ -154,20 +199,26 @@ function GachaOverlay({waifu}) {
 const styles = StyleSheet.create({
   // containers
   overlayWrapper: {
-    flexDirection: 'column',
+    position: 'absolute',
+    zIndex: 100,
     width: Dimensions.get('window').width,
     height: Dimensions.get('window').height,
-    position: 'absolute',
     top: 0,
     left: 0,
-    backgroundColor: '#0005',
-    zIndex: 100,
-    paddingBottom: 100,
+    backgroundColor: 'transparent',
+  },
+  overlayWrapperBackground: {
+    flexDirection: 'column',
+    width: Dimensions.get('window').width,
+    height: Dimensions.get('window').height - 84,
+    justifyContent: 'center',
+    paddingBottom: 20,
   },
   filler: {
     // this is just an empty View that fills up the rest of the space on the screen
     flex: 1,
     backgroundColor: 'transparent',
+    justifyContent: 'center',
   },
   overlayRow: {
     // the horizontal row that places the dialogue box & waifu image
