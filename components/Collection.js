@@ -1,18 +1,25 @@
 import * as React from 'react';
-import {useState, useEffect} from 'react';
+import {useState} from 'react';
 import {ScrollView} from 'react-native-gesture-handler';
 import {StyleSheet, Text, TouchableOpacity, Image, View} from 'react-native';
-import {Container, Header, Left, Body, Right, Title} from 'native-base';
-import {Content} from 'native-base';
-//import LottieView from 'lottie-react-native';
+import {
+  Container,
+  Content,
+  Header,
+  Left,
+  Body,
+  Right,
+  Title,
+} from 'native-base';
 import {useFocusEffect} from '@react-navigation/native';
 import utils from '../utils.js';
 import Loading from './Loading.js';
+import FavButton from './FavButton.js';
 
 export default function Collection() {
   const [loading, setLoading] = useState(true);
   const [collection, setCollection] = useState([]);
-  const [selectedWaifu, setSelectedWaifu] = useState(null);
+  const [selectedWaifuIdx, setSelectedWaifuIdx] = useState(-1);
 
   useFocusEffect(
     React.useCallback(() => {
@@ -26,47 +33,92 @@ export default function Collection() {
     }, []),
   );
 
+  const updateFavState = (waifuIdx, newFavState) => {
+    const newWaifu = {...collection[selectedWaifuIdx], isFavorite: newFavState};
+    const newCollection = [...collection];
+    newCollection[waifuIdx] = newWaifu;
+    setCollection(newCollection);
+  };
+
+  const fav = waifuIdx => {
+    const waifu = collection[waifuIdx];
+    if (!waifu.isFavorite) {
+      utils
+        .setFavWaifu(waifu.malId)
+        .then(result => result && updateFavState(waifuIdx, true))
+        .catch(e => alert(e));
+    } else {
+      utils
+        .setUnfavWaifu(waifu.malId)
+        .then(result => result && updateFavState(waifuIdx, false))
+        .catch(e => alert(e));
+    }
+  };
+
+  const getGalleryItem = i => {
+    return (
+      <TouchableOpacity
+        onPress={() => {
+          setSelectedWaifuIdx(i);
+        }}>
+        <Image
+          style={styles.collection}
+          source={{
+            uri: collection[i].imageUrl,
+          }}
+        />
+        {collection[i].isFavorite ? (
+          <Text style={styles.isFavMark}>♥</Text>
+        ) : (
+          <Text style={styles.isFavMark}> </Text>
+        )}
+      </TouchableOpacity>
+    );
+  };
+  const pairCollection = [];
+  for (let i = 0; i < collection.length; i += 2) {
+    pairCollection.push(
+      <View key={i}>
+        {getGalleryItem(i)}
+        {collection.length > i + 1 && getGalleryItem(i + 1)}
+      </View>,
+    );
+  }
+
   if (loading) return <Loading />;
   return (
     <Container>
-      <Header>
+      <Header style={styles.header}>
         <Left />
         <Body>
-          <Title>Collection</Title>
+          <Title style={styles.title}>Collection</Title>
         </Body>
         <Right />
       </Header>
       <Content style={styles.body}>
         <View style={styles.showView}>
-          {selectedWaifu ? (
-            <Image
-              style={styles.waifuImage}
-              source={{
-                uri: selectedWaifu.imageUrl,
-              }}
-              resizeMode="contain"
-            />
+          {selectedWaifuIdx >= 0 ? (
+            <>
+              <Image
+                style={styles.waifuImage}
+                source={{
+                  uri: collection[selectedWaifuIdx].imageUrl,
+                }}
+                resizeMode="contain"
+              />
+              <FavButton
+                onPress={() => fav(selectedWaifuIdx)}
+                waifuIdx={selectedWaifuIdx}
+                isFavorite={collection[selectedWaifuIdx].isFavorite}
+              />
+            </>
           ) : (
             <></>
           )}
         </View>
         <ScrollView contentContainerStyle={styles.gallery} horizontal={true}>
           {collection.length !== 0 ? (
-            collection.map(waifu => {
-              return (
-                <TouchableOpacity
-                  onPress={() => {
-                    setSelectedWaifu(waifu);
-                  }}>
-                  <Image
-                    style={styles.collection}
-                    source={{
-                      uri: waifu.imageUrl,
-                    }}
-                  />
-                </TouchableOpacity>
-              );
-            })
+            pairCollection
           ) : (
             <Text>No collection yet.</Text>
           )}
@@ -77,31 +129,48 @@ export default function Collection() {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fafafa',
+  header: {
+    backgroundColor: '#fed14d',
+    borderBottomWidth: 0,
+    shadowColor: 'transparent',
+  },
+  title: {
+    fontWeight: 'bold',
+    color: 'white',
   },
   body: {
-    backgroundColor: '#fed14dff',
-  },
-  waifuImage: {
-    width: 450,
-    height: 400,
+    backgroundColor: '#fafafa',
   },
   showView: {
     height: 400,
   },
+  waifuImage: {
+    position: 'relative',
+    zIndex: 0,
+    width: 414,
+    height: 380,
+    marginTop: 5,
+  },
   gallery: {
-    display: 'flex',
     justifyContent: 'center',
     alignContent: 'space-around',
     flexDirection: 'row',
     height: 300,
   },
   collection: {
+    borderRadius: 20,
     width: 100,
     height: 100,
-    display: 'flex',
     margin: 10,
+    position: 'relative',
+    zIndex: 0,
+  },
+  isFavMark: {
+    position: 'relative',
+    zIndex: 1,
+    top: -30,
+    left: 6,
+    fontSize: 30,
+    color: '#D62D51',
   },
 });

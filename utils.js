@@ -17,8 +17,19 @@ const gacha = function() {
 };
 const getWaifus = function() {
   return q(
-    'query{user{ waifus{id name imageUrl url isFavorite series{id name imageUrl url}} }}',
+    'query{user{ waifus{id malId name imageUrl url isFavorite series{id name imageUrl url}} }}',
   ).then(data => data.user.waifus);
+};
+
+const setFavWaifu = function(malId) {
+  return q(`mutation{favoriteWaifu(input:{malId:${parseInt(malId)}})}`).then(
+    data => data.favoriteWaifu,
+  );
+};
+const setUnfavWaifu = function(malId) {
+  return q(`mutation{unfavoriteWaifu(input:{malId:${parseInt(malId)}})}`).then(
+    data => data.unfavoriteWaifu,
+  );
 };
 
 /**********************************************
@@ -131,6 +142,8 @@ export default {
   getRun,
   startRun,
   stopRun,
+  setFavWaifu,
+  setUnfavWaifu,
   getSeries,
   getTopSeries,
   addSeries,
