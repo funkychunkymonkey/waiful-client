@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {StyleSheet, Text, View, Image} from 'react-native';
+import {StyleSheet, Text, View, ScrollView, Image} from 'react-native';
 import {useFocusEffect, useIsFocused} from '@react-navigation/native';
 import {Button, Input} from 'react-native-elements';
 
@@ -30,7 +30,7 @@ export default function WorkoutDetail({route, navigation}, y) {
 
   let description = exercise.description
     .replace(/<br>/gi, '\n')
-    .replace(/<p\/?>/gi, '\n')
+    .replace(/\/<p>/gi, '\n')
     .replace(/<a.*href="(.*?)".*>(.*?)<\/a>/gi, ' $2 ($1) ')
     .replace(/<(?:.|\s)*?>/g, '');
 
@@ -54,7 +54,7 @@ export default function WorkoutDetail({route, navigation}, y) {
   if (loading) return <Loading />;
 
   return (
-    <View style={styles.wrapper}>
+    <ScrollView style={styles.wrapper}>
       <LinearGradient
         colors={[COLORS.bgPrimary, COLORS.bgHighlight]}
         start={{x: 0, y: 0.5}}
@@ -85,6 +85,10 @@ export default function WorkoutDetail({route, navigation}, y) {
         />
       </View>
 
+      <ExerciseMuscles />
+
+      <ExerciseEquipments />
+
       <ExerciseDescription />
 
       <LinearGradient
@@ -93,11 +97,52 @@ export default function WorkoutDetail({route, navigation}, y) {
         colors={[COLORS.bgPrimary, COLORS.bgHighlight]}
         style={{...styles.headerGradient, ...styles.headerButt}}
       />
-    </View>
+    </ScrollView>
   );
 
   function ExerciseDescription() {
     if (exercise.description === '') return <></>;
+    return (
+      <PanelSection
+        title="Description"
+        body={
+          <View>
+            <Text style={styles.descriptionText}>{description}</Text>
+            <ExerciseImages />
+          </View>
+        }
+      />
+    );
+  }
+
+  function ExerciseMuscles() {
+    if (exercise.muscles.length === 0) return <></>;
+    return (
+      <PanelSection
+        title="Muscles"
+        body={
+          <Text style={styles.descriptionText}>
+            {exercise.muscles.map(x => x.name).join('\n')}
+          </Text>
+        }
+      />
+    );
+  }
+
+  function ExerciseEquipments() {
+    if (exercise.equipments.length === 0) return <></>;
+    return (
+      <PanelSection
+        title="Equipment"
+        body={
+          <Text style={styles.descriptionText}>
+            {exercise.equipments.join('\n')}
+          </Text>
+        }
+      />
+    );
+  }
+  function PanelSection({title, body}) {
     return (
       <>
         <LinearGradient
@@ -105,24 +150,24 @@ export default function WorkoutDetail({route, navigation}, y) {
           start={{x: 0, y: 0.5}}
           end={{x: 1, y: 0.5}}
           style={styles.headerGradient}>
-          <Text style={styles.headerText}>Description</Text>
+          <Text style={styles.headerText}>{title}</Text>
         </LinearGradient>
 
-        <View style={styles.description}>
-          <Text style={styles.descriptionText}>{description}</Text>
-        </View>
-
-        <ExerciseImages />
+        <View style={styles.description}>{body}</View>
       </>
     );
   }
   function ExerciseImages() {
     if (exercise.exerciseImages.length === 0) return <></>;
     return (
-      <View style={styles.description}>
-        {exercise.exerciseImages.map(image => {
-          <Image source={{uri: image.path}} />;
-        })}
+      <View style={{flexDirection: 'row'}}>
+        {exercise.exerciseImages.map(image => (
+          <Image
+            source={{uri: image.path}}
+            style={{flex: 1, height: 100}}
+            resizeMode="contain"
+          />
+        ))}
       </View>
     );
   }
@@ -131,6 +176,7 @@ export default function WorkoutDetail({route, navigation}, y) {
 const styles = StyleSheet.create({
   wrapper: {
     padding: 10,
+    marginBottom: 10,
   },
   headerGradient: {
     paddingRight: 30,
@@ -166,7 +212,6 @@ const styles = StyleSheet.create({
   description: {
     backgroundColor: 'white',
     padding: 20,
-    paddingTop: 0,
   },
   descriptionText: {
     fontSize: 18,
