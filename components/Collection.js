@@ -16,6 +16,11 @@ import utils from '../utils.js';
 import Loading from './Loading.js';
 import FavButton from './FavButton.js';
 import COLORS from '../color';
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from 'react-native-responsive-screen';
+import LinearGradient from 'react-native-linear-gradient';
 
 export default function Collection() {
   const [loading, setLoading] = useState(true);
@@ -96,6 +101,7 @@ export default function Collection() {
         </Body>
         <Right />
       </Header>
+
       <Content style={styles.body}>
         <View style={styles.showView}>
           {selectedWaifuIdx >= 0 ? (
@@ -112,6 +118,19 @@ export default function Collection() {
                 waifuIdx={selectedWaifuIdx}
                 isFavorite={collection[selectedWaifuIdx].isFavorite}
               />
+              <LinearGradient
+                colors={[COLORS.bgPrimary, COLORS.bgHighlight]}
+                style={styles.info}>
+                <Text style={styles.waifuNemeText}>
+                  {collection[selectedWaifuIdx].name}
+                </Text>
+                <Text style={styles.waifuSeriesText}>
+                  {collection[selectedWaifuIdx].series.name.split(':')[0]}
+                </Text>
+                <Text style={styles.waifuSeriesText}>
+                  {collection[selectedWaifuIdx].series.name.split(':')[1]}
+                </Text>
+              </LinearGradient>
             </>
           ) : (
             <></>
@@ -143,33 +162,44 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.bgSecondary,
   },
   showView: {
-    height: 400,
+    height: hp('50%'),
   },
   waifuImage: {
     position: 'relative',
-    zIndex: 0,
-    width: 414,
-    height: 380,
+    height: hp('35%'),
     marginTop: 5,
+  },
+  info: {
+    position: 'relative',
+    top: -298,
+    backgroundColor: COLORS.bgHighlight,
+    alignItems: 'center',
+    padding: 5,
+  },
+  waifuNemeText: {
+    color: COLORS.textTitle,
+    fontSize: 28,
+  },
+  waifuSeriesText: {
+    color: COLORS.textTitle,
+    fontSize: 20,
   },
   gallery: {
     justifyContent: 'center',
     alignContent: 'space-around',
     flexDirection: 'row',
-    height: 300,
+    height: hp('30%'),
   },
   collection: {
     borderRadius: 20,
-    width: 100,
-    height: 100,
-    margin: 10,
+    width: hp('11%'),
+    height: hp('11%'),
+    marginLeft: 10,
     position: 'relative',
-    zIndex: 0,
   },
   isFavMark: {
     position: 'relative',
-    zIndex: 1,
-    top: -30,
+    top: -20,
     left: 6,
     fontSize: 30,
     color: COLORS.favHeart,
