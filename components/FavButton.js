@@ -48,8 +48,8 @@ export default function FavButton(props) {
 const styles = StyleSheet.create({
   favTouchArea: {
     width: 300,
-    top: -200,
-    left: -100,
+    top: -220,
+    left: -90,
     position: 'relative',
     zIndex: 1,
   },
