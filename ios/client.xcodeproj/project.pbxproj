@@ -56,6 +56,8 @@
 		F62A4F8F5A7DC558FF632F98 /* libPods-clientTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A9ACB6AD13982364820AAD0 /* libPods-clientTests.a */; };
 		F939A60A924F45A4ACF9F033 /* Foundation.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B303401CD9714D51AE02CF8F /* Foundation.ttf */; };
 		FDE2AB0DFEE34547A1D0AC7B /* Ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FEC30B28C3B94624B2D901E8 /* Ionicons.ttf */; };
+		E29A418F1776488EB36CF4FE /* ReactNativeSocialShare.app in Resources */ = {isa = PBXBuildFile; fileRef = 792C112AA9924A1A83B9F593 /* ReactNativeSocialShare.app */; };
+		BCE8C4741D34411FA2C03EED /* ReactNativeSocialShareTests.xctest in Resources */ = {isa = PBXBuildFile; fileRef = FF47BD68CCEE4BB4918A09E2 /* ReactNativeSocialShareTests.xctest */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -140,6 +142,9 @@
 		FB76BD2736226627D6359085 /* Pods-client-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-client-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-client-tvOSTests/Pods-client-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
 		FBCB3107DA7B42E3B80BC0A1 /* Feather.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Feather.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Feather.ttf"; sourceTree = "<group>"; };
 		FEC30B28C3B94624B2D901E8 /* Ionicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Ionicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Ionicons.ttf"; sourceTree = "<group>"; };
+		A4B1CE54D8004B6DA6526356 /* ReactNativeSocialShare.xcodeproj */ = {isa = PBXFileReference; name = "ReactNativeSocialShare.xcodeproj"; path = "../node_modules/react-native-social-share/ReactNativeSocialShare.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		792C112AA9924A1A83B9F593 /* ReactNativeSocialShare.app */ = {isa = PBXFileReference; name = "ReactNativeSocialShare.app"; path = "ReactNativeSocialShare.app"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.application; explicitFileType = undefined; includeInIndex = 0; };
+		FF47BD68CCEE4BB4918A09E2 /* ReactNativeSocialShareTests.xctest */ = {isa = PBXFileReference; name = "ReactNativeSocialShareTests.xctest"; path = "ReactNativeSocialShareTests.xctest"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.cfbundle; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -156,6 +161,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				9D275428E4CE3ABFE8BFF1EB /* libPods-client.a in Frameworks */,
+				E29A418F1776488EB36CF4FE /* ReactNativeSocialShare.app in Resources */,
+				BCE8C4741D34411FA2C03EED /* ReactNativeSocialShareTests.xctest in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -269,6 +276,7 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				A4B1CE54D8004B6DA6526356 /* ReactNativeSocialShare.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -805,6 +813,15 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/client.app/client";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/../node_modules/react-native-social-share/iOS",
+				);
 			};
 			name = Debug;
 		};
@@ -826,6 +843,15 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/client.app/client";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/../node_modules/react-native-social-share/iOS",
+				);
 			};
 			name = Release;
 		};
@@ -850,6 +876,10 @@
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/../node_modules/react-native-social-share/iOS",
+				);
 			};
 			name = Debug;
 		};
@@ -872,6 +902,10 @@
 				SWIFT_OBJC_BRIDGING_HEADER = "client-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/../node_modules/react-native-social-share/iOS",
+				);
 			};
 			name = Release;
 		};
@@ -900,6 +934,15 @@
 				SDKROOT = appletvos;
 				TARGETED_DEVICE_FAMILY = 3;
 				TVOS_DEPLOYMENT_TARGET = 9.2;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/../node_modules/react-native-social-share/iOS",
+				);
 			};
 			name = Debug;
 		};
@@ -928,6 +971,15 @@
 				SDKROOT = appletvos;
 				TARGETED_DEVICE_FAMILY = 3;
 				TVOS_DEPLOYMENT_TARGET = 9.2;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/../node_modules/react-native-social-share/iOS",
+				);
 			};
 			name = Release;
 		};
@@ -955,6 +1007,15 @@
 				SDKROOT = appletvos;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/client-tvOS.app/client-tvOS";
 				TVOS_DEPLOYMENT_TARGET = 10.1;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/../node_modules/react-native-social-share/iOS",
+				);
 			};
 			name = Debug;
 		};
@@ -982,6 +1043,15 @@
 				SDKROOT = appletvos;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/client-tvOS.app/client-tvOS";
 				TVOS_DEPLOYMENT_TARGET = 10.1;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/../node_modules/react-native-social-share/iOS",
+				);
 			};
 			name = Release;
 		};

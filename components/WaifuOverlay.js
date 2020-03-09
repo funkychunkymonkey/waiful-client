@@ -1,5 +1,13 @@
 import * as React from 'react';
-import {StyleSheet, Text, Animated, View, Dimensions} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  Animated,
+  View,
+  Dimensions,
+  Linking,
+} from 'react-native';
+import {Button} from 'react-native-elements';
 import {Container} from 'native-base';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import LinearGradient from 'react-native-linear-gradient';
@@ -199,9 +207,30 @@ function GachaOverlay({waifu}) {
     <View style={styles.overlayBody}>
       <Text style={styles.overlayBodyText}>You got</Text>
       <Text style={styles.overlayBodyTitle}>{waifu.name}</Text>
-      <Text>
+      <View>
         <Text style={styles.overlayBodySubtitle}>{waifu.series.name} </Text>
-      </Text>
+        <Button
+          icon={
+            <Icon
+              name="twitter"
+              color="#fff"
+              size={20}
+              style={{marginRight: 10}}
+            />
+          }
+          titleStyle={{color: '#fff'}}
+          raised
+          onPress={() => {
+            Linking.openURL(
+              `https://twitter.com/intent/tweet?text=${encodeURI(
+                `I just got ${waifu.name} in Waiful! Check it out!`,
+              )}&hashtags=WAIFUL&url=${encodeURI(
+                'https://github.com/funkychunkymonkey/waiful-client/',
+              )}`,
+            );
+          }}
+        />
+      </View>
     </View>
   );
 }
@@ -255,6 +284,7 @@ const styles = StyleSheet.create({
   overlayBodySubtitle: {
     color: COLORS.textPrimary,
     fontSize: 20,
+    marginBottom: 10,
   },
   // waifu dialogue
   dialogue: {
