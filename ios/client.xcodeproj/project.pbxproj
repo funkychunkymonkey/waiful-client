@@ -33,7 +33,6 @@
 		67E2E028220C48D18274CC7A /* Fontisto.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 93A97B09B91E482A9288DA09 /* Fontisto.ttf */; };
 		69B1DE1A88C34894E187B7EB /* libPods-client-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B3F8278DCDB5F1180670459 /* libPods-client-tvOS.a */; };
 		6F6B615DF8814FBB9644FBE7 /* Feather.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FBCB3107DA7B42E3B80BC0A1 /* Feather.ttf */; };
-		718FA61663B147FAAF90E89F /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2B7B15F673A949B4813B3A4A /* Zocial.ttf */; };
 		7F441B1CBD0443BBB14F099D /* Entypo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 997031C123634C7A82C76C47 /* Entypo.ttf */; };
 		864433936EF1490988E9ABE8 /* FontAwesome5_Solid.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 89281A213CE549628188C1C4 /* FontAwesome5_Solid.ttf */; };
 		8B574CE21E5B49A79659672B /* FontAwesome5_Solid.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E7527995FAF14A15BA761E3E /* FontAwesome5_Solid.ttf */; };
@@ -45,7 +44,6 @@
 		BE8C729D31D949438BD1C18E /* FontAwesome.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 523D4418573E4A87B653874C /* FontAwesome.ttf */; };
 		BF6F7C3CB6634E53B3352C3F /* Foundation.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B2E4E5F559D948C798FC8340 /* Foundation.ttf */; };
 		CEC53AA6FC084768ADC4B8E7 /* Fontisto.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D3FB279583CC4BB783E11CBE /* Fontisto.ttf */; };
-		D707ED143F26465C9972CE8E /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 76A1A1058B95452293434051 /* Zocial.ttf */; };
 		E3BB3DFF31F4487989129DDF /* FontAwesome5_Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7E7A62EC4AA64576A94F426E /* FontAwesome5_Regular.ttf */; };
 		E69881CE07F4D935462E00C5 /* libPods-client-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DA7A215B249DBB6C800FD8A3 /* libPods-client-tvOSTests.a */; };
 		E75C28838EDD49FFB533DDD3 /* MaterialCommunityIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3C1A33F85A2F49F5A2D01190 /* MaterialCommunityIcons.ttf */; };
@@ -56,8 +54,6 @@
 		F62A4F8F5A7DC558FF632F98 /* libPods-clientTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A9ACB6AD13982364820AAD0 /* libPods-clientTests.a */; };
 		F939A60A924F45A4ACF9F033 /* Foundation.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B303401CD9714D51AE02CF8F /* Foundation.ttf */; };
 		FDE2AB0DFEE34547A1D0AC7B /* Ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FEC30B28C3B94624B2D901E8 /* Ionicons.ttf */; };
-		E29A418F1776488EB36CF4FE /* ReactNativeSocialShare.app in Resources */ = {isa = PBXBuildFile; fileRef = 792C112AA9924A1A83B9F593 /* ReactNativeSocialShare.app */; };
-		BCE8C4741D34411FA2C03EED /* ReactNativeSocialShareTests.xctest in Resources */ = {isa = PBXBuildFile; fileRef = FF47BD68CCEE4BB4918A09E2 /* ReactNativeSocialShareTests.xctest */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -142,9 +138,6 @@
 		FB76BD2736226627D6359085 /* Pods-client-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-client-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-client-tvOSTests/Pods-client-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
 		FBCB3107DA7B42E3B80BC0A1 /* Feather.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Feather.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Feather.ttf"; sourceTree = "<group>"; };
 		FEC30B28C3B94624B2D901E8 /* Ionicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Ionicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Ionicons.ttf"; sourceTree = "<group>"; };
-		A4B1CE54D8004B6DA6526356 /* ReactNativeSocialShare.xcodeproj */ = {isa = PBXFileReference; name = "ReactNativeSocialShare.xcodeproj"; path = "../node_modules/react-native-social-share/ReactNativeSocialShare.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
-		792C112AA9924A1A83B9F593 /* ReactNativeSocialShare.app */ = {isa = PBXFileReference; name = "ReactNativeSocialShare.app"; path = "ReactNativeSocialShare.app"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.application; explicitFileType = undefined; includeInIndex = 0; };
-		FF47BD68CCEE4BB4918A09E2 /* ReactNativeSocialShareTests.xctest */ = {isa = PBXFileReference; name = "ReactNativeSocialShareTests.xctest"; path = "ReactNativeSocialShareTests.xctest"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.cfbundle; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -161,8 +154,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				9D275428E4CE3ABFE8BFF1EB /* libPods-client.a in Frameworks */,
-				E29A418F1776488EB36CF4FE /* ReactNativeSocialShare.app in Resources */,
-				BCE8C4741D34411FA2C03EED /* ReactNativeSocialShareTests.xctest in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -273,19 +264,10 @@
 			name = Resources;
 			sourceTree = "<group>";
 		};
-		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
-			isa = PBXGroup;
-			children = (
-				A4B1CE54D8004B6DA6526356 /* ReactNativeSocialShare.xcodeproj */,
-			);
-			name = Libraries;
-			sourceTree = "<group>";
-		};
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
 				13B07FAE1A68108700A75B9A /* client */,
-				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* clientTests */,
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
@@ -411,7 +393,7 @@
 		83CBB9F71A601CBA00E9B192 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 940;
+				LastUpgradeCheck = 1130;
 				ORGANIZATIONNAME = Facebook;
 				TargetAttributes = {
 					00E356ED1AD99517003FC87E = {
@@ -434,10 +416,9 @@
 			};
 			buildConfigurationList = 83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "client" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
-				English,
 				en,
 				Base,
 			);
@@ -483,7 +464,6 @@
 				5957529BE7B444CDAEF0BD8D /* MaterialIcons.ttf in Resources */,
 				91EFDAA1C445458A8561BDA4 /* Octicons.ttf in Resources */,
 				E9E92029372C47819C3A8E30 /* SimpleLineIcons.ttf in Resources */,
-				D707ED143F26465C9972CE8E /* Zocial.ttf in Resources */,
 				1617C459C5AF4F7099A65ED7 /* AntDesign.ttf in Resources */,
 				7F441B1CBD0443BBB14F099D /* Entypo.ttf in Resources */,
 				33C0D0D01B3E40A4A66DCBFD /* EvilIcons.ttf in Resources */,
@@ -502,7 +482,6 @@
 				E9D32B78B380451DBC24B751 /* Roboto.ttf in Resources */,
 				1B79F4DEDB7143EB9584F9B1 /* rubicon-icon-font.ttf in Resources */,
 				1565AA6D3AAE4F079BF580AC /* SimpleLineIcons.ttf in Resources */,
-				718FA61663B147FAAF90E89F /* Zocial.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -802,9 +781,17 @@
 					"DEBUG=1",
 					"$(inherited)",
 				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+				);
 				INFOPLIST_FILE = clientTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-lc++",
@@ -813,15 +800,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/client.app/client";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-				);
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/../node_modules/react-native-social-share/iOS",
-				);
 			};
 			name = Debug;
 		};
@@ -832,9 +810,17 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+				);
 				INFOPLIST_FILE = clientTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-lc++",
@@ -843,15 +829,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/client.app/client";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-				);
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/../node_modules/react-native-social-share/iOS",
-				);
 			};
 			name = Release;
 		};
@@ -863,6 +840,9 @@
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+				);
 				INFOPLIST_FILE = client/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
@@ -876,10 +856,6 @@
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/../node_modules/react-native-social-share/iOS",
-				);
 			};
 			name = Debug;
 		};
@@ -890,6 +866,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+				);
 				INFOPLIST_FILE = client/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
@@ -902,10 +881,6 @@
 				SWIFT_OBJC_BRIDGING_HEADER = "client-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/../node_modules/react-native-social-share/iOS",
-				);
 			};
 			name = Release;
 		};
@@ -922,8 +897,16 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_TESTABILITY = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+				);
 				INFOPLIST_FILE = "client-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -934,15 +917,6 @@
 				SDKROOT = appletvos;
 				TARGETED_DEVICE_FAMILY = 3;
 				TVOS_DEPLOYMENT_TARGET = 9.2;
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-				);
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/../node_modules/react-native-social-share/iOS",
-				);
 			};
 			name = Debug;
 		};
@@ -959,8 +933,16 @@
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_NO_COMMON_BLOCKS = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+				);
 				INFOPLIST_FILE = "client-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -971,15 +953,6 @@
 				SDKROOT = appletvos;
 				TARGETED_DEVICE_FAMILY = 3;
 				TVOS_DEPLOYMENT_TARGET = 9.2;
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-				);
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/../node_modules/react-native-social-share/iOS",
-				);
 			};
 			name = Release;
 		};
@@ -995,8 +968,16 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_TESTABILITY = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+				);
 				INFOPLIST_FILE = "client-tvOSTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -1007,15 +988,6 @@
 				SDKROOT = appletvos;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/client-tvOS.app/client-tvOS";
 				TVOS_DEPLOYMENT_TARGET = 10.1;
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-				);
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/../node_modules/react-native-social-share/iOS",
-				);
 			};
 			name = Debug;
 		};
@@ -1031,8 +1003,16 @@
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_NO_COMMON_BLOCKS = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+				);
 				INFOPLIST_FILE = "client-tvOSTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -1043,15 +1023,6 @@
 				SDKROOT = appletvos;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/client-tvOS.app/client-tvOS";
 				TVOS_DEPLOYMENT_TARGET = 10.1;
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-				);
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/../node_modules/react-native-social-share/iOS",
-				);
 			};
 			name = Release;
 		};
@@ -1059,6 +1030,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -1112,6 +1084,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -1150,6 +1123,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
