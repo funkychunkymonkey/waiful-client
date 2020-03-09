@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, Text, View, ScrollView} from 'react-native';
 import {ListItem} from 'react-native-elements';
 import {useFocusEffect} from '@react-navigation/native';
 import moment from 'moment';
@@ -32,17 +32,17 @@ export default function WorkoutLog({navigation}) {
       </View>
     );
   return (
-    <View>
+    <ScrollView>
       {logs.map((log, i) => (
         <ListItem
           key={i}
           style={{}}
           title={log.distance + 'm'}
-          rightAvatar={<Text>{moment(log.createdAt).fromNow()}</Text>}
+          rightAvatar={<Text>{moment(log.startedAt).fromNow()}</Text>}
           bottomDivider
         />
       ))}
-    </View>
+    </ScrollView>
   );
 }
 
