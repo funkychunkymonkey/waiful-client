@@ -6,13 +6,18 @@ Revolutionise your laifu with Waiful, a health and wellness app that motivates y
 
 Let's use it for your life!
 
-// add image
-<img src="url" width="400px">
+<img src="https://user-images.githubusercontent.com/56245555/76284038-82ce2b00-62df-11ea-9c82-048f25f4ba9f.png" width="400px">
 
 ## URL
 
 You can try this app here.  
 // deploy's URL
+
+// add image   
+<img src="" width="400px">
+
+## Development Environment   
+React Native : 0.61.5
 
 ## Setup Instructions
 
