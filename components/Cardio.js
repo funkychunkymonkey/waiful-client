@@ -5,13 +5,19 @@ import {
   View,
   TouchableOpacity,
   Button,
-  Platform,
+  Dimensions,
 } from 'react-native';
 import {useFocusEffect} from '@react-navigation/native';
-import Loading from './Loading.js';
-import utils from '../utils.js';
 import MapView, {Marker} from 'react-native-maps';
 import Geolocation from '@react-native-community/geolocation';
+
+import Icon from 'react-native-vector-icons/FontAwesome5';
+import LinearGradient from 'react-native-linear-gradient';
+import LottieView from 'lottie-react-native';
+
+import Loading from './Loading.js';
+import utils from '../utils.js';
+import COLORS from '../color';
 
 export default function CardioScreen({navigation, route}) {
   const [currentRun, setCurrentRun] = React.useState(null);
@@ -66,7 +72,9 @@ export default function CardioScreen({navigation, route}) {
     case 'LOADING':
       return <Loading />;
     case 'WAITING':
-      return <NotRunning startRun={startRun} />;
+      return (
+        <NotRunning startRun={startRun} popUpWaifu={route.params.popUpWaifu} />
+      );
     case 'RUNNING':
       return (
         <Running location={location} routeData={routeData} endRun={endRun} />
@@ -115,11 +123,38 @@ export default function CardioScreen({navigation, route}) {
 
 /******** PANELS ********/
 
-function NotRunning({startRun}) {
+function NotRunning({startRun, popUpWaifu}) {
+  useFocusEffect(
+    React.useCallback(() => {
+      popUpWaifu({
+        dialogue: 'Ganbare!',
+        auto: true,
+      });
+      return () => {};
+    }, []),
+  );
   return (
-    <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-      <TouchableOpacity style={styles.circle} onPress={() => startRun()}>
-        <Text style={styles.text}> Start </Text>
+    <View style={styles.wrapper}>
+      <View>
+        <LottieView
+          autoPlay
+          loop
+          source={require('../src/50-material-loader.json')}
+          colorFilters={[
+            {
+              keypath: 'Shape Layer 1 Comp 1',
+              color: COLORS.bgHighlight,
+            },
+          ]}
+        />
+      </View>
+      <TouchableOpacity style={styles.startButton} onPress={() => startRun()}>
+        <LinearGradient
+          style={styles.startButton}
+          colors={[COLORS.bgPrimary, COLORS.bgHighlight]}>
+          <Icon name="running" size={100} color="#fff" />
+          <Text style={styles.buttonText}> Start Running </Text>
+        </LinearGradient>
       </TouchableOpacity>
     </View>
   );
@@ -127,14 +162,8 @@ function NotRunning({startRun}) {
 
 function Running({location, routeData, endRun}) {
   return (
-    <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-      <View
-        style={{
-          height: 400,
-          width: 400,
-          justifyContent: 'flex-end',
-          alignItems: 'center',
-        }}>
+    <View style={styles.wrapper}>
+      <View style={styles.mapContainer}>
         <MapView
           showsUserLocation={true}
           followsUserLocation={true}
@@ -156,15 +185,20 @@ function Running({location, routeData, endRun}) {
           />
         </MapView>
       </View>
-      <TouchableOpacity style={styles.circle} onPress={() => endRun()}>
-        <Text style={styles.text}> Stop </Text>
+      <TouchableOpacity style={styles.stopButton} onPress={() => endRun()}>
+        <LinearGradient
+          style={styles.stopButton}
+          colors={[COLORS.bgPrimary + '66', COLORS.bgHighlight + 'ee']}>
+          <Icon name="male" size={40} color="#fff" />
+          <Text style={styles.buttonText}> Stop </Text>
+        </LinearGradient>
       </TouchableOpacity>
     </View>
   );
 }
 function Result({currentRun, endResult}) {
   return (
-    <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+    <View style={styles.wrapper}>
       <Text style={styles.text}>
         You ran {currentRun.distance}m! Good work.
       </Text>
@@ -174,6 +208,7 @@ function Result({currentRun, endResult}) {
 }
 
 const styles = StyleSheet.create({
+  wrapper: {flex: 1, alignItems: 'center', justifyContent: 'center'},
   container: {
     flex: 1,
     backgroundColor: '#fafafa',
@@ -181,21 +216,35 @@ const styles = StyleSheet.create({
   contentContainer: {
     paddingTop: 50,
   },
-  circle: {
-    width: 200,
-    height: 200,
+  startButton: {
+    width: 300,
+    height: 300,
     borderRadius: 200 / 2,
-    backgroundColor: '#ffa880ff',
     justifyContent: 'center',
     alignItems: 'center',
   },
-  //for map
-  container: {
-    ...StyleSheet.absoluteFillObject,
-    height: 400,
-    width: 400,
-    justifyContent: 'flex-end',
+  stopButton: {
+    position: 'absolute',
+    zIndex: 10,
+    bottom: 10,
+    left: 10,
+    width: 150,
+    height: 150,
+    borderRadius: 200 / 2,
+    justifyContent: 'center',
     alignItems: 'center',
+  },
+  buttonText: {
+    textAlign: 'center',
+    fontSize: 28,
+    color: '#fff',
+    textTransform: 'uppercase',
+  },
+  //for map
+  mapContainer: {
+    height: Dimensions.get('window').height,
+    width: Dimensions.get('window').width,
+    marginTop: 125,
   },
   //map
   map: {
