@@ -15,6 +15,11 @@ const gacha = function() {
     'mutation{gacha(input:{}){id name imageUrl url series{id name imageUrl url}}}',
   ).then(data => data.gacha);
 };
+const sellWaifu = function(malId) {
+  return q(`mutation{sellWaifu(input:{malId:${parseInt(malId)}})}`).then(
+    data => data.sellWaifu,
+  );
+};
 const getWaifus = function() {
   return q(
     'query{user{ waifus{id malId name imageUrl url isFavorite series{id name imageUrl url}} }}',
@@ -126,16 +131,21 @@ const logExercise = function(exercise, reps) {
  **********************************************/
 const q = async function(query, variables = {}) {
   console.log(query);
-  const result = await axios.post('http://localhost:3000/graphql', {
-    query,
-    variables,
-  });
+  const result = await axios.post(
+    //'http://localhost:3000/graphql',
+    'http://waiful-backend-dev3.ap-northeast-1.elasticbeanstalk.com/graphql',
+    {
+      query,
+      variables,
+    },
+  );
   return result.data.data;
 };
 
 export default {
   getUser,
   gacha,
+  sellWaifu,
   getExercises,
   logExercise,
   getWorkouts,

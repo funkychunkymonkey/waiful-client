@@ -2,6 +2,7 @@ import * as React from 'react';
 import {useRef, useEffect} from 'react';
 import {StyleSheet, TouchableOpacity} from 'react-native';
 import LottieView from 'lottie-react-native';
+import {useFocusEffect} from '@react-navigation/native';
 
 function usePrevious(value) {
   const ref = useRef();
@@ -47,15 +48,16 @@ export default function FavButton(props) {
 
 const styles = StyleSheet.create({
   favTouchArea: {
-    width: 300,
-    top: -220,
-    left: -90,
-    position: 'relative',
-    zIndex: 1,
+    width: 60,
+    height: '100%',
+    overflow: 'hidden',
+    justifyContent: 'center',
   },
   fav: {
-    width: 300,
     position: 'relative',
-    zIndex: 2,
+    width: 300,
+    height: 300,
+    left: -40,
+    top: 0,
   },
 });
