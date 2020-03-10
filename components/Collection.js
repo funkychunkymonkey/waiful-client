@@ -192,13 +192,13 @@ const styles = StyleSheet.create({
     color: 'white',
   },
   body: {
-    backgroundColor: COLORS.textSecondary,
+    // backgroundColor: COLORS.bgPrimary,
   },
   showView: {
     height: hp('50%'),
   },
   waifuImageWrapper: {
-    height: 350,
+    height: hp('35%'),
     width: '100%',
     alignItems: 'center',
     backgroundColor: COLORS.bgPrimary,
