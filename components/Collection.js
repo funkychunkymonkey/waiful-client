@@ -24,7 +24,6 @@ import LinearGradient from 'react-native-linear-gradient';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 
 export default function Collection({route}) {
-  console.log('route', route);
   const [loading, setLoading] = useState(true);
   const [collection, setCollection] = useState([]);
   const [selectedWaifuIdx, setSelectedWaifuIdx] = useState(0);
