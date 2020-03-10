@@ -34,7 +34,7 @@ const App: () => React$Node = () => {
   if (loading) return <Splash />;
 
   async function reloadExercises() {
-    setExercises((await utils.getExercises()).slice(0, 100));
+    setExercises(await utils.getExercises());
   }
   async function reloadWaifus() {
     setWaifus(await utils.getWaifus());
@@ -42,7 +42,7 @@ const App: () => React$Node = () => {
   function popUpWaifu(options) {
     // generate waifu
     let waifu = null;
-    if (options.gacha) waifu = options.gacha;
+    if (options.waifu !== undefined) waifu = options.waifu;
     else {
       const faves = waifus.filter(x => x.isFavorite);
       waifu = faves.length
@@ -50,7 +50,7 @@ const App: () => React$Node = () => {
         : null;
     }
     // if it's a generic dialogue with no waifu, return immediately
-    if (!options.gems && !options.gacha && !waifu) return;
+    if (!options.gems && !waifu) return;
     // otherwise pop
     setOverlayKey(overlayKey + 1);
     setOverlayIsVisible(true);
@@ -102,6 +102,7 @@ const App: () => React$Node = () => {
           <Tab.Screen
             name="Collection"
             component={CollectionScreen}
+            initialParams={{popUpWaifu}}
             options={{
               tabBarLabel: 'Collection',
               tabBarIcon: ({color, size}) => (

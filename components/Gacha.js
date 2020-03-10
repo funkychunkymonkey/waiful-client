@@ -65,11 +65,11 @@ export default function Gacha({route}) {
         buttonFadeAnim.setValue(1);
         setGems(gems - 1);
         route.params.popUpWaifu({
-          gacha: res,
+          gacha: true,
+          waifu: res,
           dialogue: (
             <Text>
-              <Text>Tadaima~</Text>
-              <Icon name="heart" />
+              <Text>Tadaima!</Text>
             </Text>
           ),
           onClose: () => {

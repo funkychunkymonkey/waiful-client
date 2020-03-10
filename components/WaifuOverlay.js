@@ -63,8 +63,7 @@ export default function({options, onClose, isVisible, rerender}) {
 
   // display gacha panel if provided
   if (options.gacha) {
-    overlayBody = <GachaOverlay waifu={options.gacha} />;
-    options.waifu = options.gacha;
+    overlayBody = <GachaOverlay waifu={options.waifu} />;
   }
 
   // display waifu & dialogue if provided

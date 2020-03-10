@@ -21,11 +21,12 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import LinearGradient from 'react-native-linear-gradient';
+import Icon from 'react-native-vector-icons/FontAwesome5';
 
-export default function Collection() {
+export default function Collection({route}) {
   const [loading, setLoading] = useState(true);
   const [collection, setCollection] = useState([]);
-  const [selectedWaifuIdx, setSelectedWaifuIdx] = useState(-1);
+  const [selectedWaifuIdx, setSelectedWaifuIdx] = useState(0);
 
   useFocusEffect(
     React.useCallback(() => {
@@ -61,6 +62,22 @@ export default function Collection() {
     }
   };
 
+  function sell(waifuIdx) {
+    const waifu = collection[waifuIdx];
+    utils
+      .sellWaifu(waifu.malId)
+      .then(result => {
+        setCollection(collection.filter(x => x.id !== waifu.id));
+        setSelectedWaifuIdx(0);
+        route.params.popUpWaifu({
+          waifu: null,
+          gems: result,
+          auto: false,
+        });
+      })
+      .catch(e => alert(e));
+  }
+
   const getGalleryItem = i => {
     return (
       <TouchableOpacity
@@ -93,7 +110,7 @@ export default function Collection() {
 
   if (loading) return <Loading />;
   return (
-    <Container>
+    <Container style={{backgroundColor: COLORS.textSecondary}}>
       <Header style={styles.header}>
         <Left />
         <Body>
@@ -104,33 +121,49 @@ export default function Collection() {
 
       <Content style={styles.body}>
         <View style={styles.showView}>
-          {selectedWaifuIdx >= 0 ? (
+          {collection[selectedWaifuIdx] ? (
             <>
-              <Image
-                style={styles.waifuImage}
-                source={{
-                  uri: collection[selectedWaifuIdx].imageUrl,
-                }}
-                resizeMode="contain"
-              />
-              <FavButton
-                onPress={() => fav(selectedWaifuIdx)}
-                waifuIdx={selectedWaifuIdx}
-                isFavorite={collection[selectedWaifuIdx].isFavorite}
-              />
               <LinearGradient
                 colors={[COLORS.bgPrimary, COLORS.bgHighlight]}
-                style={styles.info}>
-                <Text style={styles.waifuNemeText}>
-                  {collection[selectedWaifuIdx].name}
-                </Text>
-                <Text style={styles.waifuSeriesText}>
-                  {collection[selectedWaifuIdx].series.name.split(':')[0]}
-                </Text>
-                <Text style={styles.waifuSeriesText}>
-                  {collection[selectedWaifuIdx].series.name.split(':')[1]}
-                </Text>
+                style={styles.waifuImageWrapper}>
+                <Image
+                  style={styles.waifuImage}
+                  source={{
+                    uri: collection[selectedWaifuIdx].imageUrl,
+                  }}
+                  resizeMode="contain"
+                />
               </LinearGradient>
+              <View
+                style={{
+                  ...styles.info,
+                }}>
+                <FavButton
+                  onPress={() => fav(selectedWaifuIdx)}
+                  waifuIdx={selectedWaifuIdx}
+                  isFavorite={collection[selectedWaifuIdx].isFavorite}
+                />
+                <View style={styles.infoText}>
+                  <Text style={styles.waifuNemeText}>
+                    {collection[selectedWaifuIdx].name.replace(
+                      /&#(\d+);/g,
+                      function(m, n) {
+                        return String.fromCharCode(n);
+                      },
+                    )}
+                  </Text>
+                  <Text style={styles.waifuSeriesText}>
+                    {collection[selectedWaifuIdx].series.name}
+                  </Text>
+                </View>
+                <TouchableOpacity
+                  style={styles.trashIcon}
+                  onPress={() => {
+                    sell(selectedWaifuIdx);
+                  }}>
+                  <Icon name="trash" size={40} />
+                </TouchableOpacity>
+              </View>
             </>
           ) : (
             <></>
@@ -159,41 +192,59 @@ const styles = StyleSheet.create({
     color: 'white',
   },
   body: {
-    backgroundColor: COLORS.bgSecondary,
+    backgroundColor: COLORS.textSecondary,
   },
   showView: {
     height: hp('50%'),
   },
+  waifuImageWrapper: {
+    height: 350,
+    width: '100%',
+    alignItems: 'center',
+    backgroundColor: COLORS.bgPrimary,
+  },
   waifuImage: {
-    position: 'relative',
-    height: hp('35%'),
-    marginTop: 5,
+    height: '100%',
+    width: 225,
   },
   info: {
     position: 'relative',
-    top: -298,
     backgroundColor: COLORS.bgHighlight,
     alignItems: 'center',
     padding: 5,
+    flexDirection: 'row',
+    height: 100,
+  },
+  infoText: {
+    height: '100%',
+    justifyContent: 'center',
+    padding: 0,
+    flex: 1,
   },
   waifuNemeText: {
     color: COLORS.textTitle,
+    textAlign: 'center',
     fontSize: 28,
   },
   waifuSeriesText: {
     color: COLORS.textTitle,
     fontSize: 20,
+    textAlign: 'center',
   },
   gallery: {
-    justifyContent: 'center',
+    backgroundColor: COLORS.textSecondary,
+    borderWidth: 0,
+    paddingTop: 25,
+    justifyContent: 'flex-start',
     alignContent: 'space-around',
     flexDirection: 'row',
     height: hp('30%'),
+    width: '100%',
   },
   collection: {
     borderRadius: 20,
-    width: hp('11%'),
-    height: hp('11%'),
+    width: hp('10%'),
+    height: hp('10%'),
     marginLeft: 10,
     position: 'relative',
   },
@@ -203,5 +254,10 @@ const styles = StyleSheet.create({
     left: 6,
     fontSize: 30,
     color: COLORS.favHeart,
+  },
+  trashIcon: {
+    justifyContent: 'center',
+    height: '100%',
+    padding: 10,
   },
 });
