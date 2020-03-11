@@ -16,6 +16,9 @@ const [useZ] = create((set, get) => ({
       waifus: await utils.getWaifus(),
     });
   },
+  setWaifus: waifus => {
+    set({waifus});
+  },
 
   /****************************************************************************
    * WAIFU OVERLAY

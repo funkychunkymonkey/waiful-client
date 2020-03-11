@@ -20,21 +20,9 @@ import {useZ} from '../../zustand';
 
 export default function Collection({route}) {
   const popUpWaifu = useZ(z => z.popUpWaifu);
-  const [loading, setLoading] = React.useState(true);
-  const [collection, setCollection] = React.useState([]);
+  const collection = useZ(z => z.waifus);
+  const setCollection = useZ(z => z.setWaifus);
   const [selectedWaifuIdx, setSelectedWaifuIdx] = React.useState(0);
-
-  useFocusEffect(
-    React.useCallback(() => {
-      utils.getWaifus().then(data => {
-        setLoading(false);
-        setCollection(data);
-      });
-      return () => {
-        setLoading(true);
-      };
-    }, []),
-  );
 
   const updateFavState = (waifuIdx, newFavState) => {
     const newWaifu = {...collection[selectedWaifuIdx], isFavorite: newFavState};
@@ -104,7 +92,6 @@ export default function Collection({route}) {
     );
   }
 
-  if (loading) return <Loading />;
   return (
     <Container>
       <Header style={styles.header}>
