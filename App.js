@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from 'react';
-
 import {NavigationContainer} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
@@ -12,60 +11,39 @@ import CollectionScreen from './components/Collection';
 import WaifuOverlay from './components/WaifuOverlay';
 import Splash from './components/Splash';
 
-import utils from './utils.js';
 import COLORS from './color';
+import useZ from './zustand';
 
 const Tab = createBottomTabNavigator();
 const App: () => React$Node = () => {
-  const [exercises, setExercises] = useState([]);
-  const [waifus, setWaifus] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const [overlayKey, setOverlayKey] = React.useState(0);
-  const [overlayIsVisible, setOverlayIsVisible] = React.useState(false);
-  const [overlayOptions, setOverlayOptions] = React.useState({});
+  const overlayIsVisible = useZ(z => z.overlayIsVisible);
+  const overlayOptions = useZ(z => z.overlayOptions);
+  const setOverlayIsVisible = useZ(z => z.setOverlayIsVisible);
+
+  const reloadExercises = useZ(z => z.reloadExercises);
+  const exercises = useZ(z => z.exercises);
+  const reloadWaifus = useZ(z => z.reloadWaifus);
+  const waifus = useZ(z => z.waifus);
 
   useEffect(() => {
-    Promise.all([reloadExercises(), reloadWaifus()]).then(() =>
-      setLoading(false),
-    );
+    reloadExercises();
+    reloadWaifus();
   }, []);
 
-  if (loading) return <Splash />;
-
-  async function reloadExercises() {
-    setExercises(await utils.getExercises());
-  }
-  async function reloadWaifus() {
-    setWaifus(await utils.getWaifus());
-  }
-  function popUpWaifu(options) {
-    // generate waifu
-    let waifu = null;
-    if (options.waifu !== undefined) waifu = options.waifu;
-    else {
-      const faves = waifus.filter(x => x.isFavorite);
-      waifu = faves.length
-        ? faves[Math.floor(Math.random() * faves.length)]
-        : null;
+  useEffect(() => {
+    if (waifus !== null && exercises !== null) {
+      setLoading(false);
     }
-    // if it's a generic dialogue with no waifu, return immediately
-    if (!options.gems && !waifu) return;
-    // otherwise pop
-    setOverlayKey(overlayKey + 1);
-    setOverlayIsVisible(true);
-    setOverlayOptions({
-      ...options,
-      waifu,
-    });
-  }
+  }, [waifus, exercises]);
+
+  if (loading) return <Splash />;
 
   return (
     <>
       <WaifuOverlay
         options={overlayOptions}
-        key={overlayKey}
-        rerender={overlayKey}
         onClose={() => {
           setOverlayIsVisible(false);
         }}
@@ -88,10 +66,6 @@ const App: () => React$Node = () => {
           <Tab.Screen
             name="Home"
             component={HomeScreen}
-            initialParams={{
-              exercises,
-              popUpWaifu,
-            }}
             options={{
               tabBarLabel: 'Home',
               tabBarIcon: ({color, size}) => (
@@ -102,7 +76,6 @@ const App: () => React$Node = () => {
           <Tab.Screen
             name="Collection"
             component={CollectionScreen}
-            initialParams={{popUpWaifu}}
             options={{
               tabBarLabel: 'Collection',
               tabBarIcon: ({color, size}) => (
@@ -113,10 +86,6 @@ const App: () => React$Node = () => {
           <Tab.Screen
             name="Gacha"
             component={GachaScreen}
-            initialParams={{
-              popUpWaifu,
-              reloadWaifus,
-            }}
             options={{
               tabBarLabel: 'Gacha',
               tabBarIcon: ({color, size}) => (
