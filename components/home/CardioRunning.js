@@ -12,14 +12,8 @@ import Icon from 'react-native-vector-icons/FontAwesome5';
 import LinearGradient from 'react-native-linear-gradient';
 
 import COLORS from '../../color';
-import {useCardioZ} from '../../zustand';
 
-export default function Running() {
-  const [location, routeData, endRun] = useCardioZ(state => [
-    state.location,
-    state.routeData,
-    state.endRun,
-  ]);
+export default function Running({endRun, location, routeData}) {
   return (
     <View style={styles.wrapper}>
       <View style={styles.mapContainer}>
