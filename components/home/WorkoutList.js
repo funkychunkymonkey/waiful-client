@@ -6,6 +6,7 @@ import {Content} from 'native-base';
 
 import COLORS from '../../color';
 import {useZ} from '../../zustand';
+import {getSystemAvailableFeaturesSync} from 'react-native-device-info';
 
 export default function WorkoutList({navigation}) {
   const allExercises = useZ(z => z.exercises);
@@ -54,9 +55,11 @@ export default function WorkoutList({navigation}) {
   }, [filters, allExercises, search]);
 
   return (
-    <Content>
+    <Content style={styles.content}>
       <LinearGradient colors={[COLORS.bgPrimary, COLORS.bgHighlight]}>
+        <Text style={styles.titleText}>MUSUCLES</Text>
         <Filters type="muscles" data={allData.muscles} />
+        <Text style={styles.titleText}>EQUIPMENTS</Text>
         <Filters type="equipments" data={['None', ...allData.equipments]} />
       </LinearGradient>
       <SearchBar
@@ -70,19 +73,20 @@ export default function WorkoutList({navigation}) {
 
   function Filters({type, data}) {
     return (
-      <View style={{flexDirection: 'row'}}>
+      <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
         {data.map((x, i) => (
           <View
             key={i}
             style={{
               opacity: filters[type].includes(x) ? 1.0 : 0.5,
             }}>
-            <FilterCircle onPress={() => filter(type, x)} text={x} />
+            <FilterButton onPress={() => filter(type, x)} text={x} />
           </View>
         ))}
       </View>
     );
   }
+
   function filter(type, x) {
     if (filters[type].includes(x)) {
       filters[type] = filters[type].filter(xx => xx !== x);
@@ -93,7 +97,7 @@ export default function WorkoutList({navigation}) {
     }
   }
 
-  function FilterCircle({onPress, text}) {
+  function FilterButton({onPress, text}) {
     return (
       <TouchableOpacity
         style={{...styles.filterCircle}}
@@ -120,11 +124,15 @@ export default function WorkoutList({navigation}) {
             }}
             rightAvatar={
               <View style={{flexDirection: 'row'}}>
-                {exercise.muscleGroups.map((x, i) => (
-                  <FilterCircle text={x} key={i} />
+                {exercise.muscleGroups.map(text => (
+                  <View style={{...styles.filterMusText}}>
+                    <Text style={{color: '#fff'}}>{text}</Text>
+                  </View>
                 ))}
-                {exercise.equipments.map((x, i) => (
-                  <FilterCircle text={x} key={i} />
+                {exercise.equipments.map(text => (
+                  <View style={{...styles.filterEqText}}>
+                    <Text style={{color: '#fff'}}>{text}</Text>
+                  </View>
                 ))}
               </View>
             }
@@ -137,29 +145,37 @@ export default function WorkoutList({navigation}) {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: COLORS.bgSecondary,
+  content: {
+    backgroundColor: COLORS.bgPrimary,
+    width: '100%',
   },
-  contentContainer: {
-    paddingTop: 50,
-  },
-  item: {
-    borderRadius: 1,
-    padding: 10,
-    fontSize: 18,
-    height: 44,
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+  titleText: {
+    color: COLORS.textTitle,
+    fontSize: 20,
+    margin: 5,
   },
   filterCircle: {
-    width: 50,
-    height: 50,
-    margin: 5,
-    borderRadius: 50,
+    padding: 6,
+    margin: 2,
+    borderRadius: 15,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#fc7349',
+  },
+  filterEqText: {
+    padding: 6,
+    margin: 2,
+    borderRadius: 15,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: COLORS.bgHighlight,
+  },
+  filterMusText: {
+    padding: 6,
+    margin: 2,
+    borderRadius: 15,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: COLORS.bgPrimary,
   },
 });
