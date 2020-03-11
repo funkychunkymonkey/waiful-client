@@ -5,8 +5,10 @@ import LinearGradient from 'react-native-linear-gradient';
 import {Content} from 'native-base';
 import COLORS from '../color';
 
-export default function WorkoutList({route, navigation}) {
-  const allExercises = route.params.exercises;
+import useZ from '../zustand';
+
+export default function WorkoutList({navigation}) {
+  const allExercises = useZ(z => z.exercises);
   const [exercises, setExercises] = React.useState(allExercises);
   const [allData] = React.useState({
     equipments: Array.from(

@@ -36,7 +36,8 @@
     "react-native-screens": "^2.2.0",
     "react-native-vector-icons": "^6.6.0",
     "react-native-webview": "^8.1.2",
-    "shortid": "^2.2.15"
+    "shortid": "^2.2.15",
+    "zustand": "^2.2.3"
   },
   "devDependencies": {
     "@babel/core": "^7.6.2",

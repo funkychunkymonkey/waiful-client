@@ -2,15 +2,7 @@ import * as React from 'react';
 import {useState} from 'react';
 import {ScrollView} from 'react-native-gesture-handler';
 import {StyleSheet, Text, TouchableOpacity, Image, View} from 'react-native';
-import {
-  Container,
-  Content,
-  Header,
-  Left,
-  Body,
-  Right,
-  Title,
-} from 'native-base';
+import {Container, Header, Left, Body, Right, Title} from 'native-base';
 import {useFocusEffect} from '@react-navigation/native';
 import utils from '../utils.js';
 import Loading from './Loading.js';
@@ -22,8 +14,10 @@ import {
 } from 'react-native-responsive-screen';
 import LinearGradient from 'react-native-linear-gradient';
 import Icon from 'react-native-vector-icons/FontAwesome5';
+import useZ from '../zustand';
 
 export default function Collection({route}) {
+  const popUpWaifu = useZ(z => z.popUpWaifu);
   const [loading, setLoading] = useState(true);
   const [collection, setCollection] = useState([]);
   const [selectedWaifuIdx, setSelectedWaifuIdx] = useState(0);
@@ -69,7 +63,7 @@ export default function Collection({route}) {
       .then(result => {
         setCollection(collection.filter(x => x.id !== waifu.id));
         setSelectedWaifuIdx(0);
-        route.params.popUpWaifu({
+        popUpWaifu({
           waifu: null,
           gems: result,
           auto: false,
@@ -110,7 +104,7 @@ export default function Collection({route}) {
 
   if (loading) return <Loading />;
   return (
-    <Container style={{backgroundColor: COLORS.textSecondary}}>
+    <Container>
       <Header style={styles.header}>
         <Left />
         <Body>
@@ -119,7 +113,7 @@ export default function Collection({route}) {
         <Right />
       </Header>
 
-      <Content style={styles.body}>
+      <Body style={styles.body}>
         <View style={styles.showView}>
           {collection[selectedWaifuIdx] ? (
             <>
@@ -133,37 +127,37 @@ export default function Collection({route}) {
                   }}
                   resizeMode="contain"
                 />
-              </LinearGradient>
-              <View
-                style={{
-                  ...styles.info,
-                }}>
-                <FavButton
-                  onPress={() => fav(selectedWaifuIdx)}
-                  waifuIdx={selectedWaifuIdx}
-                  isFavorite={collection[selectedWaifuIdx].isFavorite}
-                />
-                <View style={styles.infoText}>
-                  <Text style={styles.waifuNemeText}>
-                    {collection[selectedWaifuIdx].name.replace(
-                      /&#(\d+);/g,
-                      function(m, n) {
-                        return String.fromCharCode(n);
-                      },
-                    )}
-                  </Text>
-                  <Text style={styles.waifuSeriesText}>
-                    {collection[selectedWaifuIdx].series.name}
-                  </Text>
-                </View>
-                <TouchableOpacity
-                  style={styles.trashIcon}
-                  onPress={() => {
-                    sell(selectedWaifuIdx);
+                <View
+                  style={{
+                    ...styles.info,
                   }}>
-                  <Icon name="trash" size={40} />
-                </TouchableOpacity>
-              </View>
+                  <FavButton
+                    onPress={() => fav(selectedWaifuIdx)}
+                    waifuIdx={selectedWaifuIdx}
+                    isFavorite={collection[selectedWaifuIdx].isFavorite}
+                  />
+                  <View style={styles.infoText}>
+                    <Text style={styles.waifuNemeText}>
+                      {collection[selectedWaifuIdx].name.replace(
+                        /&#(\d+);/g,
+                        function(m, n) {
+                          return String.fromCharCode(n);
+                        },
+                      )}
+                    </Text>
+                    <Text style={styles.waifuSeriesText}>
+                      {collection[selectedWaifuIdx].series.name}
+                    </Text>
+                  </View>
+                  <TouchableOpacity
+                    style={styles.trashIcon}
+                    onPress={() => {
+                      sell(selectedWaifuIdx);
+                    }}>
+                    <Icon name="trash" size={40} />
+                  </TouchableOpacity>
+                </View>
+              </LinearGradient>
             </>
           ) : (
             <></>
@@ -176,7 +170,7 @@ export default function Collection({route}) {
             <Text>No collection yet.</Text>
           )}
         </ScrollView>
-      </Content>
+      </Body>
     </Container>
   );
 }
@@ -192,28 +186,25 @@ const styles = StyleSheet.create({
     color: 'white',
   },
   body: {
-    // backgroundColor: COLORS.bgPrimary,
+    backgroundColor: COLORS.textSecondary,
   },
   showView: {
-    height: hp('50%'),
+    height: hp('52%'),
   },
   waifuImageWrapper: {
-    height: hp('35%'),
-    width: '100%',
+    height: hp('52%'),
     alignItems: 'center',
-    backgroundColor: COLORS.bgPrimary,
   },
   waifuImage: {
-    height: '100%',
-    width: 225,
+    marginTop: hp('1%'),
+    height: hp('37%'),
+    width: wp('100%'),
   },
   info: {
     position: 'relative',
-    backgroundColor: COLORS.bgHighlight,
     alignItems: 'center',
-    padding: 5,
     flexDirection: 'row',
-    height: 100,
+    height: hp('14%'),
   },
   infoText: {
     height: '100%',
@@ -224,28 +215,22 @@ const styles = StyleSheet.create({
   waifuNemeText: {
     color: COLORS.textTitle,
     textAlign: 'center',
-    fontSize: 28,
+    fontSize: hp('3%'),
   },
   waifuSeriesText: {
     color: COLORS.textTitle,
-    fontSize: 20,
+    fontSize: hp('2.5%'),
     textAlign: 'center',
   },
   gallery: {
     backgroundColor: COLORS.textSecondary,
-    borderWidth: 0,
-    paddingTop: 25,
-    justifyContent: 'flex-start',
-    alignContent: 'space-around',
-    flexDirection: 'row',
-    height: hp('30%'),
-    width: '100%',
+    paddingTop: hp('3%'),
   },
   collection: {
     borderRadius: 20,
-    width: hp('10%'),
-    height: hp('10%'),
-    marginLeft: 10,
+    width: hp('9%'),
+    height: hp('9%'),
+    marginLeft: wp('3%'),
     position: 'relative',
   },
   isFavMark: {
@@ -257,6 +242,7 @@ const styles = StyleSheet.create({
   },
   trashIcon: {
     justifyContent: 'center',
+    width: wp('20%'),
     height: '100%',
     padding: 10,
   },
