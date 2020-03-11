@@ -13,9 +13,9 @@ import {useFocusEffect, useIsFocused} from '@react-navigation/native';
 import LinearGradient from 'react-native-linear-gradient';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 
-import utils from '../utils.js';
-import COLORS from '../color';
-import useZ from '../zustand';
+import utils from '../../utils.js';
+import COLORS from '../../color';
+import {useZ} from '../../zustand';
 
 export default function Gacha({route}) {
   const popUpWaifu = useZ(z => z.popUpWaifu);

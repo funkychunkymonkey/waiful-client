@@ -6,10 +6,10 @@ import {Button, Input} from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import LinearGradient from 'react-native-linear-gradient';
 
-import Loading from './Loading.js';
-import utils from '../utils.js';
-import COLORS from '../color';
-import useZ from '../zustand';
+import Loading from '../Loading.js';
+import utils from '../../utils.js';
+import COLORS from '../../color';
+import {useZ} from '../../zustand';
 
 export default function WorkoutDetail({route, navigation}, y) {
   const popUpWaifu = useZ(z => z.popUpWaifu);

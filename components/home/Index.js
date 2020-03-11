@@ -12,8 +12,8 @@ import WorkoutLog from './WorkoutLog.js';
 import CardioScreen from './Cardio.js';
 import CardioLog from './CardioLog.js';
 
-import COLORS from '../color';
-import useZ from '../zustand';
+import COLORS from '../../color';
+import {useZ} from '../../zustand';
 
 const Stack = createStackNavigator();
 

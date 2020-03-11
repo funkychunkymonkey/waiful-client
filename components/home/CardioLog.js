@@ -1,12 +1,11 @@
 import * as React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
-import {useFocusEffect} from '@react-navigation/native';
+import {StyleSheet, Text, View, ScrollView} from 'react-native';
 import {ListItem} from 'react-native-elements';
+import {useFocusEffect} from '@react-navigation/native';
 import moment from 'moment';
 
-import utils from '../utils.js';
-import Loading from './Loading.js';
-import COLORS from '../color.js';
+import utils from '../../utils.js';
+import Loading from '../Loading.js';
 
 export default function WorkoutLog({navigation}) {
   const [logs, setLogs] = React.useState([]);
@@ -14,7 +13,7 @@ export default function WorkoutLog({navigation}) {
 
   useFocusEffect(
     React.useCallback(() => {
-      utils.getWorkouts().then(data => {
+      utils.getRuns().then(data => {
         setLoading(false);
         setLogs(data);
       });
@@ -28,22 +27,21 @@ export default function WorkoutLog({navigation}) {
   if (logs.length === 0)
     return (
       <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-        <Text>No workouts found.</Text>
+        <Text>No runs found.</Text>
       </View>
     );
   return (
-    <View>
+    <ScrollView>
       {logs.map((log, i) => (
         <ListItem
           key={i}
           style={{}}
-          title={log.exercise.name}
-          subtitle={log.reps + ' reps'}
-          rightAvatar={<Text>{moment(log.createdAt).fromNow()}</Text>}
+          title={log.distance + 'm'}
+          rightAvatar={<Text>{moment(log.startedAt).fromNow()}</Text>}
           bottomDivider
         />
       ))}
-    </View>
+    </ScrollView>
   );
 }
 
