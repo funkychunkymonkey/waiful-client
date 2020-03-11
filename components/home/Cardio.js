@@ -12,19 +12,11 @@ import utils from '../../utils';
 import {useZ, useCardioZ} from '../../zustand';
 
 export default function CardioScreen({navigation, route}) {
-  const [
-    currentRun,
-    panel,
-    setCurrentRun,
-    setPanel,
-    addCoords,
-  ] = useCardioZ(state => [
-    state.currentRun,
-    state.panel,
-    state.setCurrentRun,
-    state.setPanel,
-    state.addCoords,
-  ]);
+  const [currentRun, setCurrentRun] = React.useState(null);
+  const [panel, setPanel] = React.useState('LOADING');
+  const [location, setLocation] = React.useState(null);
+  const [distance, setDistance] = React.useState(0);
+  const [routeData, setRouteData] = React.useState([]);
   const popUpWaifu = useZ(z => z.popUpWaifu);
 
   useFocusEffect(
@@ -44,22 +36,43 @@ export default function CardioScreen({navigation, route}) {
     }, []),
   );
 
-  React.useEffect(() => {
-    if (panel === 'WAITING') {
-      console.log('PROC WAITING, CURRENT RUN:', currentRun);
-      if (currentRun) {
-        navigation.popToTop();
-        navigation.navigate('CardioLog');
-        popUpWaifu({
-          dialogue: 'Great work!!',
-          gems: currentRun.gems,
-          auto: false,
-        });
-      } else {
-        setPanel('WAITING');
-      }
-    }
-  }, [panel]);
+  function endRun() {
+    setPanel('LOADING');
+    utils.stopRun(distance, routeData).then(data => {
+      setPanel('WAITING');
+      setCurrentRun(data);
+      navigation.navigate('CardioLog');
+      popUpWaifu({
+        dialogue: 'Great work!!',
+        gems: data.gems,
+        auto: false,
+      });
+    });
+  }
+
+  function startRun() {
+    setPanel('LOADING');
+    utils.startRun().then(data => {
+      setCurrentRun(data);
+      setPanel('RUNNING');
+    });
+    Geolocation.getCurrentPosition(position => {
+      setLocation({
+        latitude: position.coords.latitude,
+        longitude: position.coords.longitude,
+        distanceTravelled: 0,
+        prevLatLng: {},
+      });
+      error => {
+        console.log(error.code, error.message);
+      };
+    });
+  }
+
+  function addCoords(coords) {
+    setRouteData([...routeData, coords]);
+    setDistance(distance + 25);
+  }
 
   Geolocation.watchPosition(
     function({coords}) {
@@ -79,9 +92,11 @@ export default function CardioScreen({navigation, route}) {
     case 'LOADING':
       return <Loading />;
     case 'WAITING':
-      return <NotRunning />;
+      return <NotRunning startRun={startRun} />;
     case 'RUNNING':
-      return <Running />;
+      return (
+        <Running endRun={endRun} location={location} routeData={routeData} />
+      );
   }
 
   return currentRun ? <Running /> : <NotRunning />;

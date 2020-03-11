@@ -13,11 +13,10 @@ import LinearGradient from 'react-native-linear-gradient';
 import LottieView from 'lottie-react-native';
 
 import COLORS from '../../color';
-import {useZ, useCardioZ} from '../../zustand';
+import {useZ} from '../../zustand';
 
-export default function NotRunning() {
+export default function NotRunning({startRun}) {
   const popUpWaifu = useZ(z => z.popUpWaifu);
-  const startRun = useCardioZ(z => z.startRun);
   useFocusEffect(
     React.useCallback(() => {
       popUpWaifu({
