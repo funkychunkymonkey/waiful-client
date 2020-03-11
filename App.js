@@ -4,15 +4,15 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import HomeScreen from './components/Home';
-import GachaScreen from './components/Gacha';
-import SettingsScreen from './components/Settings';
-import CollectionScreen from './components/Collection';
+import HomeScreen from './components/home/Index';
+import GachaScreen from './components/gacha/Index';
+import SettingsScreen from './components/settings/Index';
+import CollectionScreen from './components/collection/Index';
 import WaifuOverlay from './components/WaifuOverlay';
 import Splash from './components/Splash';
 
 import COLORS from './color';
-import useZ from './zustand';
+import {useZ} from './zustand';
 
 const Tab = createBottomTabNavigator();
 const App: () => React$Node = () => {

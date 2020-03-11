@@ -1,38 +1,26 @@
 import * as React from 'react';
-import {useState} from 'react';
 import {ScrollView} from 'react-native-gesture-handler';
 import {StyleSheet, Text, TouchableOpacity, Image, View} from 'react-native';
 import {Container, Header, Left, Body, Right, Title} from 'native-base';
-import {useFocusEffect} from '@react-navigation/native';
-import utils from '../utils.js';
-import Loading from './Loading.js';
-import FavButton from './FavButton.js';
-import COLORS from '../color';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import LinearGradient from 'react-native-linear-gradient';
 import Icon from 'react-native-vector-icons/FontAwesome5';
-import useZ from '../zustand';
+
+import utils from '../../utils.js';
+import COLORS from '../../color';
+
+import FavButton from './FavButton.js';
+
+import {useZ} from '../../zustand';
 
 export default function Collection({route}) {
   const popUpWaifu = useZ(z => z.popUpWaifu);
-  const [loading, setLoading] = useState(true);
-  const [collection, setCollection] = useState([]);
-  const [selectedWaifuIdx, setSelectedWaifuIdx] = useState(0);
-
-  useFocusEffect(
-    React.useCallback(() => {
-      utils.getWaifus().then(data => {
-        setLoading(false);
-        setCollection(data);
-      });
-      return () => {
-        setLoading(true);
-      };
-    }, []),
-  );
+  const collection = useZ(z => z.waifus);
+  const setCollection = useZ(z => z.setWaifus);
+  const [selectedWaifuIdx, setSelectedWaifuIdx] = React.useState(0);
 
   const updateFavState = (waifuIdx, newFavState) => {
     const newWaifu = {...collection[selectedWaifuIdx], isFavorite: newFavState};
@@ -102,7 +90,6 @@ export default function Collection({route}) {
     );
   }
 
-  if (loading) return <Loading />;
   return (
     <Container>
       <Header style={styles.header}>

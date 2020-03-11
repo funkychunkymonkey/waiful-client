@@ -1,13 +1,12 @@
 import * as React from 'react';
-import {StyleSheet, Text, TouchableOpacity, FlatList} from 'react-native';
-import {Container, Header, Left, Body, Right, Title, Button} from 'native-base';
-import {Content, Icon, Switch, Image} from 'native-base';
+import {StyleSheet, Text} from 'react-native';
+import {Content} from 'native-base';
 import {useFocusEffect} from '@react-navigation/native';
 import {ListItem, SearchBar} from 'react-native-elements';
 
-import utils from '../utils.js';
-import Loading from './Loading.js';
-import COLORS from '../color';
+import utils from '../../utils.js';
+import Loading from '../Loading.js';
+import COLORS from '../../color';
 
 export default function({route, navigation}) {
   const [malType] = React.useState(route.params.malType);

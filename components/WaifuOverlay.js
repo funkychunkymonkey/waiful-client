@@ -11,6 +11,7 @@ import {Button} from 'react-native-elements';
 import {Container} from 'native-base';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import LinearGradient from 'react-native-linear-gradient';
+
 import COLORS from '../color';
 
 let closeTimeout = null;
