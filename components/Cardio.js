@@ -18,6 +18,7 @@ import LottieView from 'lottie-react-native';
 import Loading from './Loading.js';
 import utils from '../utils.js';
 import COLORS from '../color';
+import useZ from '../zustand';
 
 export default function CardioScreen({navigation, route}) {
   const [currentRun, setCurrentRun] = React.useState(null);
@@ -25,6 +26,7 @@ export default function CardioScreen({navigation, route}) {
   const [location, setLocation] = React.useState(null);
   const [routeData, setRouteData] = React.useState([]);
   const [distance, setDistance] = React.useState(0);
+  const popUpWaifu = useZ(z => z.popUpWaifu);
 
   useFocusEffect(
     React.useCallback(() => {
@@ -68,23 +70,6 @@ export default function CardioScreen({navigation, route}) {
     setDistance(state => state + 25);
   }
 
-  switch (panel) {
-    case 'LOADING':
-      return <Loading />;
-    case 'WAITING':
-      return (
-        <NotRunning startRun={startRun} popUpWaifu={route.params.popUpWaifu} />
-      );
-    case 'RUNNING':
-      return (
-        <Running location={location} routeData={routeData} endRun={endRun} />
-      );
-    case 'RESULT':
-      return <Result endResult={endResult} currentRun={currentRun} />;
-  }
-
-  return currentRun ? <Running /> : <NotRunning />;
-
   /******** UTILS ********/
 
   function startRun() {
@@ -112,18 +97,34 @@ export default function CardioScreen({navigation, route}) {
       setPanel('WAITING');
       navigation.popToTop();
       navigation.navigate('CardioLog');
-      route.params.popUpWaifu({
+      popUpWaifu({
         dialogue: 'Great work!!',
         gems: data.gems,
         auto: false,
       });
     });
   }
+
+  switch (panel) {
+    case 'LOADING':
+      return <Loading />;
+    case 'WAITING':
+      return <NotRunning startRun={startRun} />;
+    case 'RUNNING':
+      return (
+        <Running location={location} routeData={routeData} endRun={endRun} />
+      );
+    case 'RESULT':
+      return <Result endResult={endResult} currentRun={currentRun} />;
+  }
+
+  return currentRun ? <Running /> : <NotRunning />;
 }
 
 /******** PANELS ********/
 
-function NotRunning({startRun, popUpWaifu}) {
+function NotRunning({startRun}) {
+  const popUpWaifu = useZ(z => z.popUpWaifu);
   useFocusEffect(
     React.useCallback(() => {
       popUpWaifu({

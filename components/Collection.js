@@ -22,8 +22,10 @@ import {
 } from 'react-native-responsive-screen';
 import LinearGradient from 'react-native-linear-gradient';
 import Icon from 'react-native-vector-icons/FontAwesome5';
+import useZ from '../zustand';
 
 export default function Collection({route}) {
+  const popUpWaifu = useZ(z => z.popUpWaifu);
   const [loading, setLoading] = useState(true);
   const [collection, setCollection] = useState([]);
   const [selectedWaifuIdx, setSelectedWaifuIdx] = useState(0);
@@ -69,7 +71,7 @@ export default function Collection({route}) {
       .then(result => {
         setCollection(collection.filter(x => x.id !== waifu.id));
         setSelectedWaifuIdx(0);
-        route.params.popUpWaifu({
+        popUpWaifu({
           waifu: null,
           gems: result,
           auto: false,

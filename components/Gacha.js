@@ -15,8 +15,11 @@ import Icon from 'react-native-vector-icons/FontAwesome5';
 
 import utils from '../utils.js';
 import COLORS from '../color';
+import useZ from '../zustand';
 
 export default function Gacha({route}) {
+  const popUpWaifu = useZ(z => z.popUpWaifu);
+  const reloadWaifus = useZ(z => z.reloadWaifus);
   const [gems, setGems] = React.useState(0);
   const [gachaStatus, setGachaStatus] = React.useState('WAITING'); // can be WAITING, GACHA or RESULTS
 
@@ -59,12 +62,12 @@ export default function Gacha({route}) {
         duration: 1000,
       }).start(() => {
         setGachaStatus('RESULTS');
-        route.params.reloadWaifus();
+        reloadWaifus();
         buttonRiseAnim.setValue(0);
         buttonSpinAnim.setValue(1);
         buttonFadeAnim.setValue(1);
         setGems(gems - 1);
-        route.params.popUpWaifu({
+        popUpWaifu({
           gacha: true,
           waifu: res,
           dialogue: (
