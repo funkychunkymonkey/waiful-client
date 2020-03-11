@@ -2,7 +2,6 @@ import * as React from 'react';
 import {ScrollView} from 'react-native-gesture-handler';
 import {StyleSheet, Text, TouchableOpacity, Image, View} from 'react-native';
 import {Container, Header, Left, Body, Right, Title} from 'native-base';
-import {useFocusEffect} from '@react-navigation/native';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -13,7 +12,6 @@ import Icon from 'react-native-vector-icons/FontAwesome5';
 import utils from '../../utils.js';
 import COLORS from '../../color';
 
-import Loading from '../Loading.js';
 import FavButton from './FavButton.js';
 
 import {useZ} from '../../zustand';
