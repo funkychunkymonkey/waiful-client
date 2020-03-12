@@ -36,19 +36,7 @@ export default function WorkoutLog({navigation}) {
       {logs.map((log, i) => {
         const time = moment(log.startedAt);
         const day = time.format('dddd');
-        const getGreetingTime = m => {
-          const currentHour = parseFloat(m.format('HH'));
-          let result;
-          if (currentHour >= 12 && currentHour < 17) {
-            result = 'afternoon';
-          } else if (currentHour >= 17 && currentHour < 5) {
-            result = 'evening';
-          } else {
-            result = 'morning';
-          }
-          return result;
-        };
-        const timeOfTheDay = getGreetingTime(time);
+        const timeOfTheDay = utils.getGreetingTime(time);
         return (
           <ListItem
             key={i}
