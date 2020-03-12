@@ -1,12 +1,12 @@
 import * as React from 'react';
-import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
+import {StyleSheet, Text, View, TouchableOpacity, Image} from 'react-native';
+import {ScrollView} from 'react-native-gesture-handler';
 import {ListItem, SearchBar} from 'react-native-elements';
 import LinearGradient from 'react-native-linear-gradient';
 import {Content} from 'native-base';
 
 import COLORS from '../../color';
 import {useZ} from '../../zustand';
-import {getSystemAvailableFeaturesSync} from 'react-native-device-info';
 
 export default function WorkoutList({navigation}) {
   const allExercises = useZ(z => z.exercises);
@@ -73,17 +73,23 @@ export default function WorkoutList({navigation}) {
 
   function Filters({type, data}) {
     return (
-      <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
-        {data.map((x, i) => (
-          <View
-            key={i}
-            style={{
-              opacity: filters[type].includes(x) ? 1.0 : 0.5,
-            }}>
-            <FilterButton onPress={() => filter(type, x)} text={x} />
-          </View>
-        ))}
-      </View>
+      <ScrollView horizontal={true}>
+        <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
+          {data.map((x, i) => (
+            <View
+              key={i}
+              style={{
+                opacity: filters[type].includes(x) ? 1.0 : 0.6,
+              }}>
+              <FilterButton
+                onPress={() => filter(type, x)}
+                text={x}
+                type={type}
+              />
+            </View>
+          ))}
+        </View>
+      </ScrollView>
     );
   }
 
@@ -97,11 +103,18 @@ export default function WorkoutList({navigation}) {
     }
   }
 
-  function FilterButton({onPress, text}) {
+  function FilterButton({onPress, text, type}) {
     return (
       <TouchableOpacity
-        style={{...styles.filterCircle}}
+        style={
+          type === 'muscles' ? {...styles.filtersMus} : {...styles.filtersEq}
+        }
         onPress={onPress ? onPress : () => {}}>
+        <Image
+          style={styles.bigIcon}
+          source={SetImage(text)}
+          resizeMode="contain"
+        />
         <Text style={{color: '#fff'}}>{text}</Text>
       </TouchableOpacity>
     );
@@ -109,7 +122,7 @@ export default function WorkoutList({navigation}) {
   function Exercises() {
     if (exercises.length === 0)
       return (
-        <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+        <View style={styles.none}>
           <Text>No exercises found.</Text>
         </View>
       );
@@ -125,13 +138,21 @@ export default function WorkoutList({navigation}) {
             rightAvatar={
               <View style={{flexDirection: 'row'}}>
                 {exercise.muscleGroups.map(text => (
-                  <View style={{...styles.filterMusText}}>
-                    <Text style={{color: '#fff'}}>{text}</Text>
+                  <View style={{...styles.filterMus}}>
+                    <Image
+                      style={styles.bigIcon}
+                      source={SetImage(text)}
+                      resizeMode="contain"
+                    />
                   </View>
                 ))}
                 {exercise.equipments.map(text => (
-                  <View style={{...styles.filterEqText}}>
-                    <Text style={{color: '#fff'}}>{text}</Text>
+                  <View style={{...styles.filterEq}}>
+                    <Image
+                      style={styles.bigIcon}
+                      source={SetImage(text)}
+                      resizeMode="contain"
+                    />
                   </View>
                 ))}
               </View>
@@ -141,6 +162,25 @@ export default function WorkoutList({navigation}) {
         ))}
       </View>
     );
+  }
+
+  function SetImage(text) {
+    let img;
+    if (text === 'Barbell') img = require('../../src/eqipments/Barbell.png');
+    else if (text === 'Dumbbell')
+      img = require('../../src/eqipments/Dumbbell.png');
+    else if (text === 'Kettlebell')
+      img = require('../../src/eqipments/Kettlebell.png');
+    else if (text === 'Bench') img = require('../../src/eqipments/Bench.png');
+    else if (text === 'SZ-Bar') img = require('../../src/eqipments/SZ-Bar.png');
+    else if (text === 'Pull-up bar')
+      img = require('../../src/eqipments/Pull-upBar.png');
+    else if (text === 'None') img = require('../../src/eqipments/None.png');
+    else if (text === 'Front') img = require('../../src/body/Front.png');
+    else if (text === 'Arms') img = require('../../src/body/Arms.png');
+    else if (text === 'Back') img = require('../../src/body/Back.png');
+    else if (text === 'Legs') img = require('../../src/body/Legs.png');
+    return img;
   }
 }
 
@@ -154,15 +194,35 @@ const styles = StyleSheet.create({
     fontSize: 20,
     margin: 5,
   },
-  filterCircle: {
+  filtersEq: {
     padding: 6,
     margin: 2,
     borderRadius: 15,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#fc7349',
+    backgroundColor: '#F8C404',
   },
-  filterEqText: {
+  filtersMus: {
+    padding: 6,
+    margin: 2,
+    borderRadius: 15,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#ffa175',
+  },
+  bigIcon: {
+    width: 40,
+    height: 40,
+  },
+  filterEq: {
+    padding: 6,
+    margin: 2,
+    borderRadius: 15,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: COLORS.bgPrimary,
+  },
+  filterMus: {
     padding: 6,
     margin: 2,
     borderRadius: 15,
@@ -170,12 +230,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: COLORS.bgHighlight,
   },
-  filterMusText: {
-    padding: 6,
-    margin: 2,
-    borderRadius: 15,
-    justifyContent: 'center',
+  none: {
+    flex: 1,
     alignItems: 'center',
-    backgroundColor: COLORS.bgPrimary,
+    justifyContent: 'center',
+    height: 200,
   },
 });
