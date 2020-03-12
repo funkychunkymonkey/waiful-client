@@ -3,9 +3,9 @@ import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import {ListItem, SearchBar} from 'react-native-elements';
 import LinearGradient from 'react-native-linear-gradient';
 import {Content} from 'native-base';
-import COLORS from '../color';
 
-import useZ from '../zustand';
+import COLORS from '../../color';
+import {useZ} from '../../zustand';
 
 export default function WorkoutList({navigation}) {
   const allExercises = useZ(z => z.exercises);

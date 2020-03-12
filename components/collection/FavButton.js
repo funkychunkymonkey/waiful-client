@@ -1,12 +1,14 @@
 import * as React from 'react';
-import {useRef, useEffect} from 'react';
 import {StyleSheet, TouchableOpacity} from 'react-native';
 import LottieView from 'lottie-react-native';
-import {useFocusEffect} from '@react-navigation/native';
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from 'react-native-responsive-screen';
 
 function usePrevious(value) {
-  const ref = useRef();
-  useEffect(() => {
+  const ref = React.useRef();
+  React.useEffect(() => {
     ref.current = value;
   });
   return ref.current;
@@ -26,7 +28,7 @@ export default function FavButton(props) {
       <TouchableOpacity style={styles.favTouchArea} onPress={onPress} key="1">
         <LottieView
           style={styles.fav}
-          source={require('../src/2415-twitter-heart.json')}
+          source={require('../../src/2415-twitter-heart.json')}
           autoPlay={true}
           loop={false}
           progress={0.3}
@@ -38,7 +40,7 @@ export default function FavButton(props) {
       <TouchableOpacity style={styles.favTouchArea} onPress={onPress} key="2">
         <LottieView
           style={styles.fav}
-          source={require('../src/2415-twitter-heart.json')}
+          source={require('../../src/2415-twitter-heart.json')}
           progress={isFavorite ? 1 : 0}
         />
       </TouchableOpacity>
@@ -48,16 +50,15 @@ export default function FavButton(props) {
 
 const styles = StyleSheet.create({
   favTouchArea: {
-    width: 60,
+    width: wp('22%'),
     height: '100%',
-    overflow: 'hidden',
     justifyContent: 'center',
+    //    overflow: 'hidden',
   },
   fav: {
     position: 'relative',
     width: 300,
     height: 300,
-    left: -40,
-    top: 0,
+    left: -wp('8%'),
   },
 });

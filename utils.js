@@ -1,4 +1,5 @@
 import axios from 'axios';
+import {getUniqueId} from 'react-native-device-info';
 
 /**********************************************
  * USER
@@ -130,13 +131,18 @@ const logExercise = function(exercise, reps) {
  * UTILITY
  **********************************************/
 const q = async function(query, variables = {}) {
-  console.log(query);
+  console.log({
+    query,
+    variables,
+    device_id: getUniqueId(),
+  });
   const result = await axios.post(
     //'http://localhost:3000/graphql',
     'http://waiful-backend-dev3.ap-northeast-1.elasticbeanstalk.com/graphql',
     {
       query,
       variables,
+      device_id: getUniqueId(),
     },
   );
   return result.data.data;

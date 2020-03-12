@@ -1,17 +1,15 @@
 import * as React from 'react';
 import {StyleSheet, Text} from 'react-native';
 
-import {Container, Header, Left, Body, Right, Title, Button} from 'native-base';
-import {Content, List, ListItem, Icon, Switch} from 'native-base';
+import {Content, List, ListItem, Icon, Left, Right} from 'native-base';
 import {createStackNavigator} from '@react-navigation/stack';
 
-import SettingsSeries from './SettingsSeries.js';
-import SettingsSeriesAdd from './SettingsSeriesAdd.js';
+import SettingsSeries from './Series.js';
+import SettingsSeriesAdd from './SeriesAdd.js';
 
-import COLORS from '../color';
+import COLORS from '../../color';
 
 const Stack = createStackNavigator();
-
 export default function() {
   return (
     <Stack.Navigator
