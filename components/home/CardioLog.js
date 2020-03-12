@@ -6,6 +6,7 @@ import moment from 'moment';
 
 import utils from '../../utils.js';
 import Loading from '../Loading.js';
+import {color} from 'react-native-reanimated';
 
 export default function WorkoutLog({navigation}) {
   const [logs, setLogs] = React.useState([]);
@@ -32,15 +33,19 @@ export default function WorkoutLog({navigation}) {
     );
   return (
     <ScrollView>
-      {logs.map((log, i) => (
-        <ListItem
-          key={i}
-          style={{}}
-          title={log.distance + 'm'}
-          rightAvatar={<Text>{moment(log.startedAt).fromNow()}</Text>}
-          bottomDivider
-        />
-      ))}
+      {logs.map((log, i) => {
+        const time = moment(log.startedAt);
+        const day = time.format('dddd');
+        return (
+          <ListItem
+            key={i}
+            style={{}}
+            title={day + ' Run! :' + log.distance + 'm'}
+            rightAvatar={<Text>{time.fromNow()}</Text>}
+            bottomDivider
+          />
+        );
+      })}
     </ScrollView>
   );
 }
