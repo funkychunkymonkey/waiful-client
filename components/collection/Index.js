@@ -1,6 +1,7 @@
 import * as React from 'react';
 import {ScrollView} from 'react-native-gesture-handler';
 import {StyleSheet, Text, TouchableOpacity, Image, View} from 'react-native';
+import {Badge} from 'react-native-elements';
 import {Container, Header, Left, Body, Right, Title} from 'native-base';
 import {
   widthPercentageToDP as wp,
@@ -72,11 +73,12 @@ export default function Collection({route}) {
             uri: collection[i].imageUrl,
           }}
         />
-        {collection[i].isFavorite ? (
-          <Text style={styles.isFavMark}>♥</Text>
-        ) : (
-          <Text style={styles.isFavMark}> </Text>
-        )}
+        <View style={styles.isFavMarkView}>
+          <Text style={styles.isFavMarkHeart}>
+            {collection[i].isFavorite ? '♥' : ' '}
+          </Text>
+          <Badge value={collection[i].level} status="warning" />
+        </View>
       </TouchableOpacity>
     );
   };
@@ -134,6 +136,9 @@ export default function Collection({route}) {
                     </Text>
                     <Text style={styles.waifuSeriesText}>
                       {collection[selectedWaifuIdx].series.name}
+                    </Text>
+                    <Text style={styles.waifuSeriesText}>
+                      Level {collection[selectedWaifuIdx].level}
                     </Text>
                   </View>
                   <TouchableOpacity
@@ -220,11 +225,15 @@ const styles = StyleSheet.create({
     marginLeft: wp('3%'),
     position: 'relative',
   },
-  isFavMark: {
-    position: 'relative',
+  isFavMarkView: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     top: -20,
-    left: 6,
-    fontSize: 30,
+  },
+  isFavMarkHeart: {
+    top: -4,
+    right: -10,
+    fontSize: 22,
     color: COLORS.favHeart,
   },
   trashIcon: {
