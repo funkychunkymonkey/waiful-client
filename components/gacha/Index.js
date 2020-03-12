@@ -19,7 +19,8 @@ import {useZ} from '../../zustand';
 
 export default function Gacha({route}) {
   const popUpWaifu = useZ(z => z.popUpWaifu);
-  const reloadWaifus = useZ(z => z.reloadWaifus);
+  const waifus = useZ(z => z.waifus);
+  const setWaifus = useZ(z => z.setWaifus);
   const [gems, setGems] = React.useState(0);
   const [gachaStatus, setGachaStatus] = React.useState('WAITING'); // can be WAITING, GACHA or RESULTS
 
@@ -62,7 +63,7 @@ export default function Gacha({route}) {
         duration: 1000,
       }).start(() => {
         setGachaStatus('RESULTS');
-        reloadWaifus();
+        setWaifus([res, ...waifus.filter(x => x.id !== res.id)]);
         buttonRiseAnim.setValue(0);
         buttonSpinAnim.setValue(1);
         buttonFadeAnim.setValue(1);

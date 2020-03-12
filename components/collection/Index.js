@@ -1,246 +1,43 @@
 import * as React from 'react';
-import {ScrollView} from 'react-native-gesture-handler';
-import {StyleSheet, Text, TouchableOpacity, Image, View} from 'react-native';
-import {Badge} from 'react-native-elements';
-import {Container, Header, Left, Body, Right, Title} from 'native-base';
-import {
-  widthPercentageToDP as wp,
-  heightPercentageToDP as hp,
-} from 'react-native-responsive-screen';
-import LinearGradient from 'react-native-linear-gradient';
-import Icon from 'react-native-vector-icons/FontAwesome5';
+import {createStackNavigator} from '@react-navigation/stack';
 
-import utils from '../../utils.js';
 import COLORS from '../../color';
+import Collection from './Collection.js';
+import Detail from './Detail.js';
 
-import FavButton from './FavButton.js';
+import {useZ, useCollectionZ} from '../../zustand';
 
-import {useZ} from '../../zustand';
+const Stack = createStackNavigator();
+export default function() {
+  const waifus = useZ(z => z.waifus);
+  const selectedIndex = useCollectionZ(z => z.selectedIndex);
+  const waifu = useCollectionZ(z => z.waifu);
+  const setWaifu = useCollectionZ(z => z.setWaifu);
 
-export default function Collection({route}) {
-  const popUpWaifu = useZ(z => z.popUpWaifu);
-  const collection = useZ(z => z.waifus);
-  const setCollection = useZ(z => z.setWaifus);
-  const [selectedWaifuIdx, setSelectedWaifuIdx] = React.useState(0);
-
-  const updateFavState = (waifuIdx, newFavState) => {
-    const newWaifu = {...collection[selectedWaifuIdx], isFavorite: newFavState};
-    const newCollection = [...collection];
-    newCollection[waifuIdx] = newWaifu;
-    setCollection(newCollection);
-  };
-
-  const fav = waifuIdx => {
-    const waifu = collection[waifuIdx];
-    if (!waifu.isFavorite) {
-      utils
-        .setFavWaifu(waifu.malId)
-        .then(result => result && updateFavState(waifuIdx, true))
-        .catch(e => alert(e));
-    } else {
-      utils
-        .setUnfavWaifu(waifu.malId)
-        .then(result => result && updateFavState(waifuIdx, false))
-        .catch(e => alert(e));
-    }
-  };
-
-  function sell(waifuIdx) {
-    const waifu = collection[waifuIdx];
-    utils
-      .sellWaifu(waifu.malId)
-      .then(result => {
-        setCollection(collection.filter(x => x.id !== waifu.id));
-        setSelectedWaifuIdx(0);
-        popUpWaifu({
-          waifu: null,
-          gems: result,
-          auto: false,
-        });
-      })
-      .catch(e => alert(e));
-  }
-
-  const getGalleryItem = i => {
-    return (
-      <TouchableOpacity
-        onPress={() => {
-          setSelectedWaifuIdx(i);
-        }}>
-        <Image
-          style={styles.collection}
-          source={{
-            uri: collection[i].imageUrl,
-          }}
-        />
-        <View style={styles.isFavMarkView}>
-          <Text style={styles.isFavMarkHeart}>
-            {collection[i].isFavorite ? '♥' : ' '}
-          </Text>
-          <Badge value={collection[i].level} status="warning" />
-        </View>
-      </TouchableOpacity>
-    );
-  };
-  const pairCollection = [];
-  for (let i = 0; i < collection.length; i += 2) {
-    pairCollection.push(
-      <View key={i}>
-        {getGalleryItem(i)}
-        {collection.length > i + 1 && getGalleryItem(i + 1)}
-      </View>,
-    );
-  }
+  React.useEffect(() => {
+    setWaifu(waifus[selectedIndex]);
+  }, [selectedIndex, waifus]);
 
   return (
-    <Container>
-      <Header style={styles.header}>
-        <Left />
-        <Body>
-          <Title style={styles.title}>Collection</Title>
-        </Body>
-        <Right />
-      </Header>
-
-      <Body style={styles.body}>
-        <View style={styles.showView}>
-          {collection[selectedWaifuIdx] ? (
-            <>
-              <LinearGradient
-                colors={[COLORS.bgPrimary, COLORS.bgHighlight]}
-                style={styles.waifuImageWrapper}>
-                <Image
-                  style={styles.waifuImage}
-                  source={{
-                    uri: collection[selectedWaifuIdx].imageUrl,
-                  }}
-                  resizeMode="contain"
-                />
-                <View
-                  style={{
-                    ...styles.info,
-                  }}>
-                  <FavButton
-                    onPress={() => fav(selectedWaifuIdx)}
-                    waifuIdx={selectedWaifuIdx}
-                    isFavorite={collection[selectedWaifuIdx].isFavorite}
-                  />
-                  <View style={styles.infoText}>
-                    <Text style={styles.waifuNemeText}>
-                      {collection[selectedWaifuIdx].name.replace(
-                        /&#(\d+);/g,
-                        function(m, n) {
-                          return String.fromCharCode(n);
-                        },
-                      )}
-                    </Text>
-                    <Text style={styles.waifuSeriesText}>
-                      {collection[selectedWaifuIdx].series.name}
-                    </Text>
-                    <Text style={styles.waifuSeriesText}>
-                      Level {collection[selectedWaifuIdx].level}
-                    </Text>
-                  </View>
-                  <TouchableOpacity
-                    style={styles.trashIcon}
-                    onPress={() => {
-                      sell(selectedWaifuIdx);
-                    }}>
-                    <Icon name="trash" size={40} />
-                  </TouchableOpacity>
-                </View>
-              </LinearGradient>
-            </>
-          ) : (
-            <></>
-          )}
-        </View>
-        <ScrollView contentContainerStyle={styles.gallery} horizontal={true}>
-          {collection.length !== 0 ? (
-            pairCollection
-          ) : (
-            <Text style={styles.waifuNemeText}> No collection yet.</Text>
-          )}
-        </ScrollView>
-      </Body>
-    </Container>
+    <Stack.Navigator
+      initialRouteName="Collection"
+      screenOptions={{
+        headerStyle: {
+          backgroundColor: COLORS.bgPrimary,
+          borderBottomWidth: 0,
+          shadowColor: 'transparent',
+        },
+        headerTintColor: COLORS.textTitle,
+        headerTitleStyle: {
+          fontWeight: 'bold',
+        },
+      }}>
+      <Stack.Screen name="Collection" component={Collection} />
+      <Stack.Screen
+        name="Detail"
+        component={Detail}
+        options={{title: waifu ? waifu.name : 'Detail', headerBackTitle: ' '}}
+      />
+    </Stack.Navigator>
   );
 }
-
-const styles = StyleSheet.create({
-  header: {
-    backgroundColor: COLORS.bgPrimary,
-    borderBottomWidth: 0,
-    shadowColor: 'transparent',
-  },
-  title: {
-    fontWeight: 'bold',
-    color: 'white',
-  },
-  body: {
-    backgroundColor: COLORS.textSecondary,
-    width: '100%',
-  },
-  showView: {
-    height: hp('52%'),
-  },
-  waifuImageWrapper: {
-    height: hp('52%'),
-    alignItems: 'center',
-  },
-  waifuImage: {
-    marginTop: hp('1%'),
-    height: hp('37%'),
-    width: wp('100%'),
-  },
-  info: {
-    position: 'relative',
-    alignItems: 'center',
-    flexDirection: 'row',
-    height: hp('14%'),
-  },
-  infoText: {
-    height: '100%',
-    justifyContent: 'center',
-    padding: 0,
-    flex: 1,
-  },
-  waifuNemeText: {
-    color: COLORS.textTitle,
-    textAlign: 'center',
-    fontSize: hp('3%'),
-  },
-  waifuSeriesText: {
-    color: COLORS.textTitle,
-    fontSize: hp('2.5%'),
-    textAlign: 'center',
-  },
-  gallery: {
-    backgroundColor: COLORS.textSecondary,
-    paddingTop: hp('3%'),
-  },
-  collection: {
-    borderRadius: 20,
-    width: hp('9%'),
-    height: hp('9%'),
-    marginLeft: wp('3%'),
-    position: 'relative',
-  },
-  isFavMarkView: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    top: -20,
-  },
-  isFavMarkHeart: {
-    top: -4,
-    right: -10,
-    fontSize: 22,
-    color: COLORS.favHeart,
-  },
-  trashIcon: {
-    justifyContent: 'center',
-    width: wp('20%'),
-    height: '100%',
-    padding: 10,
-  },
-});

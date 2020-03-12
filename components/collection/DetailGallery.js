@@ -15,6 +15,7 @@ import COLORS from '../../color';
 
 export default function DetailGallery({waifu}) {
   const [selectedImageIndex, setSelectedImageIndex] = React.useState(0);
+  const images = waifu.waifuImages.slice(0, Math.floor(waifu.level / 10) + 1);
 
   return (
     <LinearGradient
@@ -35,18 +36,18 @@ export default function DetailGallery({waifu}) {
             height: 350,
           }}
           source={{
-            uri: waifu.waifuImages[selectedImageIndex].url,
+            uri: images[selectedImageIndex].url,
           }}
         />
       </View>
-      {waifu.waifuImages.length > 1 ? (
+      {images.length > 1 ? (
         <ScrollView
           style={{
             backgroundColor: COLORS.textSecondary,
             width: '100%',
           }}
           horizontal={true}>
-          {waifu.waifuImages.slice(0, 3).map((x, i) => (
+          {images.map((x, i) => (
             <TouchableOpacity
               style={{
                 margin: 5,

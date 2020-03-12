@@ -13,7 +13,7 @@ const getUser = function() {
  **********************************************/
 const gacha = function() {
   return q(
-    'mutation{gacha(input:{}){id name imageUrl url series{id name imageUrl url}}}',
+    'mutation{gacha(input:{}){ id level malId name imageUrl url description isFavorite waifuImages{url} series{id name imageUrl url} }}',
   ).then(data => data.gacha);
 };
 const sellWaifu = function(malId) {
@@ -25,7 +25,6 @@ const getWaifus = function() {
   return q(
     'query{user{ waifus{id level malId name imageUrl url description isFavorite waifuImages{url} series{id name imageUrl url}} }}',
   ).then(data => {
-    console.log('------------------', data);
     return data.user.waifus;
   });
 };
