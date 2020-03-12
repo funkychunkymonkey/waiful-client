@@ -154,7 +154,7 @@ export default function Collection({route}) {
           {collection.length !== 0 ? (
             pairCollection
           ) : (
-            <Text>No collection yet.</Text>
+            <Text style={styles.waifuNemeText}> No collection yet.</Text>
           )}
         </ScrollView>
       </Body>
@@ -174,6 +174,7 @@ const styles = StyleSheet.create({
   },
   body: {
     backgroundColor: COLORS.textSecondary,
+    width: '100%',
   },
   showView: {
     height: hp('52%'),
