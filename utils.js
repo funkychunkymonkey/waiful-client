@@ -23,7 +23,7 @@ const sellWaifu = function(malId) {
 };
 const getWaifus = function() {
   return q(
-    'query{user{ waifus{id malId name imageUrl url isFavorite series{id name imageUrl url}} }}',
+    'query{user{ waifus{id level malId name imageUrl url isFavorite series{id name imageUrl url}} }}',
   ).then(data => data.user.waifus);
 };
 
