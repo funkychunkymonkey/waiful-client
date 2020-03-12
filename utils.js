@@ -23,8 +23,11 @@ const sellWaifu = function(malId) {
 };
 const getWaifus = function() {
   return q(
-    'query{user{ waifus{id level malId name imageUrl url isFavorite series{id name imageUrl url}} }}',
-  ).then(data => data.user.waifus);
+    'query{user{ waifus{id level malId name imageUrl url description isFavorite waifuImages{url} series{id name imageUrl url}} }}',
+  ).then(data => {
+    console.log('------------------', data);
+    return data.user.waifus;
+  });
 };
 
 const setFavWaifu = function(malId) {
