@@ -7,6 +7,9 @@ import {
 import COLORS from '../../color';
 
 export default function DetailLevel({waifu}) {
+  const maxLevel =
+    waifu.waifuImages.length > 1 ? (waifu.waifuImages.length - 1) * 10 : 1;
+  const completion = Math.floor((waifu.level / maxLevel) * 100);
   return (
     <View
       style={{
@@ -50,7 +53,7 @@ export default function DetailLevel({waifu}) {
               position: 'absolute',
               bottom: 10,
             }}>
-            / {waifu.waifuImages.length * 10}
+            / {maxLevel}
           </Text>
         </View>
       </View>
@@ -76,7 +79,7 @@ export default function DetailLevel({waifu}) {
             style={{
               backgroundColor: COLORS.bgPrimary,
               height: '100%',
-              width: `90%`,
+              width: `${completion}%`,
             }}
           />
           <View
@@ -90,7 +93,7 @@ export default function DetailLevel({waifu}) {
               alignItems: 'center',
             }}>
             <Text style={{color: COLORS.textSecondary, fontSize: 20}}>
-              90% completion
+              {completion}% completion
             </Text>
           </View>
         </View>

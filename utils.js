@@ -25,7 +25,6 @@ const getWaifus = function() {
   return q(
     'query{user{ waifus{id level malId name imageUrl url description isFavorite waifuImages{url} series{id name imageUrl url}} }}',
   ).then(data => {
-    console.log('------------------', data);
     return data.user.waifus;
   });
 };

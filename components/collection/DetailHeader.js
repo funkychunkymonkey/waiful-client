@@ -5,16 +5,44 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import LinearGradient from 'react-native-linear-gradient';
+
 import COLORS from '../../color';
+import utils from '../../utils';
 import FavButton from './FavButton.js';
 
-export default function DetailHeader({waifu}) {
+import {useZ, useCollectionZ} from '../../zustand';
+
+export default function DetailHeader() {
+  const waifus = useZ(z => z.waifus);
+  const setWaifus = useZ(z => z.setWaifus);
+
+  const selectedIndex = useCollectionZ(z => z.selectedIndex);
+  const waifu = waifus[selectedIndex];
+
+  const updateFavState = newFavState => {
+    const newWaifu = {...waifus[selectedIndex], isFavorite: newFavState};
+    const newWaifus = [...waifus];
+    newWaifus[selectedIndex] = newWaifu;
+    setWaifus(newWaifus);
+  };
+
+  const fav = () => {
+    if (!waifu.isFavorite) {
+      utils
+        .setFavWaifu(waifu.malId)
+        .then(result => result && updateFavState(true));
+    } else {
+      utils
+        .setUnfavWaifu(waifu.malId)
+        .then(result => result && updateFavState(false));
+    }
+  };
+
   return (
     <LinearGradient
       colors={[COLORS.bgPrimary, COLORS.bgHighlight]}
       style={{
         width: wp(100),
-        paddingTop: 100,
         justifyContent: 'center',
         padding: 10,
       }}>
@@ -39,7 +67,7 @@ export default function DetailHeader({waifu}) {
           </Text>
         </View>
         <View style={{height: 100}}>
-          <FavButton onPress={() => () => {}} isFavorite={waifu.isFavorite} />
+          <FavButton onPress={fav} isFavorite={waifu.isFavorite} />
         </View>
       </View>
     </LinearGradient>
