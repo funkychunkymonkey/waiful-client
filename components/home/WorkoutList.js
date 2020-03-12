@@ -166,20 +166,23 @@ export default function WorkoutList({navigation}) {
 
   function SetImage(text) {
     let img;
-    if (text === 'Barbell') img = require('../../src/eqipments/Barbell.png');
+    if (text === 'Barbell') img = require('../../assets/eqipments/Barbell.png');
     else if (text === 'Dumbbell')
-      img = require('../../src/eqipments/Dumbbell.png');
+      img = require('../../assets/eqipments/Dumbbell.png');
     else if (text === 'Kettlebell')
-      img = require('../../src/eqipments/Kettlebell.png');
-    else if (text === 'Bench') img = require('../../src/eqipments/Bench.png');
-    else if (text === 'SZ-Bar') img = require('../../src/eqipments/SZ-Bar.png');
+      img = require('../../assets/eqipments/Kettlebell.png');
+    else if (text === 'Bench')
+      img = require('../../assets/eqipments/Bench.png');
+    else if (text === 'SZ-Bar')
+      img = require('../../assets/eqipments/SZ-Bar.png');
     else if (text === 'Pull-up bar')
-      img = require('../../src/eqipments/Pull-upBar.png');
-    else if (text === 'None') img = require('../../src/eqipments/None.png');
-    else if (text === 'Front') img = require('../../src/body/Front.png');
-    else if (text === 'Arms') img = require('../../src/body/Arms.png');
-    else if (text === 'Back') img = require('../../src/body/Back.png');
-    else if (text === 'Legs') img = require('../../src/body/Legs.png');
+      img = require('../../assets/eqipments/Pull-upBar.png');
+    else if (text === 'None') img = require('../../assets/eqipments/None.png');
+    else if (text === 'Front') img = require('../../assets/body/Front.png');
+    else if (text === 'Arms') img = require('../../assets/body/Arms.png');
+    else if (text === 'Back') img = require('../../assets/body/Back.png');
+    else if (text === 'Legs') img = require('../../assets/body/Legs.png');
+    else img = require('../../assets/eqipments/None.png');
     return img;
   }
 }
