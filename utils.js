@@ -151,6 +151,19 @@ const q = async function(query, variables = {}) {
   return result.data.data;
 };
 
+const getGreetingTime = m => {
+  const currentHour = parseFloat(m.format('HH'));
+  let result;
+  if (currentHour >= 12 && currentHour < 17) {
+    result = 'afternoon';
+  } else if (currentHour >= 17 && currentHour < 5) {
+    result = 'evening';
+  } else {
+    result = 'morning';
+  }
+  return result;
+};
+
 export default {
   getUser,
   gacha,
@@ -169,4 +182,5 @@ export default {
   getTopSeries,
   addSeries,
   removeSeries,
+  getGreetingTime,
 };
