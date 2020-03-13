@@ -1,5 +1,6 @@
 import * as React from 'react';
-import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
+import {StyleSheet, Text, View, TouchableOpacity, Image} from 'react-native';
+import {ScrollView} from 'react-native-gesture-handler';
 import {ListItem, SearchBar} from 'react-native-elements';
 import LinearGradient from 'react-native-linear-gradient';
 import {Content} from 'native-base';
@@ -54,9 +55,11 @@ export default function WorkoutList({navigation}) {
   }, [filters, allExercises, search]);
 
   return (
-    <Content>
+    <Content style={styles.content}>
       <LinearGradient colors={[COLORS.bgPrimary, COLORS.bgHighlight]}>
+        <Text style={styles.titleText}>MUSUCLES</Text>
         <Filters type="muscles" data={allData.muscles} />
+        <Text style={styles.titleText}>EQUIPMENTS</Text>
         <Filters type="equipments" data={['None', ...allData.equipments]} />
       </LinearGradient>
       <SearchBar
@@ -70,19 +73,26 @@ export default function WorkoutList({navigation}) {
 
   function Filters({type, data}) {
     return (
-      <View style={{flexDirection: 'row'}}>
-        {data.map((x, i) => (
-          <View
-            key={i}
-            style={{
-              opacity: filters[type].includes(x) ? 1.0 : 0.5,
-            }}>
-            <FilterCircle onPress={() => filter(type, x)} text={x} />
-          </View>
-        ))}
-      </View>
+      <ScrollView horizontal={true}>
+        <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
+          {data.map((x, i) => (
+            <View
+              key={i}
+              style={{
+                opacity: filters[type].includes(x) ? 1.0 : 0.6,
+              }}>
+              <FilterButton
+                onPress={() => filter(type, x)}
+                text={x}
+                type={type}
+              />
+            </View>
+          ))}
+        </View>
+      </ScrollView>
     );
   }
+
   function filter(type, x) {
     if (filters[type].includes(x)) {
       filters[type] = filters[type].filter(xx => xx !== x);
@@ -93,11 +103,18 @@ export default function WorkoutList({navigation}) {
     }
   }
 
-  function FilterCircle({onPress, text}) {
+  function FilterButton({onPress, text, type}) {
     return (
       <TouchableOpacity
-        style={{...styles.filterCircle}}
+        style={
+          type === 'muscles' ? {...styles.filtersMus} : {...styles.filtersEq}
+        }
         onPress={onPress ? onPress : () => {}}>
+        <Image
+          style={styles.bigIcon}
+          source={SetImage(text)}
+          resizeMode="contain"
+        />
         <Text style={{color: '#fff'}}>{text}</Text>
       </TouchableOpacity>
     );
@@ -105,7 +122,7 @@ export default function WorkoutList({navigation}) {
   function Exercises() {
     if (exercises.length === 0)
       return (
-        <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+        <View style={styles.none}>
           <Text>No exercises found.</Text>
         </View>
       );
@@ -120,11 +137,23 @@ export default function WorkoutList({navigation}) {
             }}
             rightAvatar={
               <View style={{flexDirection: 'row'}}>
-                {exercise.muscleGroups.map((x, i) => (
-                  <FilterCircle text={x} key={i} />
+                {exercise.muscleGroups.map(text => (
+                  <View style={{...styles.filterMus}}>
+                    <Image
+                      style={styles.bigIcon}
+                      source={SetImage(text)}
+                      resizeMode="contain"
+                    />
+                  </View>
                 ))}
-                {exercise.equipments.map((x, i) => (
-                  <FilterCircle text={x} key={i} />
+                {exercise.equipments.map(text => (
+                  <View style={{...styles.filterEq}}>
+                    <Image
+                      style={styles.bigIcon}
+                      source={SetImage(text)}
+                      resizeMode="contain"
+                    />
+                  </View>
                 ))}
               </View>
             }
@@ -134,32 +163,80 @@ export default function WorkoutList({navigation}) {
       </View>
     );
   }
+
+  function SetImage(text) {
+    let img;
+    if (text === 'Barbell') img = require('../../assets/eqipments/Barbell.png');
+    else if (text === 'Dumbbell')
+      img = require('../../assets/eqipments/Dumbbell.png');
+    else if (text === 'Kettlebell')
+      img = require('../../assets/eqipments/Kettlebell.png');
+    else if (text === 'Bench')
+      img = require('../../assets/eqipments/Bench.png');
+    else if (text === 'SZ-Bar')
+      img = require('../../assets/eqipments/SZ-Bar.png');
+    else if (text === 'Pull-up bar')
+      img = require('../../assets/eqipments/Pull-upBar.png');
+    else if (text === 'None') img = require('../../assets/eqipments/None.png');
+    else if (text === 'Front') img = require('../../assets/body/Front.png');
+    else if (text === 'Arms') img = require('../../assets/body/Arms.png');
+    else if (text === 'Back') img = require('../../assets/body/Back.png');
+    else if (text === 'Legs') img = require('../../assets/body/Legs.png');
+    else img = require('../../assets/eqipments/None.png');
+    return img;
+  }
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: COLORS.bgSecondary,
+  content: {
+    backgroundColor: COLORS.bgPrimary,
+    width: '100%',
   },
-  contentContainer: {
-    paddingTop: 50,
-  },
-  item: {
-    borderRadius: 1,
-    padding: 10,
-    fontSize: 18,
-    height: 44,
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  filterCircle: {
-    width: 50,
-    height: 50,
+  titleText: {
+    color: COLORS.textTitle,
+    fontSize: 20,
     margin: 5,
-    borderRadius: 50,
+  },
+  filtersEq: {
+    padding: 6,
+    margin: 2,
+    borderRadius: 15,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#fc7349',
+    backgroundColor: '#F8C404',
+  },
+  filtersMus: {
+    padding: 6,
+    margin: 2,
+    borderRadius: 15,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#ffa175',
+  },
+  bigIcon: {
+    width: 40,
+    height: 40,
+  },
+  filterEq: {
+    padding: 6,
+    margin: 2,
+    borderRadius: 15,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: COLORS.bgPrimary,
+  },
+  filterMus: {
+    padding: 6,
+    margin: 2,
+    borderRadius: 15,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: COLORS.bgHighlight,
+  },
+  none: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: 200,
   },
 });

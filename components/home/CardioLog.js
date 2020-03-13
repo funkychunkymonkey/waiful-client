@@ -1,25 +1,21 @@
 import * as React from 'react';
 import {Dimensions} from 'react-native';
 import {StyleSheet, Text, View, ScrollView} from 'react-native';
-import {ListItem} from 'react-native-elements';
+import {ListItem, Tooltip} from 'react-native-elements';
 import {useFocusEffect} from '@react-navigation/native';
 import moment from 'moment';
 
 import utils from '../../utils.js';
 import Loading from '../Loading.js';
+import {color} from 'react-native-reanimated';
+import COLOR from '../../color';
 
-import {
-  LineChart,
-  BarChart,
-  PieChart,
-  ProgressChart,
-  ContributionGraph,
-  StackedBarChart,
-} from 'react-native-chart-kit';
+import {LineChart} from 'react-native-chart-kit';
 
 export default function WorkoutLog({navigation}) {
   const [logs, setLogs] = React.useState([]);
   const [loading, setLoading] = React.useState(true);
+  const [selectedList, setSelectedList] = React.useState('');
 
   useFocusEffect(
     React.useCallback(() => {
@@ -41,7 +37,7 @@ export default function WorkoutLog({navigation}) {
       </View>
     );
   return (
-    <ScrollView>
+    <View>
       <LineChart
         data={{
           labels: logs
@@ -49,14 +45,18 @@ export default function WorkoutLog({navigation}) {
             .map(
               startedAt => startedAt.slice(5, 7) + '/' + startedAt.slice(8, 10),
             )
-            .reverse(),
+            .reverse()
+            .splice(-7), // get latest data from the end of an array
           datasets: [
             {
-              data: logs.map(log => log.distance).reverse(),
+              data: logs
+                .map(log => log.distance)
+                .reverse()
+                .splice(-7), // get latest data from the end of an array
             },
           ],
         }}
-        width={Dimensions.get('window').width} // from react-native
+        width={Dimensions.get('window').width - 10} // from react-native
         height={250}
         fromZero={true}
         yAxisSuffix="m"
@@ -80,21 +80,40 @@ export default function WorkoutLog({navigation}) {
             stroke: '#ffa726',
           },
         }}
+        onDataPointClick={data => {
+          const dataIndex = {
+            0: 6,
+            1: 5,
+            2: 4,
+            3: 3,
+            4: 2,
+            5: 1,
+            6: 0,
+          };
+          setSelectedList(dataIndex[data.index]);
+        }}
         style={{
-          marginVertical: 20,
+          marginTop: 20,
+          marginBottom: 20,
+          marginLeft: 10,
+          marginRight: 10,
           borderRadius: 20,
         }}
       />
-      {logs.map((log, i) => (
-        <ListItem
-          key={i}
-          style={{}}
-          title={log.distance + 'm'}
-          rightAvatar={<Text>{moment(log.startedAt).fromNow()}</Text>}
-          bottomDivider
-        />
-      ))}
-    </ScrollView>
+      <ScrollView>
+        {logs.map((log, i) => (
+          <ListItem
+            key={i}
+            containerStyle={
+              selectedList === i ? {backgroundColor: COLOR.bgHighlight} : {}
+            }
+            title={log.distance + 'm'}
+            rightAvatar={<Text>{moment(log.startedAt).fromNow()}</Text>}
+            bottomDivider
+          />
+        ))}
+      </ScrollView>
+    </View>
   );
 }
 

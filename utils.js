@@ -13,7 +13,7 @@ const getUser = function() {
  **********************************************/
 const gacha = function() {
   return q(
-    'mutation{gacha(input:{}){id name imageUrl url series{id name imageUrl url}}}',
+    'mutation{gacha(input:{}){ id level malId name imageUrl url description isFavorite waifuImages{url} series{id name imageUrl url} }}',
   ).then(data => data.gacha);
 };
 const sellWaifu = function(malId) {
@@ -23,8 +23,10 @@ const sellWaifu = function(malId) {
 };
 const getWaifus = function() {
   return q(
-    'query{user{ waifus{id malId name imageUrl url isFavorite series{id name imageUrl url}} }}',
-  ).then(data => data.user.waifus);
+    'query{user{ waifus{id level malId name imageUrl url description isFavorite waifuImages{url} series{id name imageUrl url}} }}',
+  ).then(data => {
+    return data.user.waifus;
+  });
 };
 
 const setFavWaifu = function(malId) {
@@ -148,6 +150,19 @@ const q = async function(query, variables = {}) {
   return result.data.data;
 };
 
+const getGreetingTime = m => {
+  const currentHour = parseFloat(m.format('HH'));
+  let result;
+  if (currentHour >= 12 && currentHour < 17) {
+    result = 'afternoon';
+  } else if (currentHour >= 17 && currentHour < 5) {
+    result = 'evening';
+  } else {
+    result = 'morning';
+  }
+  return result;
+};
+
 export default {
   getUser,
   gacha,
@@ -166,4 +181,5 @@ export default {
   getTopSeries,
   addSeries,
   removeSeries,
+  getGreetingTime,
 };
