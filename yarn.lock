@@ -665,6 +665,13 @@
     exec-sh "^0.3.2"
     minimist "^1.2.0"
 
+"@dooboo-ui/native-accordion@^0.4.4":
+  version "0.4.4"
+  resolved "https://registry.yarnpkg.com/@dooboo-ui/native-accordion/-/native-accordion-0.4.4.tgz#2e386aaec740d9c1944d2afddb536bd80f0c99f2"
+  integrity sha512-GJ2oE7JRJagi9S4l6mUchpruBn3EPEJflS/jKOZOjUl2k0GZPOLVqRvbd+XrNug096nGIOIKP4DroacVncY+Eg==
+  dependencies:
+    dooboolab-welcome "^1.1.1"
+
 "@egjs/hammerjs@^2.0.17":
   version "2.0.17"
   resolved "https://registry.yarnpkg.com/@egjs/hammerjs/-/hammerjs-2.0.17.tgz#5dc02af75a6a06e4c2db0202cae38c9263895124"
@@ -2331,6 +2338,11 @@ domexception@^1.0.1:
   integrity sha512-raigMkn7CJNNo6Ihro1fzG7wr3fHuYVytzquZKX5n0yizGsTcYgzdIUwj1X9pK0VvjeihV+XiclP+DjwbsSKug==
   dependencies:
     webidl-conversions "^4.0.2"
+
+dooboolab-welcome@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/dooboolab-welcome/-/dooboolab-welcome-1.1.1.tgz#ca2184f6e1f568865d707a6ce3bda7e003550f54"
+  integrity sha512-tQ/9NBCGnalHwKOBjDqTD4t4wQpDfSSbxQGctzkzaLHR3AhN0wCBkIs05JciVtvl/jfLZ+DgAndktAMk3Bu7Vw==
 
 ecc-jsbn@~0.1.1:
   version "0.1.2"
@@ -5547,6 +5559,13 @@ react-native-cli@^2.0.1:
     minimist "^1.2.0"
     prompt "^0.2.14"
     semver "^5.0.3"
+
+react-native-collapsible@^1.5.1:
+  version "1.5.1"
+  resolved "https://registry.yarnpkg.com/react-native-collapsible/-/react-native-collapsible-1.5.1.tgz#da2937b509921b28bf1b0f9eb8e50ad61c3ffb5d"
+  integrity sha512-uQQ2s6l+7+L/pzJroisWsDsyVYVF5bQ+jGbLATNioRh/03SpEL8pcQEVKqVWswcNNR0B9GENixHaLzmuZIwpQg==
+  dependencies:
+    prop-types "^15.6.2"
 
 react-native-device-info@^5.5.3:
   version "5.5.3"
