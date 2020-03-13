@@ -13,6 +13,10 @@ const getUser = function() {
     user.personalities = [1, ...user.personalities].map(
       x => PERSONALITIES[x - 1],
     );
+    user.waifus = user.waifus.map(x => {
+      x.imageUrl = x.waifuImages.length > 0 ? x.waifuImages[0].url : x.imageUrl;
+      return x;
+    });
     return user;
   });
 };

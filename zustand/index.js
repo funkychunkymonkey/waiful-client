@@ -47,6 +47,16 @@ const [useZ] = create((set, get) => ({
     // if it's a generic dialogue with no waifu, return immediately
     if (!options.gems && !waifu) return;
 
+    // generate waifu image
+    if (waifu.waifuImages.length > 1) {
+      const maxIndex = Math.min(
+        waifu.waifuImages.length - 1,
+        Math.floor(waifu.level / 10),
+      );
+      const index = Math.floor(Math.random() * (maxIndex + 1));
+      waifu.imageUrl = waifu.waifuImages[index].url;
+    }
+
     // otherwise pop
     set({
       overlayIsVisible: true,
