@@ -16,11 +16,16 @@ import utils from '../../utils';
 export default function DetailPersonality({waifu}) {
   const user = useZ(z => z.user);
   const setWaifus = useZ(z => z.setWaifus);
-  console.log(user.personalities);
+  const popUpWaifu = useZ(z => z.popUpWaifu);
+
   function setPersonality(personalityId) {
     waifu.personalityId = personalityId;
     setWaifus([...user.waifus]);
     utils.setPersonality(waifu.id, personalityId);
+    popUpWaifu({
+      waifu: waifu,
+      event: 'greet',
+    });
   }
   return (
     <LinearGradient

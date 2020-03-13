@@ -1,5 +1,6 @@
 import create from 'zustand';
 import utils from '../utils.js';
+const PERSONALITIES = require('../assets/personalities.json');
 
 const [useZ] = create((set, get) => ({
   /****************************************************************************
@@ -55,6 +56,14 @@ const [useZ] = create((set, get) => ({
       );
       const index = Math.floor(Math.random() * (maxIndex + 1));
       waifu.imageUrl = waifu.waifuImages[index].url;
+    }
+
+    // if no dialogue was provided, check for an event
+    if (!options.dialogue && options.event) {
+      const index = waifu.personalityId ? waifu.personalityId - 1 : 1;
+      const dialogues = PERSONALITIES[index].dialogues[options.event];
+      options.dialogue =
+        dialogues[Math.floor(Math.random() * dialogues.length)];
     }
 
     // otherwise pop

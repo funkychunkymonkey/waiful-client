@@ -72,11 +72,7 @@ export default function Gacha({route}) {
         popUpWaifu({
           gacha: true,
           waifu: res,
-          dialogue: (
-            <Text>
-              <Text>Tadaima!</Text>
-            </Text>
-          ),
+          event: 'greet',
           onClose: () => {
             Animated.timing(fadeScreenAnim, {
               toValue: 0,

@@ -15,12 +15,12 @@
     "id": 2,
     "name": "Tsundere",
     "dialogues": {
-      "welcome": ["Welcome home!"],
-      "greet": ["Tadaima~"],
-      "run:waiting": ["Ganbare~"],
-      "run:finished": ["Great work!"],
-      "exercise:waiting": ["Ganbare~"],
-      "exercise:finished": ["Great work!"]
+      "welcome": ["Hmph.", "... What?"],
+      "greet": ["... What are you looking at?"],
+      "run:waiting": ["Hurry up and get started."],
+      "run:finished": ["You managed to finish, huh? ... N-not like I care!"],
+      "exercise:waiting": ["You're keeping me waiting!"],
+      "exercise:finished": ["You expected me to praise you?"]
     }
   },
   {

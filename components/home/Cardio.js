@@ -45,7 +45,7 @@ export default function CardioScreen({navigation, route}) {
       navigation.navigate('CardioLog');
       incrementGems(data.gems);
       popUpWaifu({
-        dialogue: 'Great work!!',
+        event: 'run:finished',
         gems: data.gems,
         auto: false,
       });

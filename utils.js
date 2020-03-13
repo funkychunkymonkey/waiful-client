@@ -14,6 +14,7 @@ const getUser = function() {
       x => PERSONALITIES[x - 1],
     );
     user.waifus = user.waifus.map(x => {
+      x.personalityId = x.personalityId ? x.personalityId : 1;
       x.imageUrl = x.waifuImages.length > 0 ? x.waifuImages[0].url : x.imageUrl;
       return x;
     });

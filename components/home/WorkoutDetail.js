@@ -23,7 +23,7 @@ export default function WorkoutDetail({route, navigation}, y) {
     React.useCallback(() => {
       if (isFocused) {
         popUpWaifu({
-          dialogue: 'Ganbare!',
+          event: 'exercise:waiting',
           auto: true,
         });
       }
@@ -48,7 +48,7 @@ export default function WorkoutDetail({route, navigation}, y) {
       navigation.navigate('WorkoutLog');
       incrementGems(data.gems);
       popUpWaifu({
-        dialogue: 'Great work!!',
+        event: 'exercise:finished',
         gems: data.gems,
         auto: false,
       });
