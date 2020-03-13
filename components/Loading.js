@@ -10,7 +10,7 @@ export default function Loading() {
       <LottieView
         autoPlay
         loop
-        source={require('../src/50-material-loader.json')}
+        source={require('../assets/lottie/50-material-loader.json')}
         colorFilters={[
           {
             keypath: 'Shape Layer 1 Comp 1',

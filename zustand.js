@@ -1,3 +1,4 @@
 import useZ from './zustand/index';
+import useCollectionZ from './zustand/collection';
 
-export {useZ};
+export {useZ, useCollectionZ};

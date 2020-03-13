@@ -16,7 +16,6 @@ import MapView from 'react-native-maps';
 export default function WorkoutLog({navigation}) {
   const [logs, setLogs] = React.useState([]);
   const [loading, setLoading] = React.useState(true);
-  const [selectedLog, setSelectedLog] = React.useState(-1);
   const [activeSections, setActiveSections] = React.useState([]);
 
   useFocusEffect(
@@ -42,17 +41,24 @@ export default function WorkoutLog({navigation}) {
     <ScrollView>
       <Accordion
         style={{}}
-        sections={logs}
+        sections={logs.filter(x => x.distance > 0)}
         activeSections={activeSections}
-        renderHeader={log => (
-          <View>
-            <ListItem
-              title={'🏃 ' + log.distance + 'm'}
-              rightAvatar={<Text>{moment(log.createdAt).format('LLL')}</Text>}
-              bottomDivider
-            />
-          </View>
-        )}
+        renderHeader={log => {
+          const time = moment(log.startedAt);
+          const day = time.format('dddd');
+          const timeOfTheDay = utils.getGreetingTime(time);
+          return (
+            <View>
+              <ListItem
+                leftAvatar={<Text>🏃</Text>}
+                title={`${day} ${timeOfTheDay} run!`}
+                subtitle={`${log.distance}m`}
+                rightAvatar={<Text>{time.fromNow()}</Text>}
+                bottomDivider
+              />
+            </View>
+          );
+        }}
         renderContent={(log, _, isActive) => {
           if (!isActive) return <></>;
           const data = JSON.parse(log.data);

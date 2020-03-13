@@ -28,7 +28,7 @@ export default function FavButton(props) {
       <TouchableOpacity style={styles.favTouchArea} onPress={onPress} key="1">
         <LottieView
           style={styles.fav}
-          source={require('../../src/2415-twitter-heart.json')}
+          source={require('../../assets/lottie/2415-twitter-heart.json')}
           autoPlay={true}
           loop={false}
           progress={0.3}
@@ -40,7 +40,7 @@ export default function FavButton(props) {
       <TouchableOpacity style={styles.favTouchArea} onPress={onPress} key="2">
         <LottieView
           style={styles.fav}
-          source={require('../../src/2415-twitter-heart.json')}
+          source={require('../../assets/lottie/2415-twitter-heart.json')}
           progress={isFavorite ? 1 : 0}
         />
       </TouchableOpacity>
@@ -53,7 +53,6 @@ const styles = StyleSheet.create({
     width: wp('22%'),
     height: '100%',
     justifyContent: 'center',
-    //    overflow: 'hidden',
   },
   fav: {
     position: 'relative',
