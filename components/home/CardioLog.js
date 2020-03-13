@@ -1,6 +1,5 @@
 import * as React from 'react';
-import {Dimensions} from 'react-native';
-import {StyleSheet, Text, View, ScrollView} from 'react-native';
+import {StyleSheet, Text, View, ScrollView, Dimensions} from 'react-native';
 import {ListItem, Tooltip} from 'react-native-elements';
 import {useFocusEffect} from '@react-navigation/native';
 import moment from 'moment';
@@ -13,8 +12,6 @@ import utils from '../../utils.js';
 import Loading from '../Loading.js';
 import Accordion from 'react-native-collapsible/Accordion';
 import MapView from 'react-native-maps';
-import {color} from 'react-native-reanimated';
-import COLOR from '../../color';
 
 import {LineChart} from 'react-native-chart-kit';
 
