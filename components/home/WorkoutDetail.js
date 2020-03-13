@@ -15,6 +15,7 @@ export default function WorkoutDetail({route, navigation}, y) {
   const popUpWaifu = useZ(z => z.popUpWaifu);
   const isFocused = useIsFocused();
   const exercise = route.params.exercise;
+  const incrementGems = useZ(z => z.incrementGems);
   const [reps, setReps] = React.useState('');
   const [loading, setLoading] = React.useState(false);
 
@@ -45,6 +46,7 @@ export default function WorkoutDetail({route, navigation}, y) {
       setLoading(false);
       navigation.popToTop();
       navigation.navigate('WorkoutLog');
+      incrementGems(data.gems);
       popUpWaifu({
         dialogue: 'Great work!!',
         gems: data.gems,

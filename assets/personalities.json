@@ -1,0 +1,38 @@
+[
+  {
+    "id": 1,
+    "name": "Basic",
+    "dialogues": {
+      "welcome": ["Welcome home!"],
+      "greet": ["Tadaima~"],
+      "run:waiting": ["Ganbare~"],
+      "run:finished": ["Great work!"],
+      "exercise:waiting": ["Ganbare~"],
+      "exercise:finished": ["Great work!"]
+    }
+  },
+  {
+    "id": 2,
+    "name": "Tsundere",
+    "dialogues": {
+      "welcome": ["Welcome home!"],
+      "greet": ["Tadaima~"],
+      "run:waiting": ["Ganbare~"],
+      "run:finished": ["Great work!"],
+      "exercise:waiting": ["Ganbare~"],
+      "exercise:finished": ["Great work!"]
+    }
+  },
+  {
+    "id": 3,
+    "name": "Kuudere",
+    "dialogues": {
+      "welcome": ["..."],
+      "greet": ["..."],
+      "run:waiting": ["..."],
+      "run:finished": ["..."],
+      "exercise:waiting": ["..."],
+      "exercise:finished": ["..."]
+    }
+  }
+]

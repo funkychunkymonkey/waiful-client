@@ -5,7 +5,9 @@ import {getUniqueId} from 'react-native-device-info';
  * USER
  **********************************************/
 const getUser = function() {
-  return q('query{user{ id email gems }}').then(data => data.user);
+  return q(
+    `query{user{id gems personalities waifus{id level malId name imageUrl url description isFavorite waifuImages{url} series{id name imageUrl url}} }}`,
+  ).then(data => data.user);
 };
 
 /**********************************************
@@ -21,14 +23,6 @@ const sellWaifu = function(malId) {
     data => data.sellWaifu,
   );
 };
-const getWaifus = function() {
-  return q(
-    'query{user{ waifus{id level malId name imageUrl url description isFavorite waifuImages{url} series{id name imageUrl url}} }}',
-  ).then(data => {
-    return data.user.waifus;
-  });
-};
-
 const setFavWaifu = function(malId) {
   return q(`mutation{favoriteWaifu(input:{malId:${parseInt(malId)}})}`).then(
     data => data.favoriteWaifu,
@@ -37,6 +31,13 @@ const setFavWaifu = function(malId) {
 const setUnfavWaifu = function(malId) {
   return q(`mutation{unfavoriteWaifu(input:{malId:${parseInt(malId)}})}`).then(
     data => data.unfavoriteWaifu,
+  );
+};
+const buyPersonality = function(personalityId) {
+  return q(
+    `mutation{buyPersonality(input:{personalityId: ${parseInt(
+      personalityId,
+    )}})}`,
   );
 };
 
@@ -139,7 +140,7 @@ const q = async function(query, variables = {}) {
     device_id: getUniqueId(),
   });
   const result = await axios.post(
-    // 'http://localhost:3000/graphql',
+    //'http://localhost:3000/graphql',
     'http://waiful-backend-dev3.ap-northeast-1.elasticbeanstalk.com/graphql',
     {
       query,
@@ -170,7 +171,6 @@ export default {
   getExercises,
   logExercise,
   getWorkouts,
-  getWaifus,
   getRuns,
   getRun,
   startRun,
@@ -182,4 +182,5 @@ export default {
   addSeries,
   removeSeries,
   getGreetingTime,
+  buyPersonality,
 };
