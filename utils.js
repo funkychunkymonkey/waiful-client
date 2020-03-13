@@ -1,13 +1,20 @@
 import axios from 'axios';
 import {getUniqueId} from 'react-native-device-info';
+const PERSONALITIES = require('./assets/personalities.json');
 
 /**********************************************
  * USER
  **********************************************/
 const getUser = function() {
   return q(
-    `query{user{id gems personalities waifus{id level malId name imageUrl url description isFavorite waifuImages{url} series{id name imageUrl url}} }}`,
-  ).then(data => data.user);
+    `query{user{id gems personalities waifus{id level malId name personalityId imageUrl url description isFavorite waifuImages{url} series{id name imageUrl url}} }}`,
+  ).then(data => {
+    const user = data.user;
+    user.personalities = [1, ...user.personalities].map(
+      x => PERSONALITIES[x - 1],
+    );
+    return user;
+  });
 };
 
 /**********************************************
@@ -15,7 +22,7 @@ const getUser = function() {
  **********************************************/
 const gacha = function() {
   return q(
-    'mutation{gacha(input:{}){ id level malId name imageUrl url description isFavorite waifuImages{url} series{id name imageUrl url} }}',
+    'mutation{gacha(input:{}){ id level malId name personalityId imageUrl url description isFavorite waifuImages{url} series{id name imageUrl url} }}',
   ).then(data => data.gacha);
 };
 const sellWaifu = function(malId) {
@@ -38,6 +45,14 @@ const buyPersonality = function(personalityId) {
     `mutation{buyPersonality(input:{personalityId: ${parseInt(
       personalityId,
     )}})}`,
+  );
+};
+const setPersonality = function(waifuId, personalityId) {
+  return q(
+    `mutation{addPersonality(input:{
+      waifuId: ${parseInt(waifuId)},
+      personalityId: ${parseInt(personalityId)}
+    })}`,
   );
 };
 
@@ -183,4 +198,5 @@ export default {
   removeSeries,
   getGreetingTime,
   buyPersonality,
+  setPersonality,
 };

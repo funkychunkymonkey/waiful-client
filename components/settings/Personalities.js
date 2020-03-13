@@ -45,7 +45,7 @@ export default function({route, navigation}) {
         <DialogueSet
           key={i}
           personality={personality}
-          isOwned={user.personalities.includes(personality.id)}
+          isOwned={user.personalities.some(x => x.id === personality.id)}
           buy={buy}
         />
       ))}

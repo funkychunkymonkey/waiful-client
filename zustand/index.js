@@ -6,7 +6,7 @@ const [useZ] = create((set, get) => ({
    * DATA
    ****************************************************************************/
   user: null,
-  setUser: user => set({user}),
+  setUser: user => set({user, waifus: user.waifus}),
   incrementGems: gems =>
     set({user: {...get().user, gems: get().user.gems + gems}}),
   exercises: null,
@@ -15,7 +15,7 @@ const [useZ] = create((set, get) => ({
       exercises: (await utils.getExercises()).slice(0, 50),
     }),
   waifus: null,
-  setWaifus: waifus => set({waifus}),
+  setWaifus: waifus => set({waifus, user: {...get().user, waifus}}),
   reloadUser: async () => {
     const data = await utils.getUser();
     set({
