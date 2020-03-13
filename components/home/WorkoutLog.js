@@ -38,7 +38,7 @@ export default function WorkoutLog({navigation}) {
           style={{}}
           title={log.exercise.name}
           subtitle={log.reps + ' reps'}
-          rightAvatar={<Text>{moment(log.createdAt).fromNow()}</Text>}
+          rightAvatar={<Text>{moment(log.createdAt).format('LLLL')}</Text>}
           bottomDivider
         />
       ))}

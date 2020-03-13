@@ -38,7 +38,7 @@ export default function CardioScreen({navigation, route}) {
 
   function endRun() {
     setPanel('LOADING');
-    utils.stopRun(distance, routeData).then(data => {
+      utils.stopRun(distance, routeData).then(data => {
       setPanel('WAITING');
       setCurrentRun(data);
       navigation.navigate('CardioLog');

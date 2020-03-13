@@ -33,8 +33,7 @@ export default function Running({endRun, location, routeData}) {
           />
           <Marker
             coordinate={{latitude: 35.657966, longitude: 139.727667}}
-            title="Team Funky Chunky Monkey"
-            description="Waiful HQ"
+            title="Team Funky Chunky Monkey HQ"
           />
         </MapView>
       </View>
