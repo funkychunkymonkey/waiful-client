@@ -1,4 +1,5 @@
 import axios from 'axios';
+import {getUniqueId} from 'react-native-device-info';
 
 /**********************************************
  * USER
@@ -12,7 +13,7 @@ const getUser = function() {
  **********************************************/
 const gacha = function() {
   return q(
-    'mutation{gacha(input:{}){id name imageUrl url series{id name imageUrl url}}}',
+    'mutation{gacha(input:{}){ id level malId name imageUrl url description isFavorite waifuImages{url} series{id name imageUrl url} }}',
   ).then(data => data.gacha);
 };
 const sellWaifu = function(malId) {
@@ -22,8 +23,10 @@ const sellWaifu = function(malId) {
 };
 const getWaifus = function() {
   return q(
-    'query{user{ waifus{id malId name imageUrl url isFavorite series{id name imageUrl url}} }}',
-  ).then(data => data.user.waifus);
+    'query{user{ waifus{id level malId name imageUrl url description isFavorite waifuImages{url} series{id name imageUrl url}} }}',
+  ).then(data => {
+    return data.user.waifus;
+  });
 };
 
 const setFavWaifu = function(malId) {
@@ -130,16 +133,34 @@ const logExercise = function(exercise, reps) {
  * UTILITY
  **********************************************/
 const q = async function(query, variables = {}) {
-  console.log(query);
+  console.log({
+    query,
+    variables,
+    device_id: getUniqueId(),
+  });
   const result = await axios.post(
     //'http://localhost:3000/graphql',
     'http://waiful-backend-dev3.ap-northeast-1.elasticbeanstalk.com/graphql',
     {
       query,
       variables,
+      device_id: getUniqueId(),
     },
   );
   return result.data.data;
+};
+
+const getGreetingTime = m => {
+  const currentHour = parseFloat(m.format('HH'));
+  let result;
+  if (currentHour >= 12 && currentHour < 17) {
+    result = 'afternoon';
+  } else if (currentHour >= 17 && currentHour < 5) {
+    result = 'evening';
+  } else {
+    result = 'morning';
+  }
+  return result;
 };
 
 export default {
@@ -160,4 +181,5 @@ export default {
   getTopSeries,
   addSeries,
   removeSeries,
+  getGreetingTime,
 };

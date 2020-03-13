@@ -10,6 +10,7 @@
     "lint": "eslint ."
   },
   "dependencies": {
+    "@dooboo-ui/native-accordion": "^0.4.4",
     "@react-native-community/geolocation": "^2.0.2",
     "@react-native-community/masked-view": "^0.1.7",
     "@react-navigation/bottom-tabs": "^5.1.1",
@@ -23,6 +24,8 @@
     "react": "16.9.0",
     "react-native": "0.61.5",
     "react-native-cli": "^2.0.1",
+    "react-native-collapsible": "^1.5.1",
+    "react-native-device-info": "^5.5.3",
     "react-native-elements": "^1.2.7",
     "react-native-gesture-handler": "^1.6.0",
     "react-native-linear-gradient": "^2.5.6",
@@ -35,7 +38,8 @@
     "react-native-screens": "^2.2.0",
     "react-native-vector-icons": "^6.6.0",
     "react-native-webview": "^8.1.2",
-    "shortid": "^2.2.15"
+    "shortid": "^2.2.15",
+    "zustand": "^2.2.3"
   },
   "devDependencies": {
     "@babel/core": "^7.6.2",

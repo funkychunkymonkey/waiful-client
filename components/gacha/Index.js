@@ -13,10 +13,14 @@ import {useFocusEffect, useIsFocused} from '@react-navigation/native';
 import LinearGradient from 'react-native-linear-gradient';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 
-import utils from '../utils.js';
-import COLORS from '../color';
+import utils from '../../utils.js';
+import COLORS from '../../color';
+import {useZ} from '../../zustand';
 
 export default function Gacha({route}) {
+  const popUpWaifu = useZ(z => z.popUpWaifu);
+  const waifus = useZ(z => z.waifus);
+  const setWaifus = useZ(z => z.setWaifus);
   const [gems, setGems] = React.useState(0);
   const [gachaStatus, setGachaStatus] = React.useState('WAITING'); // can be WAITING, GACHA or RESULTS
 
@@ -59,12 +63,12 @@ export default function Gacha({route}) {
         duration: 1000,
       }).start(() => {
         setGachaStatus('RESULTS');
-        route.params.reloadWaifus();
+        setWaifus([res, ...waifus.filter(x => x.id !== res.id)]);
         buttonRiseAnim.setValue(0);
         buttonSpinAnim.setValue(1);
         buttonFadeAnim.setValue(1);
         setGems(gems - 1);
-        route.params.popUpWaifu({
+        popUpWaifu({
           gacha: true,
           waifu: res,
           dialogue: (

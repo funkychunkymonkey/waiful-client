@@ -6,11 +6,13 @@ import {Button, Input} from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import LinearGradient from 'react-native-linear-gradient';
 
-import Loading from './Loading.js';
-import utils from '../utils.js';
-import COLORS from '../color';
+import Loading from '../Loading.js';
+import utils from '../../utils.js';
+import COLORS from '../../color';
+import {useZ} from '../../zustand';
 
 export default function WorkoutDetail({route, navigation}, y) {
+  const popUpWaifu = useZ(z => z.popUpWaifu);
   const isFocused = useIsFocused();
   const exercise = route.params.exercise;
   const [reps, setReps] = React.useState('');
@@ -19,7 +21,7 @@ export default function WorkoutDetail({route, navigation}, y) {
   useFocusEffect(
     React.useCallback(() => {
       if (isFocused) {
-        route.params.popUpWaifu({
+        popUpWaifu({
           dialogue: 'Ganbare!',
           auto: true,
         });
@@ -43,7 +45,7 @@ export default function WorkoutDetail({route, navigation}, y) {
       setLoading(false);
       navigation.popToTop();
       navigation.navigate('WorkoutLog');
-      route.params.popUpWaifu({
+      popUpWaifu({
         dialogue: 'Great work!!',
         gems: data.gems,
         auto: false,
