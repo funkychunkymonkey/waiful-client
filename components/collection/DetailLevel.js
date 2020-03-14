@@ -17,6 +17,7 @@ export default function DetailLevel({waifu}) {
         justifyContent: 'center',
         flexDirection: 'row',
         padding: 10,
+        backgroundColor: COLORS.textSecondary,
       }}>
       <View style={{alignItems: 'center'}}>
         <View
@@ -97,7 +98,9 @@ export default function DetailLevel({waifu}) {
             </Text>
           </View>
         </View>
-        <Text>Collect duplicates for levels and art!</Text>
+        <Text style={{color: COLORS.textTitle}}>
+          Collect duplicates for levels and art!
+        </Text>
       </View>
     </View>
   );

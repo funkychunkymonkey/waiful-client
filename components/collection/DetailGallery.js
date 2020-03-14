@@ -17,9 +17,11 @@ export default function DetailGallery({waifu}) {
   const [selectedImageIndex, setSelectedImageIndex] = React.useState(0);
   const images = waifu.waifuImages.slice(0, Math.floor(waifu.level / 10) + 1);
 
+  if (images.length === 0) return <></>;
+
   return (
     <LinearGradient
-      colors={[COLORS.bgPrimary, COLORS.bgHighlight]}
+      colors={['#111', '#111']}
       style={{
         width: wp(100),
         justifyContent: 'center',
@@ -40,36 +42,32 @@ export default function DetailGallery({waifu}) {
           }}
         />
       </View>
-      {images.length > 1 ? (
-        <ScrollView
-          style={{
-            backgroundColor: COLORS.textSecondary,
-            width: '100%',
-          }}
-          horizontal={true}>
-          {images.map((x, i) => (
-            <TouchableOpacity
+      <ScrollView
+        style={{
+          backgroundColor: COLORS.textSecondary,
+          width: '100%',
+        }}
+        horizontal={true}>
+        {images.map((x, i) => (
+          <TouchableOpacity
+            style={{
+              margin: 5,
+            }}
+            onPress={() => setSelectedImageIndex(i)}>
+            <Image
               style={{
-                margin: 5,
+                borderRadius: 10,
+                width: hp('8%'),
+                height: hp('8%'),
+                alignSelf: 'center',
               }}
-              onPress={() => setSelectedImageIndex(i)}>
-              <Image
-                style={{
-                  borderRadius: 10,
-                  width: hp('8%'),
-                  height: hp('8%'),
-                  alignSelf: 'center',
-                }}
-                source={{
-                  uri: x.url,
-                }}
-              />
-            </TouchableOpacity>
-          ))}
-        </ScrollView>
-      ) : (
-        <></>
-      )}
+              source={{
+                uri: x.url,
+              }}
+            />
+          </TouchableOpacity>
+        ))}
+      </ScrollView>
     </LinearGradient>
   );
 }

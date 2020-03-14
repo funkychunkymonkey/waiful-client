@@ -8,6 +8,7 @@ import COLORS from '../../color';
 import DetailHeader from './DetailHeader.js';
 import DetailLevel from './DetailLevel.js';
 import DetailGallery from './DetailGallery.js';
+import DetailPersonality from './DetailPersonality.js';
 import DetailFooter from './DetailFooter.js';
 
 import {useZ, useCollectionZ} from '../../zustand';
@@ -25,6 +26,7 @@ export default function Collection({navigation}) {
           <DetailHeader />
           <DetailLevel waifu={waifu} />
           <DetailGallery waifu={waifu} />
+          <DetailPersonality waifu={waifu} />
           <Text style={{padding: 20, fontSize: 20}}>
             {waifu.description.replace(/\\n/g, '\n')}
           </Text>

@@ -14,17 +14,18 @@ export default function WorkoutLog({navigation}) {
   const [logs, setLogs] = React.useState([]);
   const [loading, setLoading] = React.useState(true);
   const [activeSections, setActiveSections] = React.useState('');
-  const [listPositions, setListPositions] = React.useState([]);
+  const [listPositions, setListPositions] = React.useState({});
   const scrollElement = React.useRef();
   const listElement = React.useRef();
 
   const changeListPlace = listPosition => {
-    console.log(listPosition);
-    scrollElement.current.scrollTo({
-      x: 0,
-      y: listPosition[0].place,
-      animated: true,
-    });
+    if (listPosition) {
+      scrollElement.current.scrollTo({
+        x: 0,
+        y: listPosition.place,
+        animated: true,
+      });
+    }
   };
 
   useFocusEffect(
@@ -90,21 +91,9 @@ export default function WorkoutLog({navigation}) {
           },
         }}
         onDataPointClick={data => {
-          const dataIndex = {
-            0: 6,
-            1: 5,
-            2: 4,
-            3: 3,
-            4: 2,
-            5: 1,
-            6: 0,
-          };
-          setActiveSections(dataIndex[data.index]);
-          changeListPlace(
-            listPositions.filter(
-              listPosition => listPosition.key === dataIndex[data.index],
-            ),
-          );
+          const dataIndex = Object.keys(listPositions).length - data.index - 1;
+          setActiveSections(dataIndex);
+          changeListPlace(listPositions[dataIndex]);
         }}
         style={{
           marginTop: 20,
@@ -123,11 +112,9 @@ export default function WorkoutLog({navigation}) {
               activeSections === i ? {backgroundColor: COLOR.bgPrimary} : {}
             }
             onLayout={({nativeEvent}) => {
-              // activeSections === i
-              setListPositions([
-                ...listPositions,
-                {key: i, place: nativeEvent.layout.y},
-              ]);
+              const newListPositions = listPositions;
+              newListPositions[i] = nativeEvent.layout.y;
+              setListPositions(newListPositions);
             }}
             title={log.exercise.name}
             subtitle={log.reps + ' reps'}

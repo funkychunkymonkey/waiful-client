@@ -12,6 +12,7 @@ export default function DetailHeader({navigation}) {
   const waifus = useZ(z => z.waifus);
   const setWaifus = useZ(z => z.setWaifus);
   const popUpWaifu = useZ(z => z.popUpWaifu);
+  const incrementGems = useZ(z => z.incrementGems);
   const selectedIndex = useCollectionZ(z => z.selectedIndex);
   const setSelectedIndex = useCollectionZ(z => z.setSelectedIndex);
 
@@ -20,6 +21,7 @@ export default function DetailHeader({navigation}) {
     utils.sellWaifu(waifu.malId).then(result => {
       navigation.pop();
       setWaifus(waifus.filter(x => x.id !== waifu.id));
+      incrementGems(result);
       setSelectedIndex(0);
       popUpWaifu({
         waifu: null,

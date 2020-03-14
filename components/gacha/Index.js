@@ -18,10 +18,11 @@ import COLORS from '../../color';
 import {useZ} from '../../zustand';
 
 export default function Gacha({route}) {
+  const user = useZ(z => z.user);
+  const incrementGems = useZ(z => z.incrementGems);
   const popUpWaifu = useZ(z => z.popUpWaifu);
   const waifus = useZ(z => z.waifus);
   const setWaifus = useZ(z => z.setWaifus);
-  const [gems, setGems] = React.useState(0);
   const [gachaStatus, setGachaStatus] = React.useState('WAITING'); // can be WAITING, GACHA or RESULTS
 
   const [buttonRiseAnim] = React.useState(new Animated.Value(0));
@@ -67,15 +68,11 @@ export default function Gacha({route}) {
         buttonRiseAnim.setValue(0);
         buttonSpinAnim.setValue(1);
         buttonFadeAnim.setValue(1);
-        setGems(gems - 1);
+        incrementGems(-20);
         popUpWaifu({
           gacha: true,
           waifu: res,
-          dialogue: (
-            <Text>
-              <Text>Tadaima!</Text>
-            </Text>
-          ),
+          event: 'greet',
           onClose: () => {
             Animated.timing(fadeScreenAnim, {
               toValue: 0,
@@ -91,9 +88,6 @@ export default function Gacha({route}) {
 
   useFocusEffect(() => {
     if (!isFocused) setGachaStatus('WAITING');
-    utils.getUser().then(data => {
-      setGems(data.gems);
-    });
   }, []);
 
   function ActiveGachaButton() {
@@ -154,9 +148,9 @@ export default function Gacha({route}) {
               <Text style={styles.gachaPanelHeaderTitle}>Gems</Text>
             </LinearGradient>
             <View style={styles.gachaPanelBody}>
-              <Text style={styles.gachaPanelText}>{gems}</Text>
+              <Text style={styles.gachaPanelText}>{user.gems}</Text>
             </View>
-            {gems >= 20 ? <ActiveGachaButton /> : <InactiveGachaButton />}
+            {user.gems >= 20 ? <ActiveGachaButton /> : <InactiveGachaButton />}
           </Animated.View>
           <Image
             source={{

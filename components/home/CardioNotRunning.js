@@ -20,7 +20,7 @@ export default function NotRunning({startRun}) {
   useFocusEffect(
     React.useCallback(() => {
       popUpWaifu({
-        dialogue: 'Ganbare!',
+        event: 'run:waiting',
         auto: true,
       });
       return () => {};

@@ -49,13 +49,13 @@ export default function WorkoutLog({navigation}) {
               startedAt => startedAt.slice(5, 7) + '/' + startedAt.slice(8, 10),
             )
             .reverse()
-            .splice(-7), // get latest data from the end of an array
+            .slice(-7), // get latest data from the end of an array
           datasets: [
             {
               data: logs
                 .map(log => log.distance)
                 .reverse()
-                .splice(-7), // get latest data from the end of an array
+                .slice(-7), // get latest data from the end of an array
             },
           ],
         }}
@@ -83,16 +83,8 @@ export default function WorkoutLog({navigation}) {
           },
         }}
         onDataPointClick={data => {
-          const dataIndex = {
-            0: 6,
-            1: 5,
-            2: 4,
-            3: 3,
-            4: 2,
-            5: 1,
-            6: 0,
-          };
-          setActiveSections([dataIndex[data.index]]);
+          const index = Math.min(7, logs.length) - data.index - 1;
+          setActiveSections([index]);
         }}
         style={{
           marginTop: 20,
