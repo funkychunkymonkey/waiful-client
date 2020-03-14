@@ -13,7 +13,7 @@ const [useZ] = create((set, get) => ({
   exercises: null,
   reloadExercises: async () =>
     set({
-      exercises: (await utils.getExercises()).slice(0, 50),
+      exercises: await utils.getExercises(),
     }),
   waifus: null,
   setWaifus: waifus => set({waifus, user: {...get().user, waifus}}),
