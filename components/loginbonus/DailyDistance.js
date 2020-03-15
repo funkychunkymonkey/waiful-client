@@ -19,15 +19,11 @@ export default function DailyDistance(props) {
 
   const optionDistance = {
     startDate: new Date(
-      props.nowAdj[0],
-      props.nowAdj[1],
-      props.nowAdj[2] - 1,
+      props.today.getFullYear(),
+      props.today.getMonth(),
+      props.today.getDate() - 1,
     ).toISOString(),
-    endDate: new Date(
-      props.nowAdj[0],
-      props.nowAdj[1],
-      props.nowAdj[2],
-    ).toISOString(),
+    endDate: props.today.toISOString(),
   };
 
   AppleHealthKit.getDailyDistanceWalkingRunningSamples(
@@ -38,7 +34,7 @@ export default function DailyDistance(props) {
         console.log('DisntanceErr', err);
         return;
       } else {
-        props.setWalk({km: Math.ceil(sum / 1000), date: props.nowAdj});
+        props.setWalk({km: Math.ceil(sum / 1000), date: props.today});
       }
     },
   );

@@ -3,29 +3,27 @@ import {AppState} from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import DailyDistance from './DailyDistance';
 import {useZ} from '../../zustand';
+import utils from '../../utils';
 
 export default function LoginBonus() {
   const [appState, setAppState] = useState(AppState.currentState);
   const [walk, setWalk] = useState(null);
-  const DATE_KEY = '@firstLoginDate';
+  const LAST_LOGIN_DATE_KEY = '@lastLoginDate';
   const incrementGems = useZ(z => z.incrementGems);
 
   useEffect(() => {
     function handleAppStateChange(nextAppState) {
       if (nextAppState === 'active') {
-        console.log('App has come to the foreground!');
+        const today = getToday();
 
-        const nowAdj = getNow();
-
-        getData(DATE_KEY).then(data => {
-          if (data !== JSON.stringify(nowAdj)) {
-            console.log(`Today's bonus! It is ${nowAdj} today.`);
-            DailyDistance({setWalk, nowAdj});
-          } else {
-            console.log('Bonus is nothing...');
-          }
-          storeData(DATE_KEY, JSON.stringify(nowAdj));
-        });
+        getDataOrDefault(LAST_LOGIN_DATE_KEY, today.toISOString()).then(
+          data => {
+            if (data !== today.toISOString()) {
+              DailyDistance({setWalk, today});
+            }
+            storeData(LAST_LOGIN_DATE_KEY, today.toISOString());
+          },
+        );
       }
       setAppState(nextAppState);
     }
@@ -37,33 +35,49 @@ export default function LoginBonus() {
 
   useEffect(() => {
     if (walk !== null) {
-      alert(`Today's bonus! You walked about ${walk.km}km yesterday.`);
+      utils
+        .addBonus(walk.km)
+        .then(result => {
+          incrementGems(result);
+          return result;
+        })
+        .then(gem => {
+          alert(
+            `Today's bonus! You walked about ${walk.km}km yesterday. You got ${gem} gems!`,
+          );
+        });
     }
   }, [walk]);
 
-  function getNow() {
+  function getToday() {
     const now = new Date();
-    // ToDo: remove now.getMinutes(), this is for testing.
-    return [now.getFullYear(), now.getMonth(), now.getDate(), now.getMinutes()];
+    // ToDo: remove now.getHours() and now.getMinutes(), this is for testing.
+    return new Date(
+      now.getFullYear(),
+      now.getMonth(),
+      now.getDate(),
+      now.getHours(),
+      now.getMinutes(),
+    );
   }
-  async function storeData(name, data) {
+  async function storeData(key, value) {
     try {
-      await AsyncStorage.setItem(name, data);
+      await AsyncStorage.setItem(key, value);
     } catch (e) {
       console.error('error');
     }
   }
-  async function getData(name) {
+  async function getDataOrDefault(key, defaultValue) {
     try {
-      const value = await AsyncStorage.getItem(name);
+      const value = await AsyncStorage.getItem(key);
       if (value !== null && value !== undefined) {
         return value;
       } else {
-        return JSON.stringify(getNow());
+        return defaultValue;
       }
     } catch (e) {
       console.error('error');
-      return JSON.stringify(getNow());
+      return defaultValue;
     }
   }
 
