@@ -60,8 +60,11 @@ const App: () => React$Node = () => {
             inactiveBackgroundColor: COLORS.bgPrimary,
             style: {
               borderTopWidth: 0,
-              paddingTop: 10,
+              paddingTop: 5,
               backgroundColor: COLORS.bgPrimary,
+            },
+            labelStyle: {
+              fontSize: 16,
             },
           }}>
           <Tab.Screen

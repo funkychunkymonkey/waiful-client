@@ -24,6 +24,7 @@ export default function() {
         headerTintColor: COLORS.textTitle,
         headerTitleStyle: {
           fontWeight: 'bold',
+          fontSize: 24,
         },
       }}>
       <Stack.Screen name="Settings" component={Settings} />

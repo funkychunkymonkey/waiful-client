@@ -194,6 +194,7 @@ const styles = StyleSheet.create({
   title: {
     fontWeight: 'bold',
     color: 'white',
+    fontSize: 24,
   },
   wrapper: {
     backgroundColor: COLORS.bgPrimary,
