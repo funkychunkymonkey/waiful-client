@@ -26,6 +26,7 @@ export default function({navigation}) {
         headerTintColor: COLORS.textTitle,
         headerTitleStyle: {
           fontWeight: 'bold',
+          fontSize: 24,
         },
       }}>
       <Stack.Screen name="Home" component={HomeScreen} />

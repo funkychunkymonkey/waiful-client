@@ -13,7 +13,7 @@ const [useZ] = create((set, get) => ({
   exercises: null,
   reloadExercises: async () =>
     set({
-      exercises: (await utils.getExercises()).slice(0, 50),
+      exercises: await utils.getExercises(),
     }),
   waifus: null,
   setWaifus: waifus => set({waifus, user: {...get().user, waifus}}),
@@ -60,7 +60,7 @@ const [useZ] = create((set, get) => ({
 
     // if no dialogue was provided, check for an event
     if (!options.dialogue && options.event) {
-      const index = waifu.personalityId ? waifu.personalityId - 1 : 1;
+      const index = waifu.personalityId ? waifu.personalityId - 1 : 0;
       const dialogues = PERSONALITIES[index].dialogues[options.event];
       options.dialogue =
         dialogues[Math.floor(Math.random() * dialogues.length)];
