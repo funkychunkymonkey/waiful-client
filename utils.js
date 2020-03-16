@@ -137,6 +137,26 @@ const getExercises = function() {
     return exercises;
   });
 };
+
+const registerExercise = function(
+  exerciseName,
+  exerciseDescription,
+  muscles,
+  equipments,
+) {
+  return q(
+    'mutation($input:CreateExerciseInput!){createExercise(input:$input)}',
+    {
+      input: {
+        name: exerciseName,
+        description: exerciseDescription,
+        muscles: muscles,
+        equipment: equipments,
+      },
+    },
+  );
+};
+
 const getWorkouts = function() {
   return q(
     'query{user{id email workouts{reps exercise{name} createdAt}}}',
@@ -214,4 +234,5 @@ export default {
   buyPersonality,
   setPersonality,
   addBonus,
+  registerExercise,
 };

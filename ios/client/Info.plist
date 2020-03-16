@@ -39,16 +39,16 @@
 			</dict>
 		</dict>
 	</dict>
-	<key>NSHealthShareUsageDescription</key>
-	<string>Read and understand health data.</string>
-	<key>NSHealthUpdateUsageDescription</key>
-	<string>Share workout data with other apps.</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
 	<string></string>
 	<key>NSLocationAlwaysUsageDescription</key>
 	<string></string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
+	<string>$(PRODUCT_NAME) would like to track your position while using the app. This is only used when tracking runs, to store your run routes.</string>
+	<key>NSHealthShareUsageDescription</key>
+	<string>$(PRODUCT_NAME) would like to track your distance travelled every hour. This is used to reward in-game perks for exercising between app sessions.</string>
+	<key>NSHealthUpdateUsageDescription</key>
+	<string>$(PRODUCT_NAME) would like to track your distance travelled every hour. This is used to reward in-game perks for exercising between app sessions.</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>AntDesign.ttf</string>
