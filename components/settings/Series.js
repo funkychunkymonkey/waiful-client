@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {StyleSheet, Text} from 'react-native';
+import {StyleSheet, Text, View} from 'react-native';
 import {Content, Button} from 'native-base';
 import {useFocusEffect} from '@react-navigation/native';
 import {ListItem} from 'react-native-elements';
@@ -8,6 +8,8 @@ import LottieView from 'lottie-react-native';
 import utils from '../../utils.js';
 import Loading from '../Loading.js';
 import COLORS from '../../color';
+import {TouchableOpacity} from 'react-native-gesture-handler';
+import Icon from 'react-native-vector-icons/FontAwesome5';
 
 export default function({route, navigation}) {
   const [malType] = React.useState(route.params.malType);
@@ -68,15 +70,23 @@ export default function({route, navigation}) {
   return (
     <Content style={styles.body}>
       {series.map(item => (
-        <ListItem
-          leftAvatar={{source: {uri: item.imageUrl}}}
-          key={item.malId}
-          title={item.name}
-          onPress={() => {
-            removeSeries(item);
-          }}
-          bottomDivider
-        />
+        <View style={styles.wrapper}>
+          <ListItem
+            style={styles.item}
+            leftAvatar={{source: {uri: item.imageUrl}}}
+            key={item.malId}
+            title={item.name}
+            bottomDivider
+          />
+
+          <TouchableOpacity
+            style={styles.trashcan}
+            onPress={() => {
+              removeSeries(item);
+            }}>
+            <Icon name="trash" color={'black'} size={22} />
+          </TouchableOpacity>
+        </View>
       ))}
     </Content>
   );
@@ -104,5 +114,16 @@ const styles = StyleSheet.create({
     top: -18,
     width: 300,
     position: 'absolute',
+  },
+  wrapper: {
+    flexDirection: 'row',
+    backgroundColor: 'white',
+  },
+  item: {flex: 7},
+  trashcan: {
+    flex: 3,
+    paddingRight: 15,
+    justifyContent: 'center',
+    alignContent: 'center',
   },
 });

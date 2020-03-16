@@ -6,6 +6,7 @@ import HomeScreen from './Home.js';
 import WorkoutList from './WorkoutList.js';
 import WorkoutDetail from './WorkoutDetail.js';
 import WorkoutLog from './WorkoutLog.js';
+import WorkoutCustom from './WorkoutCustom.js';
 import CardioScreen from './Cardio.js';
 import CardioLog from './CardioLog.js';
 
@@ -26,6 +27,7 @@ export default function({navigation}) {
         headerTintColor: COLORS.textTitle,
         headerTitleStyle: {
           fontWeight: 'bold',
+          fontSize: 24,
         },
       }}>
       <Stack.Screen name="Home" component={HomeScreen} />
@@ -41,6 +43,13 @@ export default function({navigation}) {
               color={COLORS.textTitle}
             />
           ),
+        }}
+      />
+      <Stack.Screen
+        name="WorkoutCustom"
+        component={WorkoutCustom}
+        options={{
+          title: 'Custom Workout',
         }}
       />
       <Stack.Screen

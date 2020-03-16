@@ -57,9 +57,7 @@ export default function WorkoutList({navigation}) {
   return (
     <Content style={styles.content}>
       <LinearGradient colors={[COLORS.bgPrimary, COLORS.bgHighlight]}>
-        <Text style={styles.titleText}>MUSUCLES</Text>
         <Filters type="muscles" data={allData.muscles} />
-        <Text style={styles.titleText}>EQUIPMENTS</Text>
         <Filters type="equipments" data={['None', ...allData.equipments]} />
       </LinearGradient>
       <SearchBar
@@ -88,6 +86,24 @@ export default function WorkoutList({navigation}) {
               />
             </View>
           ))}
+          {type === 'muscles' ? (
+            <View style={{opacity: 0.6, marginLeft: 80}}>
+              <TouchableOpacity
+                style={{...styles.filtersMus}}
+                onPress={() => {
+                  navigation.navigate('WorkoutCustom', allData);
+                }}>
+                <Image
+                  style={styles.bigIcon}
+                  source={require('../../assets/others/ExclamationMark.png')}
+                  resizeMode="contain"
+                />
+                <Text style={{color: '#fff'}}>Add New Exe</Text>
+              </TouchableOpacity>
+            </View>
+          ) : (
+            <></>
+          )}
         </View>
       </ScrollView>
     );

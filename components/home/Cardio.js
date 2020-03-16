@@ -17,6 +17,7 @@ export default function CardioScreen({navigation, route}) {
   const [location, setLocation] = React.useState(null);
   const [distance, setDistance] = React.useState(0);
   const [routeData, setRouteData] = React.useState([]);
+  const incrementGems = useZ(z => z.incrementGems);
   const popUpWaifu = useZ(z => z.popUpWaifu);
 
   useFocusEffect(
@@ -42,8 +43,9 @@ export default function CardioScreen({navigation, route}) {
       setPanel('WAITING');
       setCurrentRun(data);
       navigation.navigate('CardioLog');
+      incrementGems(data.gems);
       popUpWaifu({
-        dialogue: 'Great work!!',
+        event: 'run:finished',
         gems: data.gems,
         auto: false,
       });
