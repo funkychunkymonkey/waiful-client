@@ -110,5 +110,17 @@
       "exercise:waiting": ["EXERCISE FOR MEEEEEEEEE"],
       "exercise:finished": ["I love you"]
     }
+  },
+  {
+    "id": 8,
+    "name": "Nyandere",
+    "dialogues": {
+      "welcome": ["Nyai!"],
+      "greet": ["Nyan Nyan!", "Nyan~", "zzz..."],
+      "run:waiting": ["Ganbare-nyan!"],
+      "run:finished": ["Otsukare-nyan!"],
+      "exercise:waiting": ["Ganbare-nyan!"],
+      "exercise:finished": ["Otsukare-nyan!"]
+    }
   }
 ]

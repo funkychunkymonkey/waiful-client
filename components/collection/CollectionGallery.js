@@ -10,10 +10,9 @@ import COLORS from '../../color';
 import {useZ, useCollectionZ} from '../../zustand';
 import {Content} from 'native-base';
 
-export default function Collection({route}) {
+export default function Collection({checked}) {
   const waifus = useZ(z => z.waifus);
   const setSelectedIndex = useCollectionZ(z => z.setSelectedIndex);
-  const [checked, setChecked] = React.useState(false);
 
   const getGalleryItem = i => {
     return (
@@ -42,8 +41,6 @@ export default function Collection({route}) {
         .map((waifu, i) => (waifu.isFavorite ? i : -1))
         .filter(x => x !== -1)
     : waifus.map((_, i) => i);
-  //reduce version
-  // waifus.reduce((a, b, i) => [...a, ...(b.isFavorite ? [i] : [])], []);
   for (let i = 0; i < filteredId.length; i += 2) {
     pairCollection.push(
       <View key={i}>
@@ -54,12 +51,7 @@ export default function Collection({route}) {
   }
 
   return (
-    <Content>
-      <Switch
-        title="Favorite waifus!"
-        value={checked}
-        onValueChange={() => setChecked(checked ? false : true)}
-      />
+    <Content style={{position: 'relative', zIndex: 10}}>
       <ScrollView contentContainerStyle={styles.gallery} horizontal={true}>
         {waifus.length !== 0 ? (
           pairCollection
