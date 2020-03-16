@@ -151,6 +151,15 @@ const logExercise = function(exercise, reps) {
 };
 
 /**********************************************
+ * BONUS
+ **********************************************/
+const addBonus = function(km) {
+  return q(`mutation{addBonus(input:{km:${parseInt(km)}})}`).then(
+    data => data.addBonus,
+  );
+};
+
+/**********************************************
  * UTILITY
  **********************************************/
 const q = async function(query, variables = {}) {
@@ -204,4 +213,5 @@ export default {
   getGreetingTime,
   buyPersonality,
   setPersonality,
+  addBonus,
 };
