@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {ScrollView} from 'react-native-gesture-handler';
+import {ScrollView, Switch} from 'react-native-gesture-handler';
 import {StyleSheet, Text, TouchableOpacity, Image, View} from 'react-native';
 import {Badge} from 'react-native-elements';
 import {
@@ -8,10 +8,12 @@ import {
 } from 'react-native-responsive-screen';
 import COLORS from '../../color';
 import {useZ, useCollectionZ} from '../../zustand';
+import {Content} from 'native-base';
 
 export default function Collection({route}) {
   const waifus = useZ(z => z.waifus);
   const setSelectedIndex = useCollectionZ(z => z.setSelectedIndex);
+  const [checked, setChecked] = React.useState(false);
 
   const getGalleryItem = i => {
     return (
@@ -35,23 +37,37 @@ export default function Collection({route}) {
     );
   };
   const pairCollection = [];
-  for (let i = 0; i < waifus.length; i += 2) {
+  const filteredId = checked
+    ? waifus
+        .map((waifu, i) => (waifu.isFavorite ? i : -1))
+        .filter(x => x !== -1)
+    : waifus.map((_, i) => i);
+  //reduce version
+  // waifus.reduce((a, b, i) => [...a, ...(b.isFavorite ? [i] : [])], []);
+  for (let i = 0; i < filteredId.length; i += 2) {
     pairCollection.push(
       <View key={i}>
-        {getGalleryItem(i)}
-        {waifus.length > i + 1 && getGalleryItem(i + 1)}
+        {getGalleryItem(filteredId[i])}
+        {filteredId.length > i + 1 && getGalleryItem(filteredId[i + 1])}
       </View>,
     );
   }
 
   return (
-    <ScrollView contentContainerStyle={styles.gallery} horizontal={true}>
-      {waifus.length !== 0 ? (
-        pairCollection
-      ) : (
-        <Text style={styles.waifuNemeText}> No collection yet.</Text>
-      )}
-    </ScrollView>
+    <Content>
+      <Switch
+        title="Favorite waifus!"
+        value={checked}
+        onValueChange={() => setChecked(checked ? false : true)}
+      />
+      <ScrollView contentContainerStyle={styles.gallery} horizontal={true}>
+        {waifus.length !== 0 ? (
+          pairCollection
+        ) : (
+          <Text style={styles.waifuNemeText}> No collection yet.</Text>
+        )}
+      </ScrollView>
+    </Content>
   );
 }
 
