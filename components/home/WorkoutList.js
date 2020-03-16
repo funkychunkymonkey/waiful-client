@@ -86,6 +86,24 @@ export default function WorkoutList({navigation}) {
               />
             </View>
           ))}
+          {type === 'muscles' ? (
+            <View style={{opacity: 0.6, marginLeft: 80}}>
+              <TouchableOpacity
+                style={{...styles.filtersMus}}
+                onPress={() => {
+                  navigation.navigate('WorkoutCustom', allData);
+                }}>
+                <Image
+                  style={styles.bigIcon}
+                  source={require('../../assets/others/ExclamationMark.png')}
+                  resizeMode="contain"
+                />
+                <Text style={{color: '#fff'}}>Add New Exe</Text>
+              </TouchableOpacity>
+            </View>
+          ) : (
+            <></>
+          )}
         </View>
       </ScrollView>
     );

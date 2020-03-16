@@ -39,10 +39,6 @@
 			</dict>
 		</dict>
 	</dict>
-	<key>NSHealthShareUsageDescription</key>
-	<string>Read and understand health data.</string>
-	<key>NSHealthUpdateUsageDescription</key>
-	<string>Share workout data with other apps.</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
 	<string></string>
 	<key>NSLocationAlwaysUsageDescription</key>
