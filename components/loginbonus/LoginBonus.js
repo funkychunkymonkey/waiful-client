@@ -1,39 +1,19 @@
-import {useState, useEffect} from 'react';
+import React from 'react';
 import {AppState} from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import DailyDistance from './DailyDistance';
 import {useZ} from '../../zustand';
 import utils from '../../utils';
 
-export default function LoginBonus() {
-  const [appState, setAppState] = useState(AppState.currentState);
-  const [walk, setWalk] = useState(null);
+export default function LoginBonus({loading}) {
+  const [appState, setAppState] = React.useState(AppState.currentState);
+  const [walk, setWalk] = React.useState(null);
+  const [doCheckWalk, setDoCheckWalk] = React.useState(false);
   const LAST_LOGIN_DATE_KEY = '@lastLoginDate';
   const incrementGems = useZ(z => z.incrementGems);
+  const popUpWaifu = useZ(z => z.popUpWaifu);
 
-  useEffect(() => {
-    function handleAppStateChange(nextAppState) {
-      if (nextAppState === 'active') {
-        const today = getToday();
-
-        getDataOrDefault(LAST_LOGIN_DATE_KEY, today.toISOString()).then(
-          data => {
-            if (data !== today.toISOString()) {
-              DailyDistance({setWalk, today});
-            }
-            storeData(LAST_LOGIN_DATE_KEY, today.toISOString());
-          },
-        );
-      }
-      setAppState(nextAppState);
-    }
-
-    AppState.addEventListener('change', handleAppStateChange);
-
-    return () => AppState.removeEventListener('change', handleAppStateChange);
-  }, [appState]);
-
-  useEffect(() => {
+  React.useEffect(() => {
     if (walk !== null) {
       utils
         .addBonus(walk.km)
@@ -42,9 +22,10 @@ export default function LoginBonus() {
           return result;
         })
         .then(gem => {
-          alert(
-            `Today's bonus! You walked about ${walk.km}km yesterday. You got ${gem} gems!`,
-          );
+          popUpWaifu({
+            gems: gem,
+            dialogue: `Today's bonus! You walked about ${walk.km}km yesterday. You got ${gem} gems!`,
+          });
         });
     }
   }, [walk]);
@@ -81,5 +62,27 @@ export default function LoginBonus() {
     }
   }
 
-  return {appState};
+  AppState.addEventListener('change', checkWalk);
+  React.useEffect(checkWalk, [loading]);
+
+  function checkWalk() {
+    if (appState !== 'active') return;
+    if (loading) return;
+    setDoCheckWalk(true);
+  }
+
+  React.useEffect(() => {
+    if (doCheckWalk) {
+      const today = getToday();
+      getDataOrDefault(LAST_LOGIN_DATE_KEY, today.toISOString()).then(data => {
+        if (data !== today.toISOString()) {
+          DailyDistance({setWalk, today});
+        }
+        storeData(LAST_LOGIN_DATE_KEY, today.toISOString());
+        setDoCheckWalk(false);
+      });
+    }
+  }, [doCheckWalk]);
+
+  return <></>;
 }

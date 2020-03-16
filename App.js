@@ -29,7 +29,6 @@ const App: () => React$Node = () => {
   const reloadUser = useZ(z => z.reloadUser);
   const waifus = useZ(z => z.waifus);
 
-  LoginBonus();
   useEffect(() => {
     reloadExercises();
     reloadUser();
@@ -45,6 +44,7 @@ const App: () => React$Node = () => {
 
   return (
     <>
+      <LoginBonus loading={loading} />
       <WaifuOverlay
         options={overlayOptions}
         onClose={() => {
