@@ -193,12 +193,16 @@ export default function WorkoutList({navigation}) {
       img = require('../../assets/eqipments/SZ-Bar.png');
     else if (text === 'Pull-up bar')
       img = require('../../assets/eqipments/Pull-upBar.png');
+    else if (text === 'Gym mat')
+      img = require('../../assets/eqipments/GymMat.png');
+    else if (text === 'Incline bench')
+      img = require('../../assets/eqipments/InclineBench.png');
     else if (text === 'None') img = require('../../assets/eqipments/None.png');
     else if (text === 'Front') img = require('../../assets/body/Front.png');
     else if (text === 'Arms') img = require('../../assets/body/Arms.png');
     else if (text === 'Back') img = require('../../assets/body/Back.png');
     else if (text === 'Legs') img = require('../../assets/body/Legs.png');
-    else img = require('../../assets/eqipments/None.png');
+    else img = require('../../assets/eqipments/question.png');
     return img;
   }
 }
