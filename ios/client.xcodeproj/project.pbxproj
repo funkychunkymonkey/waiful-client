@@ -41,7 +41,6 @@
 		91EFDAA1C445458A8561BDA4 /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 60C43B2A56AC4D5AAA60FA97 /* Octicons.ttf */; };
 		98E5159B2D4B4420A03E7183 /* Ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 007A2E6DF54E4EC2B6B69935 /* Ionicons.ttf */; };
 		993EF27D24127A5800283CDB /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 993EF27C24127A5800283CDB /* File.swift */; };
-		99F03C17241D4B9D00974CD1 /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 99F03C16241D4B9D00974CD1 /* HealthKit.framework */; };
 		9D275428E4CE3ABFE8BFF1EB /* libPods-client.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 171B47F3EF602A7881967215 /* libPods-client.a */; };
 		AE2AEEA96B8945AF9B6BB983 /* Feather.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E7EFD29725E94A96AD876FB2 /* Feather.ttf */; };
 		BE8C729D31D949438BD1C18E /* FontAwesome.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 523D4418573E4A87B653874C /* FontAwesome.ttf */; };
@@ -124,9 +123,6 @@
 		993EF27B24127A5800283CDB /* client-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "client-Bridging-Header.h"; sourceTree = "<group>"; };
 		993EF27C24127A5800283CDB /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
 		997031C123634C7A82C76C47 /* Entypo.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Entypo.ttf; path = "../node_modules/native-base/Fonts/Entypo.ttf"; sourceTree = "<group>"; };
-		99F03C15241D4B9D00974CD1 /* client.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = client.entitlements; path = client/client.entitlements; sourceTree = "<group>"; };
-		99F03C16241D4B9D00974CD1 /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = System/Library/Frameworks/HealthKit.framework; sourceTree = SDKROOT; };
-		99F03C18241D4CF000974CD1 /* clientDebug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = clientDebug.entitlements; path = client/clientDebug.entitlements; sourceTree = "<group>"; };
 		9DB4EB2730064DBE9216559C /* FontAwesome5_Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Regular.ttf; path = "../node_modules/native-base/Fonts/FontAwesome5_Regular.ttf"; sourceTree = "<group>"; };
 		9E490154222D46B8AD090329 /* Entypo.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Entypo.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Entypo.ttf"; sourceTree = "<group>"; };
 		AE100686C2CB4F2A88E75377 /* rubicon-icon-font.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "rubicon-icon-font.ttf"; path = "../node_modules/native-base/Fonts/rubicon-icon-font.ttf"; sourceTree = "<group>"; };
@@ -414,22 +410,19 @@
 				TargetAttributes = {
 					00E356ED1AD99517003FC87E = {
 						CreatedOnToolsVersion = 6.2;
-						DevelopmentTeam = FGQ66SF356;
+						DevelopmentTeam = 68QSJ45X73;
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
 					13B07F861A680F5B00A75B9A = {
-						DevelopmentTeam = FGQ66SF356;
+						DevelopmentTeam = 68QSJ45X73;
 						LastSwiftMigration = 1130;
-						ProvisioningStyle = Automatic;
 					};
 					2D02E47A1E0B4A5D006451C7 = {
 						CreatedOnToolsVersion = 8.2.1;
-						DevelopmentTeam = FGQ66SF356;
 						ProvisioningStyle = Automatic;
 					};
 					2D02E48F1E0B4A5D006451C7 = {
 						CreatedOnToolsVersion = 8.2.1;
-						DevelopmentTeam = FGQ66SF356;
 						ProvisioningStyle = Automatic;
 						TestTargetID = 2D02E47A1E0B4A5D006451C7;
 					};
@@ -798,7 +791,6 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				DEVELOPMENT_TEAM = FGQ66SF356;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -830,7 +822,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
-				DEVELOPMENT_TEAM = FGQ66SF356;
+				DEVELOPMENT_TEAM = 68QSJ45X73;
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = clientTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -858,11 +850,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = client/clientDebug.entitlements;
-				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
-				DEVELOPMENT_TEAM = FGQ66SF356;
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = client/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -889,7 +878,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = client/clientRelease.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = FGQ66SF356;
+				DEVELOPMENT_TEAM = 68QSJ45X73;
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = client/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -917,7 +906,6 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = FGQ66SF356;
 				ENABLE_TESTABILITY = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
 				HEADER_SEARCH_PATHS = "$(inherited)";
@@ -953,7 +941,7 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = FGQ66SF356;
+				DEVELOPMENT_TEAM = 68QSJ45X73;
 				GCC_NO_COMMON_BLOCKS = YES;
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "client-tvOS/Info.plist";
@@ -986,7 +974,6 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = FGQ66SF356;
 				ENABLE_TESTABILITY = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
 				HEADER_SEARCH_PATHS = "$(inherited)";
@@ -1021,7 +1008,7 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = FGQ66SF356;
+				DEVELOPMENT_TEAM = 68QSJ45X73;
 				GCC_NO_COMMON_BLOCKS = YES;
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "client-tvOSTests/Info.plist";
