@@ -36,7 +36,12 @@ export default function WorkoutCustom({navigation}) {
   const [loading, setLoading] = React.useState(false);
 
   const register = () => {
-    if (!exerciseName || !exerciseDescription) return;
+    if (
+      !exerciseName &&
+      !exerciseDescription &&
+      (!filters.muscles || !filters.muscles)
+    )
+      return;
     setLoading(true);
     utils
       .registerExercise(
