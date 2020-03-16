@@ -87,7 +87,7 @@ export default function WorkoutList({navigation}) {
             </View>
           ))}
           {type === 'muscles' ? (
-            <View style={{opacity: 0.6, marginLeft: 80}}>
+            <View style={{opacity: 0.6, left: '100%'}}>
               <TouchableOpacity
                 style={{...styles.filtersMus}}
                 onPress={() => {

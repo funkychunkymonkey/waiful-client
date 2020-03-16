@@ -10,7 +10,6 @@ import {
 import {ScrollView} from 'react-native-gesture-handler';
 import {Button, Input} from 'react-native-elements';
 import LinearGradient from 'react-native-linear-gradient';
-import {Content} from 'native-base';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 
 import Loading from '../Loading.js';
@@ -21,7 +20,6 @@ import {useZ} from '../../zustand';
 export default function WorkoutCustom({navigation}) {
   const allExercises = useZ(z => z.exercises);
   const reloadExercises = useZ(z => z.reloadExercises);
-  const user = useZ(z => z.user);
   const [allData] = React.useState({
     equipments: Array.from(
       new Set(allExercises.reduce((a, b) => [...a, ...b.equipments], [])),
@@ -62,13 +60,8 @@ export default function WorkoutCustom({navigation}) {
 
   return (
     <ScrollView style={styles.wrapper}>
-      <LinearGradient
-        colors={[COLORS.bgPrimary, COLORS.bgHighlight]}
-        start={{x: 0, y: 0.5}}
-        end={{x: 1, y: 0.5}}
-        style={{...styles.headerGradient, ...styles.headerHead}}>
-        <Text style={styles.headerText}>Exercise Name</Text>
-      </LinearGradient>
+      <RenderLinearGradient text="Exercise Name" />
+
       <View style={styles.form}>
         <View style={styles.formItem}>
           <Input
@@ -79,13 +72,9 @@ export default function WorkoutCustom({navigation}) {
           />
         </View>
       </View>
-      <LinearGradient
-        colors={[COLORS.bgPrimary, COLORS.bgHighlight]}
-        start={{x: 0, y: 0.5}}
-        end={{x: 1, y: 0.5}}
-        style={styles.headerGradient}>
-        <Text style={styles.headerText}>Exercise Description</Text>
-      </LinearGradient>
+
+      <RenderLinearGradient text="Exercise Description" />
+
       <View style={styles.form}>
         <View style={{...styles.formItem, height: 80}}>
           <TextInput
@@ -97,40 +86,25 @@ export default function WorkoutCustom({navigation}) {
           />
         </View>
       </View>
-      <LinearGradient
-        colors={[COLORS.bgPrimary, COLORS.bgHighlight]}
-        start={{x: 0, y: 0.5}}
-        end={{x: 1, y: 0.5}}
-        style={styles.headerGradient}>
-        <Text style={styles.headerText}>Body parts</Text>
-      </LinearGradient>
+
+      <RenderLinearGradient text="Body parts" />
+
       <View style={styles.form}>
         <View style={styles.formItem}>
           <Filters type="muscles" data={allData.muscles} />
         </View>
       </View>
-      <LinearGradient
-        colors={[COLORS.bgPrimary, COLORS.bgHighlight]}
-        start={{x: 0, y: 0.5}}
-        end={{x: 1, y: 0.5}}
-        style={styles.headerGradient}>
-        <Text style={styles.headerText}>Equipments</Text>
-      </LinearGradient>
+
+      <RenderLinearGradient text="Equipments" />
+
       <View style={styles.form}>
         <View style={styles.formItem}>
           <Filters type="equipments" data={allData.equipments} />
         </View>
       </View>
-      <LinearGradient
-        start={{x: 0, y: 0.5}}
-        end={{x: 1, y: 0.5}}
-        colors={[COLORS.bgPrimary, COLORS.bgHighlight]}
-        style={{
-          ...styles.headerGradient,
-          ...styles.headerButt,
-          ...styles.formItem,
-        }}
-      />
+
+      <RenderLinearGradient />
+
       <Button
         title="Register Your Workout"
         onPress={() => register()}
@@ -145,6 +119,28 @@ export default function WorkoutCustom({navigation}) {
       />
     </ScrollView>
   );
+
+  function RenderLinearGradient({text}) {
+    return (
+      <LinearGradient
+        colors={[COLORS.bgPrimary, COLORS.bgHighlight]}
+        start={{x: 0, y: 0.5}}
+        end={{x: 1, y: 0.5}}
+        style={
+          text === 'Exercise Name'
+            ? {...styles.headerGradient, ...styles.headerHead}
+            : text === undefined
+            ? {
+                ...styles.headerGradient,
+                ...styles.headerButt,
+                ...styles.formItem,
+              }
+            : {...styles.headerGradient}
+        }>
+        {!text ? <></> : <Text style={styles.headerText}>{text}</Text>}
+      </LinearGradient>
+    );
+  }
 
   function Filters({type, data}) {
     return (
