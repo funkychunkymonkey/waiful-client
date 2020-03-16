@@ -171,6 +171,15 @@ const logExercise = function(exercise, reps) {
 };
 
 /**********************************************
+ * BONUS
+ **********************************************/
+const addBonus = function(km) {
+  return q(`mutation{addBonus(input:{km:${parseInt(km)}})}`).then(
+    data => data.addBonus,
+  );
+};
+
+/**********************************************
  * UTILITY
  **********************************************/
 const q = async function(query, variables = {}) {
@@ -180,8 +189,8 @@ const q = async function(query, variables = {}) {
     device_id: getUniqueId(),
   });
   const result = await axios.post(
-    'http://localhost:3000/graphql',
-    // 'http://waiful-backend-dev3.ap-northeast-1.elasticbeanstalk.com/graphql',
+    //'http://localhost:3000/graphql',
+    'http://waiful-backend-dev3.ap-northeast-1.elasticbeanstalk.com/graphql',
     {
       query,
       variables,
@@ -224,5 +233,6 @@ export default {
   getGreetingTime,
   buyPersonality,
   setPersonality,
+  addBonus,
   registerExercise,
 };

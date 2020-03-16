@@ -4,6 +4,7 @@ import {Content, Button} from 'native-base';
 import {useFocusEffect} from '@react-navigation/native';
 import {ListItem} from 'react-native-elements';
 
+import LottieView from 'lottie-react-native';
 import utils from '../../utils.js';
 import Loading from '../Loading.js';
 import COLORS from '../../color';
@@ -55,7 +56,15 @@ export default function({route, navigation}) {
   if (series.length === 0)
     return (
       <Content style={styles.body}>
-        <Text>No {malType} added.</Text>
+        <Text style={styles.text}>No {malType} added.</Text>
+        <Text style={styles.add}>Add +</Text>
+        <LottieView
+          style={styles.hand}
+          source={require('../../assets/lottie/hand.json')}
+          autoPlay={true}
+          loop={true}
+          progress={0.3}
+        />
       </Content>
     );
   return (
@@ -84,12 +93,27 @@ export default function({route, navigation}) {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: COLORS.bgSecondary,
-  },
   body: {
-    backgroundColor: COLORS.textSecondary,
+    backgroundColor: COLORS.bgSecondary,
+    width: '100%',
+    position: 'relative',
+  },
+  text: {
+    fontSize: 20,
+  },
+  add: {
+    fontSize: 15,
+    backgroundColor: COLORS.bgPrimary,
+    padding: 15,
+    margin: 5,
+    position: 'absolute',
+    right: 10,
+  },
+  hand: {
+    right: -25,
+    top: -18,
+    width: 300,
+    position: 'absolute',
   },
   wrapper: {
     flexDirection: 'row',
