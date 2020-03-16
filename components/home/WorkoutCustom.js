@@ -20,6 +20,8 @@ import {useZ} from '../../zustand';
 
 export default function WorkoutCustom({navigation}) {
   const allExercises = useZ(z => z.exercises);
+  const reloadExercises = useZ(z => z.reloadExercises);
+  const user = useZ(z => z.user);
   const [allData] = React.useState({
     equipments: Array.from(
       new Set(allExercises.reduce((a, b) => [...a, ...b.equipments], [])),
@@ -28,13 +30,32 @@ export default function WorkoutCustom({navigation}) {
       new Set(allExercises.reduce((a, b) => [...a, ...b.muscleGroups], [])),
     ),
   });
+
   const [filters, setFilters] = React.useState({muscles: [], equipments: []});
-  const [loading, setLoading] = React.useState(false);
   const [exerciseName, setExerciseName] = React.useState('');
   const [exerciseDescription, setExerciseDescription] = React.useState('');
 
+  const [loading, setLoading] = React.useState(false);
+
   const register = () => {
     if (!exerciseName || !exerciseDescription) return;
+    setLoading(true);
+    utils
+      .registerExercise(
+        exerciseName,
+        exerciseDescription,
+        filters.muscles,
+        filters.equipments,
+      )
+      .then(data => {
+        reloadExercises();
+        setExerciseName('');
+        setExerciseDescription('');
+        setFilters({muscles: [], equipments: []});
+        setLoading(false);
+        navigation.popToTop();
+        navigation.navigate('WorkoutList');
+      });
   };
 
   if (loading) return <Loading />;
@@ -112,7 +133,7 @@ export default function WorkoutCustom({navigation}) {
       />
       <Button
         title="Register Your Workout"
-        onPress={() => submit(reps)}
+        onPress={() => register()}
         raised
         ViewComponent={LinearGradient} // Don't forget this!
         linearGradientProps={{
