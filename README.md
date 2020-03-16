@@ -1,6 +1,6 @@
 # waiful-client
 
-"This was created during our time as students at Code Chrysalis."
+**This was created during our time as students at Code Chrysalis.**
 
 Revolutionise your laifu with Waiful, a health and wellness app that motivates you with your favourite waifus.
 
@@ -14,7 +14,7 @@ Let's use it for your life!
 You can try this app here.  
 // deploy's URL
 
-## Setup Instructions
+# Setup
 
 This is the client repository.  
 The server repository is <a href=https://github.com/funkychunkymonkey/waiful-backend.git>HERE</a>.
@@ -57,7 +57,16 @@ android:
 yarn android
 ```
 
-## Introducing the Team
+# Technologies Used
+
+- [WGER Workout Manager API](http://wger.de/en)
+  - Used for information regarding exercises.
+- [Jikan.moe](https://jikan.moe/)
+  - Used to access MyAnimeList data.
+- [MyAnimeList](https://myanimelist.net/)
+  - Used for information regarding anime, manga, and anime/manga characters.
+
+# Introducing the Team
 
 #### Kan Phongjaroenwit(CEO)
 

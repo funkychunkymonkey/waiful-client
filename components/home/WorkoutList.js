@@ -57,9 +57,7 @@ export default function WorkoutList({navigation}) {
   return (
     <Content style={styles.content}>
       <LinearGradient colors={[COLORS.bgPrimary, COLORS.bgHighlight]}>
-        <Text style={styles.titleText}>MUSUCLES</Text>
         <Filters type="muscles" data={allData.muscles} />
-        <Text style={styles.titleText}>EQUIPMENTS</Text>
         <Filters type="equipments" data={['None', ...allData.equipments]} />
       </LinearGradient>
       <SearchBar

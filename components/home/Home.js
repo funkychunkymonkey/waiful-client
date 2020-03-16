@@ -14,7 +14,7 @@ export default function HomeScreen({navigation}) {
   useFocusEffect(
     React.useCallback(() => {
       popUpWaifu({
-        dialogue: 'Welcome back!',
+        event: 'welcome',
         auto: true,
       });
       return () => {};

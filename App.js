@@ -24,12 +24,13 @@ const App: () => React$Node = () => {
 
   const reloadExercises = useZ(z => z.reloadExercises);
   const exercises = useZ(z => z.exercises);
-  const reloadWaifus = useZ(z => z.reloadWaifus);
+
+  const reloadUser = useZ(z => z.reloadUser);
   const waifus = useZ(z => z.waifus);
 
   useEffect(() => {
     reloadExercises();
-    reloadWaifus();
+    reloadUser();
   }, []);
 
   useEffect(() => {
@@ -59,8 +60,11 @@ const App: () => React$Node = () => {
             inactiveBackgroundColor: COLORS.bgPrimary,
             style: {
               borderTopWidth: 0,
-              paddingTop: 10,
+              paddingTop: 5,
               backgroundColor: COLORS.bgPrimary,
+            },
+            labelStyle: {
+              fontSize: 16,
             },
           }}>
           <Tab.Screen
