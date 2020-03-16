@@ -869,6 +869,10 @@
     "@types/yargs" "^15.0.0"
     chalk "^3.0.0"
 
+"@react-native-community/async-storage@react-native-community/async-storage":
+  version "1.8.1"
+  resolved "https://codeload.github.com/react-native-community/async-storage/tar.gz/f20e68dbb8f90e8d96ceb45ac4325eeb8b75d43e"
+
 "@react-native-community/cli-debugger-ui@^3.0.0":
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/@react-native-community/cli-debugger-ui/-/cli-debugger-ui-3.0.0.tgz#d01d08d1e5ddc1633d82c7d84d48fff07bd39416"
@@ -6161,6 +6165,11 @@ rimraf@~2.2.6:
   version "2.2.8"
   resolved "https://registry.yarnpkg.com/rimraf/-/rimraf-2.2.8.tgz#e439be2aaee327321952730f99a8929e4fc50582"
   integrity sha1-5Dm+Kq7jJzIZUnMPmaiSnk/FBYI=
+
+rn-apple-healthkit@^0.8.0:
+  version "0.8.0"
+  resolved "https://registry.yarnpkg.com/rn-apple-healthkit/-/rn-apple-healthkit-0.8.0.tgz#83a23e71fc54d6d929cd6a55d5c590072bab4c64"
+  integrity sha512-LymIWk9lwIkcGIACveCxvp2jKXTTrDbdUYgcac+wuaSLPPpLfZqrQ0fz+QACYx5cSwAn6Uj6NcJ5+QkwPjY+5g==
 
 rsvp@^4.8.4:
   version "4.8.5"

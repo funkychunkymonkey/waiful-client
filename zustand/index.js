@@ -49,7 +49,7 @@ const [useZ] = create((set, get) => ({
     if (!options.gems && !waifu) return;
 
     // generate waifu image
-    if (waifu.waifuImages.length > 1) {
+    if (waifu && waifu.waifuImages && waifu.waifuImages.length > 1) {
       const maxIndex = Math.min(
         waifu.waifuImages.length - 1,
         Math.floor(waifu.level / 10),

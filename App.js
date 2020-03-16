@@ -10,6 +10,7 @@ import SettingsScreen from './components/settings/Index';
 import CollectionScreen from './components/collection/Index';
 import WaifuOverlay from './components/WaifuOverlay';
 import Splash from './components/Splash';
+import LoginBonus from './components/loginbonus/LoginBonus';
 
 import COLORS from './color';
 import {useZ} from './zustand';
@@ -43,6 +44,7 @@ const App: () => React$Node = () => {
 
   return (
     <>
+      <LoginBonus loading={loading} />
       <WaifuOverlay
         options={overlayOptions}
         onClose={() => {
