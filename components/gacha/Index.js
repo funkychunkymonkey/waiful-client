@@ -197,7 +197,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
   },
   wrapper: {
-    backgroundColor: COLORS.bgPrimary,
+    backgroundColor: COLORS.bgSecondary,
   },
   screen: {
     height: Dimensions.get('window').height,

@@ -56,14 +56,17 @@ export default function WorkoutList({navigation}) {
 
   return (
     <Content style={styles.content}>
-      <LinearGradient colors={[COLORS.bgPrimary, COLORS.bgHighlight]}>
+      <View>
         <Filters type="muscles" data={allData.muscles} />
         <Filters type="equipments" data={['None', ...allData.equipments]} />
-      </LinearGradient>
+      </View>
       <SearchBar
+        searchIcon={false}
         placeholder="Type Here..."
         onChangeText={updateSearch}
         value={search}
+        lightTheme
+        round
       />
       <Exercises />
     </Content>
@@ -87,20 +90,18 @@ export default function WorkoutList({navigation}) {
             </View>
           ))}
           {type === 'muscles' ? (
-            <View style={{opacity: 0.6, left: '100%'}}>
-              <TouchableOpacity
-                style={{...styles.filtersMus}}
-                onPress={() => {
-                  navigation.navigate('WorkoutCustom', allData);
-                }}>
-                <Image
-                  style={styles.bigIcon}
-                  source={require('../../assets/others/ExclamationMark.png')}
-                  resizeMode="contain"
-                />
-                <Text style={{color: '#fff'}}>Add New Exe</Text>
-              </TouchableOpacity>
-            </View>
+            <TouchableOpacity
+              style={{...styles.add}}
+              onPress={() => {
+                navigation.navigate('WorkoutCustom', allData);
+              }}>
+              <Image
+                style={styles.bigIcon}
+                source={require('../../assets/others/plusicon.png')}
+                resizeMode="contain"
+              />
+              <Text style={{color: COLORS.textSecondary}}>Add New Exe</Text>
+            </TouchableOpacity>
           ) : (
             <></>
           )}
@@ -209,7 +210,7 @@ export default function WorkoutList({navigation}) {
 
 const styles = StyleSheet.create({
   content: {
-    backgroundColor: COLORS.bgPrimary,
+    backgroundColor: COLORS.bgSecondary,
     width: '100%',
   },
   titleText: {
@@ -223,7 +224,7 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#F8C404',
+    backgroundColor: COLORS.bgPrimary,
   },
   filtersMus: {
     padding: 6,
@@ -231,7 +232,7 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#ffa175',
+    backgroundColor: COLORS.textHighlight,
   },
   bigIcon: {
     width: 40,
@@ -251,7 +252,16 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: COLORS.bgHighlight,
+    backgroundColor: COLORS.textHighlight,
+  },
+  add: {
+    padding: 6,
+    marginLeft: 70,
+    margin: 2,
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: 100,
+    height: 65,
   },
   none: {
     flex: 1,
