@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {Text, View} from 'react-native';
 import {Content} from 'native-base';
 import {ListItem} from 'react-native-elements';
 import LinearGradient from 'react-native-linear-gradient';
@@ -22,34 +22,38 @@ export default function({route, navigation}) {
   }
 
   return (
-    <Content>
-      <LinearGradient
-        colors={[COLORS.bgPrimary, COLORS.bgHighlight]}
-        style={{padding: 10, alignItems: 'center'}}>
-        <Icon name="heart" size={60} color={COLORS.textTitle} />
-        <Text style={{color: COLORS.textSecondary, fontSize: 20}}>
-          {user.gems} Ikigai
-        </Text>
-      </LinearGradient>
-      <View
-        style={{
-          backgroundColor: COLORS.textSecondary,
-          alignItems: 'center',
-          padding: 10,
-        }}>
-        <Text style={{color: COLORS.textTitle}}>
-          Purchase dialogue sets to customise your collection with!
-        </Text>
+    <>
+      <View>
+        <LinearGradient
+          colors={[COLORS.bgPrimary, COLORS.bgHighlight]}
+          style={{padding: 10, alignItems: 'center'}}>
+          <Icon name="heart" size={60} color={COLORS.textTitle} />
+          <Text style={{color: COLORS.textSecondary, fontSize: 20}}>
+            {user.gems} Ikigai
+          </Text>
+        </LinearGradient>
+        <View
+          style={{
+            backgroundColor: COLORS.textSecondary,
+            alignItems: 'center',
+            padding: 10,
+          }}>
+          <Text style={{color: COLORS.textTitle}}>
+            Purchase dialogue sets to customise your collection with!
+          </Text>
+        </View>
       </View>
-      {PERSONALITIES.map((personality, i) => (
-        <DialogueSet
-          key={i}
-          personality={personality}
-          isOwned={user.personalities.some(x => x.id === personality.id)}
-          buy={buy}
-        />
-      ))}
-    </Content>
+      <Content>
+        {PERSONALITIES.map((personality, i) => (
+          <DialogueSet
+            key={i}
+            personality={personality}
+            isOwned={user.personalities.some(x => x.id === personality.id)}
+            buy={buy}
+          />
+        ))}
+      </Content>
+    </>
   );
 }
 
@@ -77,24 +81,3 @@ function DialogueSet({personality, isOwned, buy}) {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: COLORS.bgSecondary,
-  },
-  body: {
-    backgroundColor: COLORS.textSecondary,
-  },
-  wrapper: {
-    flexDirection: 'row',
-    backgroundColor: 'white',
-  },
-  item: {flex: 7},
-  trashcan: {
-    flex: 3,
-    paddingRight: 15,
-    justifyContent: 'center',
-    alignContent: 'center',
-  },
-});
