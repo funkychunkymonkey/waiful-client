@@ -26,9 +26,9 @@ export default function({route, navigation}) {
       <LinearGradient
         colors={[COLORS.bgPrimary, COLORS.bgHighlight]}
         style={{padding: 10, alignItems: 'center'}}>
-        <Icon name="gem" size={60} color={COLORS.textTitle} />
+        <Icon name="heart" size={60} color={COLORS.textTitle} />
         <Text style={{color: COLORS.textSecondary, fontSize: 20}}>
-          {user.gems} Gems
+          {user.gems} Ikigai
         </Text>
       </LinearGradient>
       <View
@@ -68,7 +68,7 @@ function DialogueSet({personality, isOwned, buy}) {
     return (
       <ListItem
         title={personality.name}
-        rightAvatar={<Text>Buy for 200 Gems</Text>}
+        rightAvatar={<Text>Buy for 200 Ikigai</Text>}
         onPress={() => {
           buy(personality.id);
         }}

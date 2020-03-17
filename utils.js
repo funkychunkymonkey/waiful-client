@@ -30,6 +30,13 @@ const gacha = function() {
     'mutation{gacha(input:{}){ id level malId name personalityId imageUrl url description isFavorite waifuImages{url} series{id name imageUrl url} }}',
   ).then(data => data.gacha);
 };
+const buyWaifu = function(seriesMalType, seriesMalId, waifuMalId) {
+  return q(
+    `mutation{buyWaifu(input:{seriesMalType: "${seriesMalType}", seriesMalId: ${seriesMalId}, waifuMalId: ${waifuMalId}}){
+      id level malId name personalityId imageUrl url description isFavorite waifuImages{url} series{id name imageUrl url}
+    }}`,
+  ).then(data => data.buyWaifu);
+};
 const sellWaifu = function(malId) {
   return q(`mutation{sellWaifu(input:{malId:${parseInt(malId)}})}`).then(
     data => data.sellWaifu,
@@ -85,8 +92,15 @@ const removeSeries = function(malType, malId) {
 };
 const getTopSeries = function(malType, search) {
   return q(
-    `query($search: String!){ series(malType:"${malType}", search: $search){id malId name imageUrl url} }`,
+    `query($search: String!){ serieses(malType:"${malType}", search: $search){id malId name imageUrl url} }`,
     {search},
+  ).then(data => data.serieses);
+};
+const getFirstSeries = function(malType, malId) {
+  return q(
+    `query{ series(malType:"${malType}", malId: ${parseInt(
+      malId,
+    )}){id malId name imageUrl url waifus {malId name imageUrl}} }`,
   ).then(data => data.series);
 };
 
@@ -189,8 +203,8 @@ const q = async function(query, variables = {}) {
     device_id: getUniqueId(),
   });
   const result = await axios.post(
-    //'http://localhost:3000/graphql',
-    'http://waiful-backend-dev3.ap-northeast-1.elasticbeanstalk.com/graphql',
+    'http://localhost:3000/graphql',
+    //'http://waiful-backend-dev3.ap-northeast-1.elasticbeanstalk.com/graphql',
     {
       query,
       variables,
@@ -216,6 +230,7 @@ const getGreetingTime = m => {
 export default {
   getUser,
   gacha,
+  buyWaifu,
   sellWaifu,
   getExercises,
   logExercise,
@@ -227,6 +242,7 @@ export default {
   setFavWaifu,
   setUnfavWaifu,
   getSeries,
+  getFirstSeries,
   getTopSeries,
   addSeries,
   removeSeries,

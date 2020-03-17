@@ -24,7 +24,7 @@ export default function LoginBonus({loading}) {
         .then(gem => {
           popUpWaifu({
             gems: gem,
-            dialogue: `Today's bonus! You walked about ${walk.km}km yesterday. You got ${gem} gems!`,
+            dialogue: `Today's bonus! You walked about ${walk.km}km yesterday. You got ${gem} Ikigai!`,
           });
         });
     }
@@ -75,7 +75,7 @@ export default function LoginBonus({loading}) {
     if (doCheckWalk) {
       const today = getToday();
       getDataOrDefault(LAST_LOGIN_DATE_KEY, today.toISOString()).then(data => {
-        if (data !== today.toISOString()) {
+        if (1 || data !== today.toISOString()) {
           DailyDistance({setWalk, today});
         }
         storeData(LAST_LOGIN_DATE_KEY, today.toISOString());
