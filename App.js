@@ -1,71 +1,52 @@
 import React, {useEffect, useState} from 'react';
-
 import {NavigationContainer} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import HomeScreen from './components/Home';
-import GachaScreen from './components/Gacha';
-import SettingsScreen from './components/Settings';
-import CollectionScreen from './components/Collection';
+import HomeScreen from './components/home/Index';
+import GachaScreen from './components/gacha/Index';
+import SettingsScreen from './components/settings/Index';
+import CollectionScreen from './components/collection/Index';
 import WaifuOverlay from './components/WaifuOverlay';
 import Splash from './components/Splash';
+import LoginBonus from './components/loginbonus/LoginBonus';
 
-import utils from './utils.js';
 import COLORS from './color';
+import {useZ} from './zustand';
 
 const Tab = createBottomTabNavigator();
 const App: () => React$Node = () => {
-  const [exercises, setExercises] = useState([]);
-  const [waifus, setWaifus] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const [overlayKey, setOverlayKey] = React.useState(0);
-  const [overlayIsVisible, setOverlayIsVisible] = React.useState(false);
-  const [overlayOptions, setOverlayOptions] = React.useState({});
+  const overlayIsVisible = useZ(z => z.overlayIsVisible);
+  const overlayOptions = useZ(z => z.overlayOptions);
+  const setOverlayIsVisible = useZ(z => z.setOverlayIsVisible);
+
+  const reloadExercises = useZ(z => z.reloadExercises);
+  const exercises = useZ(z => z.exercises);
+
+  const reloadUser = useZ(z => z.reloadUser);
+  const waifus = useZ(z => z.waifus);
 
   useEffect(() => {
-    Promise.all([reloadExercises(), reloadWaifus()]).then(() =>
-      setLoading(false),
-    );
+    reloadExercises();
+    reloadUser();
   }, []);
+
+  useEffect(() => {
+    if (waifus !== null && exercises !== null) {
+      setLoading(false);
+    }
+  }, [waifus, exercises]);
 
   if (loading) return <Splash />;
 
-  async function reloadExercises() {
-    setExercises(await utils.getExercises());
-  }
-  async function reloadWaifus() {
-    setWaifus(await utils.getWaifus());
-  }
-  function popUpWaifu(options) {
-    // generate waifu
-    let waifu = null;
-    if (options.waifu !== undefined) waifu = options.waifu;
-    else {
-      const faves = waifus.filter(x => x.isFavorite);
-      waifu = faves.length
-        ? faves[Math.floor(Math.random() * faves.length)]
-        : null;
-    }
-    // if it's a generic dialogue with no waifu, return immediately
-    if (!options.gems && !waifu) return;
-    // otherwise pop
-    setOverlayKey(overlayKey + 1);
-    setOverlayIsVisible(true);
-    setOverlayOptions({
-      ...options,
-      waifu,
-    });
-  }
-
   return (
     <>
+      <LoginBonus loading={loading} />
       <WaifuOverlay
         options={overlayOptions}
-        key={overlayKey}
-        rerender={overlayKey}
         onClose={() => {
           setOverlayIsVisible(false);
         }}
@@ -81,17 +62,16 @@ const App: () => React$Node = () => {
             inactiveBackgroundColor: COLORS.bgPrimary,
             style: {
               borderTopWidth: 0,
-              paddingTop: 10,
+              paddingTop: 5,
               backgroundColor: COLORS.bgPrimary,
+            },
+            labelStyle: {
+              fontSize: 16,
             },
           }}>
           <Tab.Screen
             name="Home"
             component={HomeScreen}
-            initialParams={{
-              exercises,
-              popUpWaifu,
-            }}
             options={{
               tabBarLabel: 'Home',
               tabBarIcon: ({color, size}) => (
@@ -102,7 +82,6 @@ const App: () => React$Node = () => {
           <Tab.Screen
             name="Collection"
             component={CollectionScreen}
-            initialParams={{popUpWaifu}}
             options={{
               tabBarLabel: 'Collection',
               tabBarIcon: ({color, size}) => (
@@ -113,10 +92,6 @@ const App: () => React$Node = () => {
           <Tab.Screen
             name="Gacha"
             component={GachaScreen}
-            initialParams={{
-              popUpWaifu,
-              reloadWaifus,
-            }}
             options={{
               tabBarLabel: 'Gacha',
               tabBarIcon: ({color, size}) => (

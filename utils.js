@@ -1,10 +1,25 @@
 import axios from 'axios';
+import {getUniqueId} from 'react-native-device-info';
+const PERSONALITIES = require('./assets/personalities.json');
 
 /**********************************************
  * USER
  **********************************************/
 const getUser = function() {
-  return q('query{user{ id email gems }}').then(data => data.user);
+  return q(
+    `query{user{id gems personalities waifus{id level malId name personalityId imageUrl url description isFavorite waifuImages{url} series{id name imageUrl url}} }}`,
+  ).then(data => {
+    const user = data.user;
+    user.personalities = [1, ...user.personalities].map(
+      x => PERSONALITIES[x - 1],
+    );
+    user.waifus = user.waifus.map(x => {
+      x.personalityId = x.personalityId ? x.personalityId : 1;
+      x.imageUrl = x.waifuImages.length > 0 ? x.waifuImages[0].url : x.imageUrl;
+      return x;
+    });
+    return user;
+  });
 };
 
 /**********************************************
@@ -12,7 +27,7 @@ const getUser = function() {
  **********************************************/
 const gacha = function() {
   return q(
-    'mutation{gacha(input:{}){id name imageUrl url series{id name imageUrl url}}}',
+    'mutation{gacha(input:{}){ id level malId name personalityId imageUrl url description isFavorite waifuImages{url} series{id name imageUrl url} }}',
   ).then(data => data.gacha);
 };
 const sellWaifu = function(malId) {
@@ -20,12 +35,6 @@ const sellWaifu = function(malId) {
     data => data.sellWaifu,
   );
 };
-const getWaifus = function() {
-  return q(
-    'query{user{ waifus{id malId name imageUrl url isFavorite series{id name imageUrl url}} }}',
-  ).then(data => data.user.waifus);
-};
-
 const setFavWaifu = function(malId) {
   return q(`mutation{favoriteWaifu(input:{malId:${parseInt(malId)}})}`).then(
     data => data.favoriteWaifu,
@@ -34,6 +43,21 @@ const setFavWaifu = function(malId) {
 const setUnfavWaifu = function(malId) {
   return q(`mutation{unfavoriteWaifu(input:{malId:${parseInt(malId)}})}`).then(
     data => data.unfavoriteWaifu,
+  );
+};
+const buyPersonality = function(personalityId) {
+  return q(
+    `mutation{buyPersonality(input:{personalityId: ${parseInt(
+      personalityId,
+    )}})}`,
+  );
+};
+const setPersonality = function(waifuId, personalityId) {
+  return q(
+    `mutation{addPersonality(input:{
+      waifuId: ${parseInt(waifuId)},
+      personalityId: ${parseInt(personalityId)}
+    })}`,
   );
 };
 
@@ -113,6 +137,26 @@ const getExercises = function() {
     return exercises;
   });
 };
+
+const registerExercise = function(
+  exerciseName,
+  exerciseDescription,
+  muscles,
+  equipments,
+) {
+  return q(
+    'mutation($input:CreateExerciseInput!){createExercise(input:$input)}',
+    {
+      input: {
+        name: exerciseName,
+        description: exerciseDescription,
+        muscles: muscles,
+        equipment: equipments,
+      },
+    },
+  );
+};
+
 const getWorkouts = function() {
   return q(
     'query{user{id email workouts{reps exercise{name} createdAt}}}',
@@ -127,19 +171,46 @@ const logExercise = function(exercise, reps) {
 };
 
 /**********************************************
+ * BONUS
+ **********************************************/
+const addBonus = function(km) {
+  return q(`mutation{addBonus(input:{km:${parseInt(km)}})}`).then(
+    data => data.addBonus,
+  );
+};
+
+/**********************************************
  * UTILITY
  **********************************************/
 const q = async function(query, variables = {}) {
-  console.log(query);
+  console.log({
+    query,
+    variables,
+    device_id: getUniqueId(),
+  });
   const result = await axios.post(
     //'http://localhost:3000/graphql',
     'http://waiful-backend-dev3.ap-northeast-1.elasticbeanstalk.com/graphql',
     {
       query,
       variables,
+      device_id: getUniqueId(),
     },
   );
   return result.data.data;
+};
+
+const getGreetingTime = m => {
+  const currentHour = parseFloat(m.format('HH'));
+  let result;
+  if (currentHour >= 12 && currentHour < 17) {
+    result = 'afternoon';
+  } else if (currentHour >= 17 && currentHour < 5) {
+    result = 'evening';
+  } else {
+    result = 'morning';
+  }
+  return result;
 };
 
 export default {
@@ -149,7 +220,6 @@ export default {
   getExercises,
   logExercise,
   getWorkouts,
-  getWaifus,
   getRuns,
   getRun,
   startRun,
@@ -160,4 +230,9 @@ export default {
   getTopSeries,
   addSeries,
   removeSeries,
+  getGreetingTime,
+  buyPersonality,
+  setPersonality,
+  addBonus,
+  registerExercise,
 };

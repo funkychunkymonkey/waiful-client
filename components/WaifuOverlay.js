@@ -11,6 +11,7 @@ import {Button} from 'react-native-elements';
 import {Container} from 'native-base';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import LinearGradient from 'react-native-linear-gradient';
+
 import COLORS from '../color';
 
 let closeTimeout = null;
@@ -275,15 +276,21 @@ const styles = StyleSheet.create({
   overlayBodyText: {
     color: 'white',
     fontSize: 16,
+    textAlign: 'center',
   },
   overlayBodyTitle: {
     color: COLORS.textPrimary,
     fontSize: 60,
+    paddingRight: 10,
+    paddingLeft: 10,
+    textAlign: 'center',
   },
   overlayBodySubtitle: {
     color: COLORS.textPrimary,
     fontSize: 20,
+    marginTop: 5,
     marginBottom: 10,
+    textAlign: 'center',
   },
   // waifu dialogue
   dialogue: {

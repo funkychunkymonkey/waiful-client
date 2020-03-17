@@ -1,6 +1,7 @@
 import * as React from 'react';
 import {Text, View} from 'react-native';
 import LottieView from 'lottie-react-native';
+
 import COLORS from '../color';
 
 export default function Loading() {
@@ -9,7 +10,7 @@ export default function Loading() {
       <LottieView
         autoPlay
         loop
-        source={require('../src/50-material-loader.json')}
+        source={require('../assets/lottie/50-material-loader.json')}
         colorFilters={[
           {
             keypath: 'Shape Layer 1 Comp 1',
