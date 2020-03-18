@@ -6,8 +6,7 @@ Revolutionise your laifu with Waiful, a health and wellness app that motivates y
 
 Let's use it for your life!
 
-// add image
-<img src="url" width="400px">
+<img src="https://user-images.githubusercontent.com/56245555/76932158-9c99ee80-692d-11ea-9cec-fbef66e13374.png" width="700px">
 
 ## URL
 
@@ -65,6 +64,10 @@ yarn android
   - Used to access MyAnimeList data.
 - [MyAnimeList](https://myanimelist.net/)
   - Used for information regarding anime, manga, and anime/manga characters.
+  
+<img src="https://user-images.githubusercontent.com/56245555/76932527-79237380-692e-11ea-89d5-5729fae82f14.png" width="400px"><img src="https://user-images.githubusercontent.com/56245555/76932649-c273c300-692e-11ea-8ca6-dd927089db9b.png" width="400px">
+
+
 
 # Introducing the Team
 
