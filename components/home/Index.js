@@ -90,5 +90,3 @@ export default function({navigation}) {
     </Stack.Navigator>
   );
 }
-
-const styles = StyleSheet.create({});

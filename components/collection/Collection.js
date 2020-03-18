@@ -1,19 +1,13 @@
 import * as React from 'react';
 import {Switch} from 'react-native-gesture-handler';
-import {
-  StyleSheet,
-  Text,
-  View,
-  TouchableOpacity,
-  Dimensions,
-} from 'react-native';
+import {Text, TouchableOpacity, Dimensions} from 'react-native';
 import {Container, Body} from 'native-base';
-import COLORS from '../../color';
 
 import CollectionDetail from './CollectionDetail';
 import CollectionGallery from './CollectionGallery';
 
 import {useZ} from '../../zustand';
+import styles from '../style/Collection';
 
 export default function Collection({navigation}) {
   const [checked, setChecked] = React.useState(false);
@@ -35,19 +29,7 @@ export default function Collection({navigation}) {
             setChecked(checked ? false : true);
             return false;
           }}
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'center',
-            alignItems: 'center',
-            backgroundColor: 'white',
-            padding: 2,
-            paddingRight: 5,
-            zIndex: 10,
-            top: Dimensions.get('window').height * 0.5,
-            left: 10,
-            position: 'absolute',
-            borderRadius: 15,
-          }}>
+          style={styles.item}>
           <Switch
             value={checked}
             title="Favorites"
@@ -63,9 +45,3 @@ export default function Collection({navigation}) {
   );
 }
 
-const styles = StyleSheet.create({
-  body: {
-    backgroundColor: COLORS.textSecondary,
-    width: '100%',
-  },
-});
