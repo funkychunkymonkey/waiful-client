@@ -1,9 +1,8 @@
 import * as React from 'react';
 import {StyleSheet, Text} from 'react-native';
-import {Content} from 'native-base';
+import {Content, View} from 'native-base';
 import LinearGradient from 'react-native-linear-gradient';
-import {useFocusEffect} from '@react-navigation/native';
-import {ListItem, SearchBar} from 'react-native-elements';
+import {ListItem} from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 
 import utils from '../../utils.js';
@@ -57,25 +56,29 @@ export default function({route, navigation}) {
 
   if (loading) return <Loading />;
   return (
-    <Content style={styles.body}>
-      <LinearGradient
-        colors={[COLORS.bgPrimary, COLORS.bgHighlight]}
-        style={{padding: 10, alignItems: 'center'}}>
-        <Icon name="heart" size={60} color={COLORS.textTitle} />
-        <Text style={{color: COLORS.textSecondary, fontSize: 20}}>
-          {user.gems} Ikigai
-        </Text>
-      </LinearGradient>
-      {characters.map(character => (
-        <ListItem
-          leftAvatar={{source: {uri: character.imageUrl}}}
-          title={character.name}
-          rightAvatar={<Text>Buy for 100 Ikigai</Text>}
-          onPress={() => buy(character.malId)}
-          bottomDivider
-        />
-      ))}
-    </Content>
+    <>
+      <View style={styles.body}>
+        <LinearGradient
+          colors={[COLORS.bgPrimary, COLORS.bgHighlight]}
+          style={{padding: 10, alignItems: 'center'}}>
+          <Icon name="heart" size={60} color={COLORS.textTitle} />
+          <Text style={{color: COLORS.textTitle, fontSize: 20, marginTop: 10}}>
+            {user.gems} Ikigai
+          </Text>
+        </LinearGradient>
+      </View>
+      <Content>
+        {characters.map(character => (
+          <ListItem
+            leftAvatar={{source: {uri: character.imageUrl}}}
+            title={character.name}
+            rightAvatar={<Text>Buy for 100 Ikigai</Text>}
+            onPress={() => buy(character.malId)}
+            bottomDivider
+          />
+        ))}
+      </Content>
+    </>
   );
 }
 

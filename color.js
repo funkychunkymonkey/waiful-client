@@ -4,7 +4,7 @@ const COLORS = {
   bgSecondary: '#f7f7f7', // dark white
   bgHighlight: '#ed591a', // orange
   //text
-  textPrimary: '#fed14d', // yellow
+  textPrimary: '#f7bf31', // yellow
   textSecondary: '#222222', // dark gray
   textTitle: '#fff', // white
   textLink: '#012EB2', // dark gray
