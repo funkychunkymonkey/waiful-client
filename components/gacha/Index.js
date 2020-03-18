@@ -98,8 +98,8 @@ export default function Gacha({route}) {
           start={{x: 1, y: 0.5}}
           end={{x: 0, y: 0.5}}
           style={styles.gachaPanelButton}>
-          <Text style={styles.gachaPanelHeaderTitle}>Gacha</Text>
-          <Text style={styles.gachaPanelHeaderSubtitle}>20 Gems</Text>
+          <Text style={styles.gachaPanelHeaderTitle}>Pull Fortune</Text>
+          <Text style={styles.gachaPanelHeaderSubtitle}>20 Ikigai</Text>
         </LinearGradient>
       </TouchableOpacity>
     );
@@ -121,8 +121,8 @@ export default function Gacha({route}) {
 
   function GachaPanel() {
     const gachaImages = [
-      'https://1.bp.blogspot.com/-sZbaFXJ4y0A/UnyGKAJjwbI/AAAAAAAAacE/RYDWRq73Hsc/s400/gachagacha.png',
-      'https://cocoromembers.jp.sharp/contents/wp-content/uploads/2016/08/1.gif',
+      require('../../assets/omikuji.png'),
+      require('../../assets/omikuji.gif'),
     ];
     return (
       <View style={styles.columnContainer}>
@@ -143,9 +143,9 @@ export default function Gacha({route}) {
                   transform: [{scaleX: buttonSpinAnim}],
                   bottom: buttonRiseAnim,
                 }}>
-                <Icon name="gem" size={60} color="#fff" />
+                <Icon name="heart" size={60} color="#fff" />
               </Animated.View>
-              <Text style={styles.gachaPanelHeaderTitle}>Gems</Text>
+              <Text style={styles.gachaPanelHeaderTitle}>Ikigai</Text>
             </LinearGradient>
             <View style={styles.gachaPanelBody}>
               <Text style={styles.gachaPanelText}>{user.gems}</Text>
@@ -153,9 +153,7 @@ export default function Gacha({route}) {
             {user.gems >= 20 ? <ActiveGachaButton /> : <InactiveGachaButton />}
           </Animated.View>
           <Image
-            source={{
-              uri: gachaStatus === 'GACHA' ? gachaImages[1] : gachaImages[0],
-            }}
+            source={gachaStatus === 'GACHA' ? gachaImages[1] : gachaImages[0]}
             style={styles.gachaImage}
             resizeMode="contain"
           />
@@ -168,7 +166,7 @@ export default function Gacha({route}) {
     <Container style={styles.wrapper}>
       <Header style={styles.header}>
         <Body>
-          <Title style={styles.title}>Gacha</Title>
+          <Title style={styles.title}>Omikuji</Title>
         </Body>
       </Header>
       <Animated.View
@@ -197,7 +195,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
   },
   wrapper: {
-    backgroundColor: COLORS.bgPrimary,
+    backgroundColor: COLORS.bgSecondary,
   },
   screen: {
     height: Dimensions.get('window').height,

@@ -6,6 +6,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import HomeScreen from './components/home/Index';
 import GachaScreen from './components/gacha/Index';
+import ShopScreen from './components/shop/Index';
 import SettingsScreen from './components/settings/Index';
 import CollectionScreen from './components/collection/Index';
 import WaifuOverlay from './components/WaifuOverlay';
@@ -90,12 +91,22 @@ const App: () => React$Node = () => {
             }}
           />
           <Tab.Screen
-            name="Gacha"
+            name="Omikuji"
             component={GachaScreen}
             options={{
-              tabBarLabel: 'Gacha',
+              tabBarLabel: 'Omikuji',
               tabBarIcon: ({color, size}) => (
-                <Icon name="gift-outline" color={color} size={size} />
+                <Icon name="heart-outline" color={color} size={size} />
+              ),
+            }}
+          />
+          <Tab.Screen
+            name="Shop"
+            component={ShopScreen}
+            options={{
+              tabBarLabel: 'Shop',
+              tabBarIcon: ({color, size}) => (
+                <Icon name="heart" color={color} size={size} />
               ),
             }}
           />
