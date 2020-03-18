@@ -10,6 +10,10 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.textSecondary,
     width: '100%',
   },
+  bodyDetail: {
+    backgroundColor: COLORS.bgSecondary,
+    width: '100%',
+  },
   item: {
     flexDirection: 'row',
     justifyContent: 'center',
@@ -86,6 +90,56 @@ const styles = StyleSheet.create({
     height: '100%',
     padding: 10,
   },
+  //CollectionGallery
+  header: {
+    backgroundColor: COLORS.bgPrimary,
+    borderBottomWidth: 0,
+    shadowColor: 'transparent',
+  },
+  title: {
+    fontWeight: 'bold',
+    color: 'white',
+  },
+  footer: {
+    backgroundColor: COLORS.favHeart,
+    width: '100%',
+    padding: 10,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  //DetailGallery
+  imageContainer: {
+    width: wp(100),
+    justifyContent: 'center',
+  },
+  imageView: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 10,
+  },
+  imageSize: {
+    width: 225,
+    height: 350,
+  },
+  imageThumbnail: {
+    borderRadius: 10,
+    width: hp('8%'),
+    height: hp('8%'),
+    alignSelf: 'center',
+  },
+  //DetailHeader
+  headerContainer: {
+    width: wp(100),
+    justifyContent: 'center',
+    padding: 10,
+  },
+  headerImage: {
+    borderRadius: 20,
+    width: hp('9%'),
+    height: hp('9%'),
+    position: 'relative',
+  }
 });
 
 export default styles;

@@ -1,9 +1,7 @@
 import * as React from 'react';
 import {ScrollView} from 'react-native-gesture-handler';
-import {StyleSheet, Text} from 'react-native';
+import {Text} from 'react-native';
 import {Container, Body} from 'native-base';
-
-import COLORS from '../../color';
 
 import DetailHeader from './DetailHeader.js';
 import DetailLevel from './DetailLevel.js';
@@ -12,6 +10,7 @@ import DetailPersonality from './DetailPersonality.js';
 import DetailFooter from './DetailFooter.js';
 
 import {useZ, useCollectionZ} from '../../zustand';
+import styles from '../style/Collection';
 
 export default function Collection({navigation}) {
   const selectedIndex = useCollectionZ(z => z.selectedIndex);
@@ -21,7 +20,7 @@ export default function Collection({navigation}) {
   if (!waifu) return <></>;
   return (
     <Container>
-      <Body style={styles.body}>
+      <Body style={styles.bodyDetail}>
         <ScrollView>
           <DetailHeader />
           <DetailLevel waifu={waifu} />
@@ -36,10 +35,3 @@ export default function Collection({navigation}) {
     </Container>
   );
 }
-
-const styles = StyleSheet.create({
-  body: {
-    backgroundColor: COLORS.bgSecondary,
-    width: '100%',
-  },
-});
