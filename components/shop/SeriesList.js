@@ -26,7 +26,6 @@ export default function({route, navigation}) {
     if (result.length === 0) {
       result = await utils.getTopSeries(malType, search);
     }
-    console.log(result);
     setSeries(result);
     setLoading(false);
   }
