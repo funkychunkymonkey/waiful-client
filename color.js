@@ -1,14 +1,14 @@
 const COLORS = {
   //background
-  bgPrimary: '#fed14d', // yellow
-  bgSecondary: '#f7f7f7', // light gray
-  bgHighlight: '#ffa880', // pink
+  bgPrimary: '#f7bf31', // yellow
+  bgSecondary: '#f7f7f7', // dark white
+  bgHighlight: '#ed591a', // orange
   //text
-  textPrimary: '#fed14d', // yellow
+  textPrimary: '#f7bf31', // yellow
   textSecondary: '#222222', // dark gray
   textTitle: '#fff', // white
   textLink: '#012EB2', // dark gray
-  textHighlight: '#ffa880', // pink
+  textHighlight: '#ffa880', // orange-pink
   //Icon
   favHeart: '#d62d51', // dark pink
 };

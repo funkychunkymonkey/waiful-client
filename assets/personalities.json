@@ -8,7 +8,8 @@
       "run:waiting": ["Ganbare~"],
       "run:finished": ["Great work!"],
       "exercise:waiting": ["Ganbare~"],
-      "exercise:finished": ["Great work!"]
+      "exercise:finished": ["Great work!"],
+      "gems:insufficient": ["Oh no! You don't have enough Ikigai..."]
     }
   },
   {
@@ -17,34 +18,30 @@
     "dialogues": {
       "welcome": ["Hmph.", "... What?", "Why are you here?"],
       "greet": ["... What are you looking at?"],
-      "run:waiting": ["Hurry up and get started."],
+      "run:waiting": [
+        "Hurry up and get started.",
+        "Don't get me wrong. It's not like I'm worried about you. But if you don't come back I'll never forgive you."
+      ],
       "run:finished": [
         "You managed to finish, huh? ... N-not like I care!",
         "You can do better..."
       ],
       "exercise:waiting": ["You're keeping me waiting!"],
-      "exercise:finished": [
-        "You expected me to praise you?",
-        "Don't expect to get "
-      ]
+      "exercise:finished": ["You expected me to praise you?"],
+      "gems:insufficient": ["You can't afford even this!? Useless!"]
     }
   },
   {
     "id": 3,
     "name": "Kuudere",
     "dialogues": {
-      "welcome": ["Ara, Ara"],
-      "greet": [
-        "Curiosity is like a cockroach. It likes to stumble upon secrets that are supposed to stay hidden."
-      ],
-      "run:waiting": [
-        "Don't get me wrong. It's not like I'm worried about you. But if you don't come back I'll never forgive you."
-      ],
-      "run:finished": ["Not... bad."],
-      "exercise:waiting": [
-        "Don't get me wrong. It's not like I'm worried about you. But if you don't come back I'll never forgive you."
-      ],
-      "exercise:finished": ["Not... bad"]
+      "welcome": ["..."],
+      "greet": ["Tadaima."],
+      "run:waiting": ["You're going out...?"],
+      "run:finished": ["Not bad..."],
+      "exercise:waiting": ["..."],
+      "exercise:finished": ["Not bad..."],
+      "gems:insufficient": ["You don't have enough."]
     }
   },
   {
@@ -56,7 +53,8 @@
       "run:waiting": ["Waaaa!!!"],
       "run:finished": ["Waaaa!!!"],
       "exercise:waiting": ["Waaaa!!!"],
-      "exercise:finished": ["Waaaa!!!"]
+      "exercise:finished": ["Waaaa!!!"],
+      "gems:insufficient": ["Waaaa!!!"]
     }
   },
   {
@@ -74,7 +72,8 @@
       "exercise:waiting": [
         "You can't change the world without getting your hands dirty."
       ],
-      "exercise:finished": ["Keep evolving"]
+      "exercise:finished": ["Keep evolving"],
+      "gems:insufficient": ["Our funds seem to be insufficient."]
     }
   },
   {
@@ -94,7 +93,8 @@
       ],
       "exercise:finished": [
         "Fake people have an image to maintain. Real people just don't care. Keep pushing the boundaries"
-      ]
+      ],
+      "gems:insufficient": ["Shall I find some Ikigai for you?"]
     }
   },
   {
@@ -108,7 +108,8 @@
       "run:waiting": ["RUN FOR MEEEEEEEEEE"],
       "run:finished": ["I love you."],
       "exercise:waiting": ["EXERCISE FOR MEEEEEEEEE"],
-      "exercise:finished": ["I love you"]
+      "exercise:finished": ["I love you"],
+      "gems:insufficient": ["Shall I find some Ikigai for you?"]
     }
   },
   {
@@ -120,7 +121,8 @@
       "run:waiting": ["Ganbare-nyan!"],
       "run:finished": ["Otsukare-nyan!"],
       "exercise:waiting": ["Ganbare-nyan!"],
-      "exercise:finished": ["Otsukare-nyan!"]
+      "exercise:finished": ["Otsukare-nyan!"],
+      "gems:insufficient": ["Nyot enough Ikigai!"]
     }
   }
 ]
