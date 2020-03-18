@@ -1,10 +1,10 @@
-import {StyleSheet, Dimensions} from 'react-native';
+import {StyleSheet} from 'react-native';
 import COLORS from '../../color';
 
 const styles = StyleSheet.create({
   //WorkoutList
   content: {
-    backgroundColor: COLORS.bgPrimary,
+    backgroundColor: COLORS.bgSecondary,
     width: '100%',
   },
   titleText: {
@@ -18,15 +18,15 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#F8C404',
+    backgroundColor: COLORS.bgPrimary,
   },
   filtersMus: {
-    padding: 0,
-    margin: 10,
+    padding: 6,
+    margin: 2,
     borderRadius: 15,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#ffa175',
+    backgroundColor: COLORS.textHighlight,
   },
   bigIcon: {
     width: 40,
@@ -46,7 +46,16 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: COLORS.bgHighlight,
+    backgroundColor: COLORS.textHighlight,
+  },
+  add: {
+    padding: 6,
+    marginLeft: 70,
+    margin: 2,
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: 100,
+    height: 65,
   },
   none: {
     flex: 1,
@@ -97,6 +106,34 @@ const styles = StyleSheet.create({
   descriptionText: {
     fontSize: 18,
     color: COLORS.textSecondary,
+  },
+  exerciseImage: {
+    flex: 1,
+    height: 100,
+  },
+  //WorkoutCustom
+  formItemCustom: {
+    flex: 1,
+    marginBottom: 10,
+  },
+  filtersMusCustom: {
+    padding: 6,
+    margin: 2,
+    borderRadius: 15,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#ffa175',
+  },
+  InputDescription: {
+    textAlignVertical: 'top',
+  },
+  //WorkoutLog
+  log: {
+    marginTop: 20,
+    marginBottom: 20,
+    marginLeft: 10,
+    marginRight: 10,
+    borderRadius: 20,
   },
 });
 

@@ -1,8 +1,7 @@
 import * as React from 'react';
-import {StyleSheet, Text, View, TouchableOpacity, Image} from 'react-native';
+import {Text, View, TouchableOpacity, Image} from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
 import {ListItem, SearchBar} from 'react-native-elements';
-import LinearGradient from 'react-native-linear-gradient';
 import {Content} from 'native-base';
 
 import COLORS from '../../color';
@@ -91,24 +90,6 @@ export default function WorkoutList({navigation}) {
             </View>
           ))}
           {type === 'muscles' ? (
-<<<<<<< HEAD
-            <View style={{opacity: 0.6, left: '100%'}}>
-              <TouchableOpacity
-                style={{...styles.filtersMus}}
-                onPress={() => {
-                  navigation.navigate('WorkoutCustom', allData);
-                }}>
-              </TouchableOpacity>
-              <TouchableOpacity>
-              <Image
-                  style={styles.bigIcon}
-                  source={require('../../assets/others/ExclamationMark.png')}
-                  resizeMode="contain"
-                />
-                <Text style={{color: '#fff'}}>Add New Exe</Text>
-                </TouchableOpacity>
-            </View>
-=======
             <TouchableOpacity
               style={{...styles.add}}
               onPress={() => {
@@ -121,7 +102,6 @@ export default function WorkoutList({navigation}) {
               />
               <Text style={{color: COLORS.textSecondary}}>Add New Exe</Text>
             </TouchableOpacity>
->>>>>>> 6dc8ce12841554f907ccb3a3b7f219aba3e28fcf
           ) : (
             <></>
           )}
@@ -227,69 +207,3 @@ export default function WorkoutList({navigation}) {
     return img;
   }
 }
-<<<<<<< HEAD
-=======
-
-const styles = StyleSheet.create({
-  content: {
-    backgroundColor: COLORS.bgSecondary,
-    width: '100%',
-  },
-  titleText: {
-    color: COLORS.textTitle,
-    fontSize: 20,
-    margin: 5,
-  },
-  filtersEq: {
-    padding: 6,
-    margin: 2,
-    borderRadius: 15,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: COLORS.bgPrimary,
-  },
-  filtersMus: {
-    padding: 6,
-    margin: 2,
-    borderRadius: 15,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: COLORS.textHighlight,
-  },
-  bigIcon: {
-    width: 40,
-    height: 40,
-  },
-  filterEq: {
-    padding: 6,
-    margin: 2,
-    borderRadius: 15,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: COLORS.bgPrimary,
-  },
-  filterMus: {
-    padding: 6,
-    margin: 2,
-    borderRadius: 15,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: COLORS.textHighlight,
-  },
-  add: {
-    padding: 6,
-    marginLeft: 70,
-    margin: 2,
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: 100,
-    height: 65,
-  },
-  none: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    height: 200,
-  },
-});
->>>>>>> 6dc8ce12841554f907ccb3a3b7f219aba3e28fcf

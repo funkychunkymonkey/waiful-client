@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {StyleSheet, Text, View, ScrollView, Image} from 'react-native';
+import {Text, View, ScrollView, Image} from 'react-native';
 import {useFocusEffect, useIsFocused} from '@react-navigation/native';
 import {Button, Input} from 'react-native-elements';
 
@@ -169,7 +169,7 @@ export default function WorkoutDetail({route, navigation}, y) {
         {exercise.exerciseImages.map(image => (
           <Image
             source={{uri: image.path}}
-            style={{flex: 1, height: 100}}
+            style={styles.exerciseImage}
             resizeMode="contain"
           />
         ))}

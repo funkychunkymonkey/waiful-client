@@ -1,5 +1,4 @@
 import * as React from 'react';
-import {StyleSheet, Dimensions} from 'react-native';
 import {useFocusEffect} from '@react-navigation/native';
 
 import Geolocation from '@react-native-community/geolocation';
