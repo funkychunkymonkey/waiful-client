@@ -19,7 +19,6 @@ export default function WorkoutLog({navigation}) {
   const listElement = React.useRef();
 
   const changeListPlace = listPosition => {
-    console.log(listPosition);
     if (listPosition >= 0) {
       scrollElement.current.scrollTo({
         x: 0,
@@ -116,7 +115,6 @@ export default function WorkoutLog({navigation}) {
               const newListPositions = listPositions;
               newListPositions[i] = nativeEvent.layout.y;
               setListPositions(newListPositions);
-              console.log(listPositions);
             }}
             title={log.exercise.name}
             subtitle={log.reps + ' reps'}

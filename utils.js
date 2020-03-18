@@ -7,7 +7,17 @@ const PERSONALITIES = require('./assets/personalities.json');
  **********************************************/
 const getUser = function() {
   return q(
-    `query{user{id gems personalities waifus{id level malId name personalityId imageUrl url description isFavorite waifuImages{url} series{id name imageUrl url}} }}`,
+    `query {
+      user {
+        id gems personalities 
+        currentRun{id startedAt distance data} 
+        waifus{
+          id level malId name personalityId imageUrl url description isFavorite 
+          waifuImages{url} 
+          series{id name imageUrl url}
+        } 
+      }
+    }`,
   ).then(data => {
     const user = data.user;
     user.personalities = [1, ...user.personalities].map(
@@ -113,19 +123,22 @@ const getRuns = function() {
   );
 };
 const getRun = function() {
-  return q('query{user{currentRun{startedAt}}}').then(
+  return q('query{user{currentRun{id startedAt}}}').then(
     data => data.user.currentRun,
   );
 };
 const startRun = function() {
-  return q(`mutation{createRun(input:{}){id}}`).then(data => data.createRun);
+  return q(`mutation{createRun(input:{}){id startedAt distance data}}`).then(
+    data => data.createRun,
+  );
 };
-const stopRun = function(distance, data) {
+const stopRun = function(currentRun) {
+  if (!currentRun.data) currentRun.data = [];
   return q(
     `mutation{stopRun(input:{data:"${JSON.stringify(
-      data,
+      currentRun.data,
     )}", distance: ${parseInt(
-      distance,
+      currentRun.distance,
     )}}){distance data startedAt endedAt gems}}`,
   ).then(data => data.stopRun);
 };
