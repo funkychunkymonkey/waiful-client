@@ -24,7 +24,7 @@ export default function LoginBonus({loading}) {
         .then(gem => {
           popUpWaifu({
             gems: gem,
-            dialogue: `Today's bonus! You walked about ${walk.km}km yesterday. You got ${gem} gems!`,
+            dialogue: `Today's bonus! You walked about ${walk.km}km yesterday. You got ${gem} Ikigai!`,
           });
         });
     }

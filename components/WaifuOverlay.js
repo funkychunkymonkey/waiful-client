@@ -195,9 +195,9 @@ function GemOverlay({gems}) {
           marginBottom: 10,
           transform: [{scaleX: gemSpinAnim}],
         }}>
-        <Icon name="gem" color={'white'} size={100} />
+        <Icon name="heart" color={'white'} size={100} />
       </Animated.View>
-      <Text style={styles.overlayBodyText}>+ {gems} Gems</Text>
+      <Text style={styles.overlayBodyText}>+ {gems} Ikigai</Text>
     </View>
   );
 }
