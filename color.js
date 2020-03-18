@@ -1,8 +1,8 @@
 const COLORS = {
   //background
-  bgPrimary: '#fed14d', // yellow
+  bgPrimary: '#f7bf31', // yellow
   bgSecondary: '#f7f7f7', // light gray
-  bgHighlight: '#ffa880', // pink
+  bgHighlight: '#ed591a', // pink
   //text
   textPrimary: '#fed14d', // yellow
   textSecondary: '#222222', // dark gray

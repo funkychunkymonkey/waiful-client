@@ -10,6 +10,7 @@ import Loading from '../Loading.js';
 import utils from '../../utils.js';
 import COLORS from '../../color';
 import {useZ} from '../../zustand';
+import styles from '../style/Workout';
 
 export default function WorkoutDetail({route, navigation}, y) {
   const popUpWaifu = useZ(z => z.popUpWaifu);
@@ -176,49 +177,3 @@ export default function WorkoutDetail({route, navigation}, y) {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  wrapper: {
-    padding: 10,
-    marginBottom: 10,
-  },
-  headerGradient: {
-    paddingRight: 30,
-    paddingLeft: 30,
-    paddingTop: 15,
-    paddingBottom: 15,
-    alignContent: 'center',
-  },
-  headerHead: {
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
-  },
-  headerButt: {
-    borderBottomLeftRadius: 20,
-    borderBottomRightRadius: 20,
-  },
-  headerText: {
-    color: COLORS.textTitle,
-    fontSize: 24,
-  },
-  form: {
-    backgroundColor: COLORS.bgSecondary,
-    padding: 10,
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-  },
-  formItem: {
-    flex: 1,
-  },
-  formIcon: {
-    marginRight: 10,
-  },
-  description: {
-    backgroundColor: 'white',
-    padding: 20,
-  },
-  descriptionText: {
-    fontSize: 18,
-    color: COLORS.textSecondary,
-  },
-});

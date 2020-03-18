@@ -9,7 +9,7 @@ import Running from './CardioRunning';
 import Loading from '../Loading';
 import utils from '../../utils';
 
-import {useZ, useCardioZ} from '../../zustand';
+import {useZ} from '../../zustand';
 
 export default function CardioScreen({navigation, route}) {
   const [currentRun, setCurrentRun] = React.useState(null);
@@ -103,48 +103,3 @@ export default function CardioScreen({navigation, route}) {
 
   return currentRun ? <Running /> : <NotRunning />;
 }
-
-const styles = StyleSheet.create({
-  wrapper: {flex: 1, alignItems: 'center', justifyContent: 'center'},
-  container: {
-    flex: 1,
-    backgroundColor: '#fafafa',
-  },
-  contentContainer: {
-    paddingTop: 50,
-  },
-  startButton: {
-    width: 300,
-    height: 300,
-    borderRadius: 200 / 2,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  stopButton: {
-    position: 'absolute',
-    zIndex: 10,
-    bottom: 10,
-    left: 10,
-    width: 150,
-    height: 150,
-    borderRadius: 200 / 2,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  buttonText: {
-    textAlign: 'center',
-    fontSize: 28,
-    color: '#fff',
-    textTransform: 'uppercase',
-  },
-  //for map
-  mapContainer: {
-    height: Dimensions.get('window').height,
-    width: Dimensions.get('window').width,
-    marginTop: 125,
-  },
-  //map
-  map: {
-    ...StyleSheet.absoluteFillObject,
-  },
-});
