@@ -155,7 +155,7 @@ const App: () => React$Node = () => {
             options={{
               tabBarLabel: 'Shop',
               tabBarIcon: ({color, size}) => (
-                <Icon name="heart" color={color} size={size} />
+                <Icon name="shopping" color={color} size={size} />
               ),
             }}
           />
