@@ -24,14 +24,6 @@ export default function({route, navigation}) {
   return (
     <>
       <View>
-        <LinearGradient
-          colors={[COLORS.bgPrimary, COLORS.bgHighlight]}
-          style={{padding: 10, alignItems: 'center'}}>
-          <Icon name="heart" size={60} color={COLORS.textTitle} />
-          <Text style={{color: COLORS.textTitle, fontSize: 20, marginTop: 10}}>
-            {user.gems} Ikigai
-          </Text>
-        </LinearGradient>
         <View
           style={{
             backgroundColor: COLORS.textSecondary,

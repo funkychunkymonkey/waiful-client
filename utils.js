@@ -82,9 +82,9 @@ const setPersonality = function(waifuId, personalityId) {
  * SERIES
  **********************************************/
 const getSeries = function() {
-  return q('query{user{ series{id malId malType name imageUrl url} }}').then(
-    data => data.user.series,
-  );
+  return q(
+    'query{user{ series{id malId malType name imageUrl url score startedAt endedAt description} }}',
+  ).then(data => data.user.series);
 };
 const addSeries = function(malType, malId) {
   return q(
@@ -102,7 +102,7 @@ const removeSeries = function(malType, malId) {
 };
 const getTopSeries = function(malType, search) {
   return q(
-    `query($search: String!){ serieses(malType:"${malType}", search: $search){id malId name imageUrl url} }`,
+    `query($search: String!){ serieses(malType:"${malType}", search: $search){id malId name imageUrl url score startedAt endedAt} }`,
     {search},
   ).then(data => data.serieses);
 };
@@ -110,7 +110,7 @@ const getFirstSeries = function(malType, malId) {
   return q(
     `query{ series(malType:"${malType}", malId: ${parseInt(
       malId,
-    )}){id malId name imageUrl url waifus {malId name imageUrl}} }`,
+    )}){id malId name imageUrl url score startedAt endedAt waifus {malId name imageUrl}} }`,
   ).then(data => data.series);
 };
 

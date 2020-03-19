@@ -1,14 +1,11 @@
 import React from 'react';
-import {StyleSheet, Dimensions} from 'react-native';
-import {Container, Header, View, Body, Title} from 'native-base';
+import {StyleSheet} from 'react-native';
 import {createStackNavigator} from '@react-navigation/stack';
 
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Series from './Series.js';
 import SeriesCharacters from './SeriesCharacters.js';
 
 import COLORS from '../../color';
-import {useZ} from '../../zustand';
 
 const Stack = createStackNavigator();
 const App: () => React$Node = () => {

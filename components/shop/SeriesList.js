@@ -1,8 +1,15 @@
 import * as React from 'react';
-import {StyleSheet, Text} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  ActivityIndicator,
+  View,
+  TouchableOpacity,
+} from 'react-native';
 import {Content} from 'native-base';
 import {useFocusEffect} from '@react-navigation/native';
-import {ListItem, SearchBar} from 'react-native-elements';
+import {Image, SearchBar} from 'react-native-elements';
+import Icon from 'react-native-vector-icons/FontAwesome5';
 
 import utils from '../../utils.js';
 import Loading from '../Loading.js';
@@ -60,18 +67,53 @@ export default function({route, navigation}) {
       ) : (
         series.map(item => {
           return (
-            <ListItem
-              leftAvatar={{source: {uri: item.imageUrl}}}
-              key={item.malId}
-              title={item.name}
+            <TouchableOpacity
               onPress={() =>
-                route.params.stackNavigation.navigate('SeriesCharacters', {
-                  series: item,
-                  malType: malType,
-                })
-              }
-              bottomDivider
-            />
+                navigation.navigate('SeriesCharacters', {series: item, malType})
+              }>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  backgroundColor: '#ffffff',
+                  shadowColor: '#000000ff',
+                  shadowOpacity: 0.8,
+                  shadowOffset: {width: 0, height: 2},
+                  elevation: 1,
+                  shadowRadius: 2,
+                  margin: 5,
+                  borderWidth: 1,
+                  borderRadius: 5,
+                  borderColor: '#ddd',
+                  overflow: 'hidden',
+                }}>
+                <Image
+                  source={{uri: item.imageUrl}}
+                  style={{width: 100}}
+                  PlaceholderContent={<ActivityIndicator />}
+                />
+                <View style={{padding: 10, flex: 1}}>
+                  <Text style={{fontSize: 18}}>{item.name}</Text>
+                  <Text>
+                    {item.startedAt}
+                    {item.startedAt ? ' - ' : ''}
+                    {item.endedAt ? item.endedAt : 'Ongoing'}
+                  </Text>
+                  {item.description ? (
+                    <Text style={{fontSize: 12}}>
+                      {item.description.length > 100
+                        ? item.description.substr(0, 100) + '...'
+                        : item.description}
+                    </Text>
+                  ) : (
+                    <></>
+                  )}
+                </View>
+                <View style={{padding: 10, alignItems: 'center'}}>
+                  <Icon name="star" size={20} />
+                  <Text>{item.score}</Text>
+                </View>
+              </View>
+            </TouchableOpacity>
           );
         })
       );
