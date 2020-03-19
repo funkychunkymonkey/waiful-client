@@ -35,7 +35,7 @@ export default function({navigation}) {
         <Tab.Screen
           name="Anime Characters"
           component={SeriesList}
-          initialParams={{malType: 'anime', stackNavigation: navigation}}
+          initialParams={{malType: 'anime'}}
           options={{
             tabBarLabel: 'Anime',
           }}
@@ -43,7 +43,7 @@ export default function({navigation}) {
         <Tab.Screen
           name="Manga Characters"
           component={SeriesList}
-          initialParams={{malType: 'manga', stackNavigation: navigation}}
+          initialParams={{malType: 'manga'}}
           options={{
             tabBarLabel: 'Manga',
           }}
