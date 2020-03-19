@@ -6,8 +6,14 @@ import COLORS from '../color';
 
 export default function Loading() {
   return (
-    <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+    <View
+      style={{
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}>
       <LottieView
+        style={{height: 300}}
         autoPlay
         loop
         source={require('../assets/lottie/50-material-loader.json')}
@@ -18,7 +24,7 @@ export default function Loading() {
           },
         ]}
       />
-      <Text>Loading...</Text>
+      <Text style={{fontSize: 20}}>Loading...</Text>
     </View>
   );
 }
