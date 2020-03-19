@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, Text, View, Image} from 'react-native';
 import {Content, Button} from 'native-base';
 import {useFocusEffect} from '@react-navigation/native';
 import {ListItem} from 'react-native-elements';
@@ -42,6 +42,16 @@ export default function({route, navigation}) {
             navigation.navigate('SettingsSeriesAdd', {malType, series});
           }}>
           <Text style={{color: '#000'}}>Add +</Text>
+          {series.length === 0 && (
+            <LottieView
+              style={styles.add}
+              autoPlay={true}
+              loop={true}
+              source={require('../../assets/lottie/click.json')}
+              speed={1.5}
+              progress={0.9}
+            />
+          )}
         </Button>
       ),
     });
@@ -57,13 +67,11 @@ export default function({route, navigation}) {
     return (
       <Content style={styles.body}>
         <Text style={styles.text}>No {malType} added.</Text>
-        <Text style={styles.add}>Add +</Text>
-        <LottieView
+
+        <Image
+          source={require('../../assets/others/hand.png')}
           style={styles.hand}
-          source={require('../../assets/lottie/hand.json')}
-          autoPlay={true}
-          loop={true}
-          progress={0.3}
+          resizeMode="contain"
         />
       </Content>
     );
@@ -103,18 +111,16 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   add: {
-    fontSize: 15,
-    backgroundColor: COLORS.bgPrimary,
-    padding: 15,
-    margin: 5,
+    width: 70,
     position: 'absolute',
-    right: 10,
+    right: 2,
   },
   hand: {
-    right: -25,
-    top: -18,
-    width: 300,
+    right: 0,
+    top: -170,
+    width: 90,
     position: 'absolute',
+    transform: [{rotate: '20 deg'}],
   },
   wrapper: {
     flexDirection: 'row',
