@@ -18,9 +18,9 @@ export default function DetailHeader({navigation}) {
     const waifu = waifus[selectedIndex];
     utils.sellWaifu(waifu.malId).then(result => {
       navigation.pop();
+      setSelectedIndex(0);
       setWaifus(waifus.filter(x => x.id !== waifu.id));
       incrementGems(result);
-      setSelectedIndex(0);
       popUpWaifu({
         waifu: null,
         gems: result,
