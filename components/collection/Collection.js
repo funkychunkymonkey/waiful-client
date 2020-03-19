@@ -1,6 +1,5 @@
 import * as React from 'react';
-import {Switch} from 'react-native-gesture-handler';
-import {Text, TouchableOpacity} from 'react-native';
+import {Text, TouchableOpacity, Switch} from 'react-native';
 import {Container, Body} from 'native-base';
 
 import CollectionDetail from './CollectionDetail';
@@ -31,17 +30,18 @@ export default function Collection({navigation}) {
           }}
           style={styles.item}>
           <Switch
-            value={checked}
-            title="Favorites"
-            trackColor="black"
             style={{marginRight: 5}}
-            onPress={() => false}
+            onValueChange={() => {
+              setChecked(checked ? false : true);
+              return false;
+            }}
+            value={checked}
           />
-          <Text style={{color: 'black'}}>Favorites</Text>
+          <Text style={styles.favMarkText}>♥ </Text>
+          <Text>Favorites</Text>
         </TouchableOpacity>
         <CollectionGallery checked={checked} />
       </Body>
     </Container>
   );
 }
-

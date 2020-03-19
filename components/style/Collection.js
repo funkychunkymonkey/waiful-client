@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   container1: {
-    justifyContent: 'center', 
+    justifyContent: 'center',
     alignItems: 'center',
   },
   item: {
@@ -31,13 +31,14 @@ const styles = StyleSheet.create({
     position: 'absolute',
     borderRadius: 15,
   },
+  favMarkText: {color: COLORS.favHeart},
   //Detail
   dText: {
-    padding: 20, 
+    padding: 20,
     fontSize: 20,
   },
   dFText: {
-    color: '#fff', 
+    color: '#fff',
     marginLeft: 10,
   },
   //CollectionDetail
@@ -105,7 +106,7 @@ const styles = StyleSheet.create({
   },
   //CollectionGallery
   content1: {
-    position: 'relative', 
+    position: 'relative',
     zIndex: 10,
   },
   header: {
@@ -158,20 +159,20 @@ const styles = StyleSheet.create({
     position: 'relative',
   },
   detailHeader1: {
-    flexDirection: 'row', 
+    flexDirection: 'row',
     alignItems: 'center',
   },
   detailHeader2: {
-    flex: 1, 
-    justifyContent: 'center', 
+    flex: 1,
+    justifyContent: 'center',
     padding: 10,
   },
   text1: {
-    color: COLORS.textTitle, 
+    color: COLORS.textTitle,
     fontSize: 28,
   },
   text2: {
-    color: COLORS.textTitle, 
+    color: COLORS.textTitle,
     fontSize: 20,
   },
   //DetailLevel
@@ -234,7 +235,7 @@ const styles = StyleSheet.create({
     bottom: 10,
   },
   detailLevelText4: {
-    color: COLORS.textSecondary, 
+    color: COLORS.textSecondary,
     fontSize: 20,
   },
   //DetailPersonality
@@ -250,12 +251,12 @@ const styles = StyleSheet.create({
     width: wp(50),
   },
   dPText: {
-    color: COLORS.textSecondary, 
-    marginRight: 10, 
+    color: COLORS.textSecondary,
+    marginRight: 10,
     fontSize: 18,
   },
   dPIcon: {
-    position: 'relative', 
+    position: 'relative',
     right: -10,
   },
   //FavButton
@@ -270,7 +271,6 @@ const styles = StyleSheet.create({
     height: 300,
     left: -wp('8%'),
   },
-
 });
 
 export default styles;
