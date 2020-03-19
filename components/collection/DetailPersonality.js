@@ -50,8 +50,8 @@ export default function DetailPersonality({waifu}) {
         }}
         selectedValue={waifu.personalityId ? waifu.personalityId : 1}
         onValueChange={val => setPersonality(val)}>
-        {user.personalities.map(x => (
-          <Picker.Item label={x.name} value={x.id} key={x.i} />
+        {user.personalities.map((x, i) => (
+          <Picker.Item label={x.name} value={x.id} key={i} />
         ))}
       </Picker>
       <Icon name="angle-down" style={{position: 'relative', right: -10}} />
