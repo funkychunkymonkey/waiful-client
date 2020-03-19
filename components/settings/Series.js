@@ -1,5 +1,9 @@
 import * as React from 'react';
+<<<<<<< HEAD
 import {Text, View} from 'react-native';
+=======
+import {StyleSheet, Text, View, Image} from 'react-native';
+>>>>>>> 1dde07fb938b8270917f2efbb92583aa30c43c8c
 import {Content, Button} from 'native-base';
 import {useFocusEffect} from '@react-navigation/native';
 import {ListItem} from 'react-native-elements';
@@ -42,6 +46,16 @@ export default function({route, navigation}) {
             navigation.navigate('SettingsSeriesAdd', {malType, series});
           }}>
           <Text style={{color: '#000'}}>Add +</Text>
+          {series.length === 0 && (
+            <LottieView
+              style={styles.add}
+              autoPlay={true}
+              loop={true}
+              source={require('../../assets/lottie/click.json')}
+              speed={1.5}
+              progress={0.9}
+            />
+          )}
         </Button>
       ),
     });
@@ -57,13 +71,11 @@ export default function({route, navigation}) {
     return (
       <Content style={styles.body2}>
         <Text style={styles.text}>No {malType} added.</Text>
-        <Text style={styles.add}>Add +</Text>
-        <LottieView
+
+        <Image
+          source={require('../../assets/others/hand.png')}
           style={styles.hand}
-          source={require('../../assets/lottie/hand.json')}
-          autoPlay={true}
-          loop={true}
-          progress={0.3}
+          resizeMode="contain"
         />
       </Content>
     );
@@ -91,3 +103,41 @@ export default function({route, navigation}) {
     </Content>
   );
 }
+<<<<<<< HEAD
+=======
+
+const styles = StyleSheet.create({
+  body: {
+    backgroundColor: COLORS.bgSecondary,
+    width: '100%',
+    position: 'relative',
+  },
+  text: {
+    fontSize: 20,
+    padding: 20,
+  },
+  add: {
+    width: 70,
+    position: 'absolute',
+    right: 2,
+  },
+  hand: {
+    right: 0,
+    top: -170,
+    width: 90,
+    position: 'absolute',
+    transform: [{rotate: '20 deg'}],
+  },
+  wrapper: {
+    flexDirection: 'row',
+    backgroundColor: 'white',
+  },
+  item: {flex: 7},
+  trashcan: {
+    flex: 3,
+    paddingRight: 15,
+    justifyContent: 'center',
+    alignContent: 'center',
+  },
+});
+>>>>>>> 1dde07fb938b8270917f2efbb92583aa30c43c8c

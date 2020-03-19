@@ -6,13 +6,11 @@ import {useZ} from '../../zustand';
 import utils from '../../utils';
 
 export default function LoginBonus({loading}) {
-  const [appState, setAppState] = React.useState(AppState.currentState);
   const [walk, setWalk] = React.useState(null);
   const [doCheckWalk, setDoCheckWalk] = React.useState(false);
   const LAST_LOGIN_DATE_KEY = '@lastLoginDate';
   const incrementGems = useZ(z => z.incrementGems);
   const popUpWaifu = useZ(z => z.popUpWaifu);
-
   React.useEffect(() => {
     if (walk !== null) {
       utils
@@ -65,8 +63,8 @@ export default function LoginBonus({loading}) {
   AppState.addEventListener('change', checkWalk);
   React.useEffect(checkWalk, [loading]);
 
-  function checkWalk() {
-    if (appState !== 'active') return;
+  function checkWalk(nextAppState) {
+    if (nextAppState !== 'active') return;
     if (loading) return;
     setDoCheckWalk(true);
   }

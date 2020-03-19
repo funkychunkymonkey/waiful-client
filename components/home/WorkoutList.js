@@ -3,6 +3,7 @@ import {Text, View, TouchableOpacity, Image} from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
 import {ListItem, SearchBar} from 'react-native-elements';
 import {Content} from 'native-base';
+import Icon from 'react-native-vector-icons/Entypo';
 
 import COLORS from '../../color';
 import {useZ} from '../../zustand';
@@ -56,7 +57,22 @@ export default function WorkoutList({navigation}) {
 
   return (
     <Content style={styles.content}>
-      <View>
+      <View
+        style={{
+          alignItems: 'center',
+        }}>
+        <TouchableOpacity
+          style={{...styles.add}}
+          onPress={() => {
+            navigation.navigate('WorkoutCustom', allData);
+          }}>
+          <Image
+            style={styles.bigIcon}
+            source={require('../../assets/others/plusicon.png')}
+            resizeMode="contain"
+          />
+          <Text style={{color: COLORS.textSecondary}}>Add New Exercise</Text>
+        </TouchableOpacity>
         <Filters type="muscles" data={allData.muscles} />
         <Filters type="equipments" data={['None', ...allData.equipments]} />
       </View>
@@ -73,39 +89,38 @@ export default function WorkoutList({navigation}) {
   );
 
   function Filters({type, data}) {
+    if (type === 'muscles')
+      return (
+        <View
+          style={{
+            flexDirection: 'row',
+            // flexWrap: 'wrap',
+            flex: 1,
+          }}>
+          {data.map((x, i) => (
+            // <View key={i}>
+            <FilterButton
+              key={i}
+              onPress={() => filter(type, x)}
+              text={x}
+              type={type}
+            />
+            // </View>
+          ))}
+        </View>
+      );
     return (
       <ScrollView horizontal={true}>
-        <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
-          {data.map((x, i) => (
-            <View
-              key={i}
-              style={{
-                opacity: filters[type].includes(x) ? 1.0 : 0.6,
-              }}>
-              <FilterButton
-                onPress={() => filter(type, x)}
-                text={x}
-                type={type}
-              />
-            </View>
-          ))}
-          {type === 'muscles' ? (
-            <TouchableOpacity
-              style={{...styles.add}}
-              onPress={() => {
-                navigation.navigate('WorkoutCustom', allData);
-              }}>
-              <Image
-                style={styles.bigIcon}
-                source={require('../../assets/others/plusicon.png')}
-                resizeMode="contain"
-              />
-              <Text style={{color: COLORS.textSecondary}}>Add New Exe</Text>
-            </TouchableOpacity>
-          ) : (
-            <></>
-          )}
-        </View>
+        {data.map((x, i) => (
+          // <View key={i}>
+          <FilterButton
+            key={i}
+            onPress={() => filter(type, x)}
+            text={x}
+            type={type}
+          />
+          // </View>
+        ))}
       </ScrollView>
     );
   }
@@ -132,6 +147,12 @@ export default function WorkoutList({navigation}) {
           source={SetImage(text)}
           resizeMode="contain"
         />
+        {filters[type].includes(text) ? (
+          <Icon name="check" style={styles.checkIcon} />
+        ) : (
+          <></>
+        )}
+
         <Text style={{color: '#fff'}}>{text}</Text>
       </TouchableOpacity>
     );
@@ -207,3 +228,81 @@ export default function WorkoutList({navigation}) {
     return img;
   }
 }
+<<<<<<< HEAD
+=======
+
+const styles = StyleSheet.create({
+  content: {
+    backgroundColor: COLORS.bgSecondary,
+    width: '100%',
+  },
+  titleText: {
+    color: COLORS.textTitle,
+    fontSize: 20,
+    margin: 5,
+  },
+  filtersEq: {
+    padding: 6,
+    margin: 2,
+    borderRadius: 15,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: COLORS.bgPrimary,
+  },
+  filtersMus: {
+    padding: 6,
+    margin: 2,
+    borderRadius: 15,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: COLORS.textHighlight,
+  },
+  bigIcon: {
+    width: 40,
+    height: 40,
+  },
+  filterEq: {
+    padding: 6,
+    margin: 2,
+    borderRadius: 15,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: COLORS.bgPrimary,
+  },
+  filterMus: {
+    padding: 6,
+    margin: 2,
+    borderRadius: 15,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: COLORS.textHighlight,
+  },
+  add: {
+    padding: 6,
+    // marginLeft: '50%',
+    margin: 2,
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: 200,
+    height: 65,
+  },
+  none: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: 200,
+  },
+  checkIcon: {
+    color: 'seagreen',
+    fontSize: 42,
+    position: 'absolute',
+    zIndex: 10,
+    // backgroundColor: 'white',
+    // borderRadius: 15,
+    // overflow: 'hidden',
+  },
+  bodyParts: {
+    flex: 1,
+  },
+});
+>>>>>>> 1dde07fb938b8270917f2efbb92583aa30c43c8c

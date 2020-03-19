@@ -77,5 +77,4 @@ const styles = StyleSheet.create({
     height: 200,
   },
 });
-
 export default styles;
