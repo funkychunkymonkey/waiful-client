@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {StyleSheet, Text} from 'react-native';
+import {Text} from 'react-native';
 import {Content, View} from 'native-base';
 import LinearGradient from 'react-native-linear-gradient';
 import {ListItem} from 'react-native-elements';
@@ -9,6 +9,7 @@ import utils from '../../utils.js';
 import Loading from '../Loading.js';
 import COLORS from '../../color';
 import {useZ} from '../../zustand';
+import styles from '../style/Shop';
 
 export default function({route, navigation}) {
   const [loading, setLoading] = React.useState(true);
@@ -60,11 +61,9 @@ export default function({route, navigation}) {
       <View style={styles.body}>
         <LinearGradient
           colors={[COLORS.bgPrimary, COLORS.bgHighlight]}
-          style={{padding: 10, alignItems: 'center'}}>
+          style={styles.content1}>
           <Icon name="heart" size={60} color={COLORS.textTitle} />
-          <Text style={{color: COLORS.textTitle, fontSize: 20, marginTop: 10}}>
-            {user.gems} Ikigai
-          </Text>
+          <Text style={styles.text1}>{user.gems} Ikigai</Text>
         </LinearGradient>
       </View>
       <Content>
@@ -81,13 +80,3 @@ export default function({route, navigation}) {
     </>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: COLORS.bgSecondary,
-  },
-  body: {
-    backgroundColor: COLORS.bgSecondary,
-  },
-});

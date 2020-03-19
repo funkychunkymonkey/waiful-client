@@ -33,11 +33,7 @@ export default function({route, navigation}) {
       headerTitle: `My ${malType}`,
       headerRight: () => (
         <Button
-          style={{
-            backgroundColor: 'transparent',
-            paddingRight: 20,
-            paddingLeft: 10,
-          }}
+          style={styles.seriesButton}
           onPress={() => {
             navigation.navigate('SettingsSeriesAdd', {malType, series});
           }}>

@@ -31,6 +31,11 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   //Series
+  seriesButton: {
+    backgroundColor: 'transparent',
+    paddingRight: 20,
+    paddingLeft: 10,
+  },
   text: {
     fontSize: 20,
     padding: 20,

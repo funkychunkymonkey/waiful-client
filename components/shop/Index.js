@@ -1,14 +1,9 @@
 import React from 'react';
-import {StyleSheet, Dimensions} from 'react-native';
-import {Container, Header, View, Body, Title} from 'native-base';
 import {createStackNavigator} from '@react-navigation/stack';
-
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Series from './Series.js';
 import SeriesCharacters from './SeriesCharacters.js';
 
 import COLORS from '../../color';
-import {useZ} from '../../zustand';
 
 const Stack = createStackNavigator();
 const App: () => React$Node = () => {
@@ -38,17 +33,3 @@ const App: () => React$Node = () => {
 };
 
 export default App;
-
-const styles = StyleSheet.create({
-  // top bar & screen
-  header: {
-    backgroundColor: COLORS.bgPrimary,
-    borderBottomWidth: 0,
-    shadowColor: 'transparent',
-  },
-  title: {
-    fontWeight: 'bold',
-    color: 'white',
-    fontSize: 24,
-  },
-});

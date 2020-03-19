@@ -1,13 +1,10 @@
 import * as React from 'react';
-import {StyleSheet} from 'react-native';
-
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-
 import SeriesList from './SeriesList.js';
-
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 
 import COLORS from '../../color';
+import styles from '../style/Shop';
 
 const Tab = createMaterialTopTabNavigator();
 export default function({navigation}) {
@@ -58,13 +55,3 @@ export default function({navigation}) {
     </Tab.Navigator>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: COLORS.bgSecondary,
-  },
-  body: {
-    backgroundColor: COLORS.bgSecondary,
-  },
-});
