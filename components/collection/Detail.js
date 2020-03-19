@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {ScrollView} from 'react-native-gesture-handler';
 import {StyleSheet, Text} from 'react-native';
-import {Container, Body} from 'native-base';
+import {Container, Body, Content} from 'native-base';
 
 import COLORS from '../../color';
 
@@ -21,7 +21,7 @@ export default function Datail({navigation}) {
   if (!waifu) return <></>;
   return (
     <Container>
-      <Body style={styles.body}>
+      <Content style={styles.body}>
         <DetailHeader />
         <DetailLevel waifu={waifu} />
         <DetailGallery waifu={waifu} />
@@ -37,7 +37,7 @@ export default function Datail({navigation}) {
           </Text>
           <DetailFooter navigation={navigation} />
         </ScrollView>
-      </Body>
+      </Content>
     </Container>
   );
 }
