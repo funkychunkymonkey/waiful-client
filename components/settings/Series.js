@@ -10,8 +10,15 @@ import Loading from '../Loading.js';
 import COLORS from '../../color';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/FontAwesome5';
+import {YellowBox} from 'react-native';
+
+YellowBox.ignoreWarnings([
+  'Non-serializable values were found in the navigation state',
+]);
 
 export default function({route, navigation}) {
+  console.log('route', route);
+  console.log('navigation', navigation);
   const [malType] = React.useState(route.params.malType);
   const [series, setSeries] = React.useState([]);
   const [loading, setLoading] = React.useState(true);
@@ -29,6 +36,8 @@ export default function({route, navigation}) {
   );
 
   React.useLayoutEffect(() => {
+    console.log('route', route);
+    console.log('navigation', navigation);
     navigation.setOptions({
       headerTitle: `My ${malType}`,
       headerRight: () => (
@@ -39,7 +48,7 @@ export default function({route, navigation}) {
             paddingLeft: 10,
           }}
           onPress={() => {
-            navigation.navigate('SettingsSeriesAdd', {malType, series});
+            navigation.setOptions('SettingsSeriesAdd', {malType, series});
           }}>
           <Text style={{color: '#000'}}>Add +</Text>
           {series.length === 0 && (
