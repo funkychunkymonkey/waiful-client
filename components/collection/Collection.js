@@ -1,11 +1,12 @@
 import * as React from 'react';
-import {Switch} from 'react-native-gesture-handler';
+//import {Switch} from 'react-native-gesture-handler';
 import {
   StyleSheet,
   Text,
   View,
   TouchableOpacity,
   Dimensions,
+  Switch,
 } from 'react-native';
 import {Container, Body} from 'native-base';
 import COLORS from '../../color';
@@ -49,12 +50,14 @@ export default function Collection({navigation}) {
             borderRadius: 15,
           }}>
           <Switch
-            value={checked}
-            title="Favorites"
-            trackColor="black"
             style={{marginRight: 5}}
-            onPress={() => false}
+            onValueChange={() => {
+              setChecked(checked ? false : true);
+              return false;
+            }}
+            value={checked}
           />
+          <Text style={{color: COLORS.favHeart}}>♥ </Text>
           <Text style={{color: 'black'}}>Favorites</Text>
         </TouchableOpacity>
         <CollectionGallery checked={checked} />
