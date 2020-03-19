@@ -38,7 +38,7 @@ export default function({route, navigation}) {
         setCharacters(data.waifus);
         setLoading(false);
       });
-  }, []);
+  }, [route.params.malType, route.params.series.malId]);
 
   function buy(malId) {
     if (user.gems < 100) {
