@@ -96,7 +96,7 @@ export default function WorkoutLog({navigation}) {
             <View>
               <ListItem
                 leftAvatar={<Text>🏃</Text>}
-                title={`${day} ${timeOfTheDay} run!`}
+                title={`${day} ${timeOfTheDay} run`}
                 subtitle={`${log.distance}m`}
                 rightAvatar={<Text>{time.fromNow()}</Text>}
                 bottomDivider

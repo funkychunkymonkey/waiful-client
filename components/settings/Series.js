@@ -63,7 +63,6 @@ export default function({route, navigation}) {
     return (
       <Content style={styles.body2}>
         <Text style={styles.text}>No {malType} added.</Text>
-
         <Image
           source={require('../../assets/others/hand.png')}
           style={styles.hand}
@@ -73,8 +72,8 @@ export default function({route, navigation}) {
     );
   return (
     <Content style={styles.body2}>
-      {series.map(item => (
-        <View style={styles.wrapper}>
+      {series.map((item, i) => (
+        <View style={styles.wrapper} key={i}>
           <ListItem
             style={styles.item}
             leftAvatar={{source: {uri: item.imageUrl}}}

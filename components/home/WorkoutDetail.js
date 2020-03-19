@@ -166,8 +166,9 @@ export default function WorkoutDetail({route, navigation}, y) {
     if (exercise.exerciseImages.length === 0) return <></>;
     return (
       <View style={{flexDirection: 'row'}}>
-        {exercise.exerciseImages.map(image => (
+        {exercise.exerciseImages.map((image, i) => (
           <Image
+            key={i}
             source={{uri: image.path}}
             style={styles.exerciseImage}
             resizeMode="contain"
