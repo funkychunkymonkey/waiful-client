@@ -7,10 +7,13 @@ import {ListItem, SearchBar} from 'react-native-elements';
 import utils from '../../utils.js';
 import Loading from '../Loading.js';
 import COLORS from '../../color';
+import {useSettingsZ} from '../../zustand.js';
 
 export default function({route, navigation}) {
-  const [malType] = React.useState(route.params.malType);
-  const [favorites, setFavorites] = React.useState(route.params.series);
+  const malType = useSettingsZ(z => z.malType);
+  const favorites = useSettingsZ(z => z.series);
+  const setFavorites = useSettingsZ(z => z.setSeries);
+
   const [search, setSearch] = React.useState('');
   const [series, setSeries] = React.useState([]);
   const [loading, setLoading] = React.useState(true);

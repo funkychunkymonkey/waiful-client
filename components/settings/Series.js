@@ -3,41 +3,38 @@ import {StyleSheet, Text, View, Image} from 'react-native';
 import {Content, Button} from 'native-base';
 import {useFocusEffect} from '@react-navigation/native';
 import {ListItem} from 'react-native-elements';
-
-import LottieView from 'lottie-react-native';
-import utils from '../../utils.js';
-import Loading from '../Loading.js';
-import COLORS from '../../color';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/FontAwesome5';
-import {YellowBox} from 'react-native';
+import LottieView from 'lottie-react-native';
 
-YellowBox.ignoreWarnings([
-  'Non-serializable values were found in the navigation state',
-]);
+import Loading from '../Loading.js';
+
+import COLORS from '../../color';
+import utils from '../../utils.js';
+import {useSettingsZ} from '../../zustand.js';
 
 export default function({route, navigation}) {
-  console.log('route', route);
-  console.log('navigation', navigation);
-  const [malType] = React.useState(route.params.malType);
-  const [series, setSeries] = React.useState([]);
+  const malType = useSettingsZ(z => z.malType);
+  const setMalType = useSettingsZ(z => z.setMalType);
+  const series = useSettingsZ(z => z.series);
+  const setSeries = useSettingsZ(z => z.setSeries);
+
   const [loading, setLoading] = React.useState(true);
 
   useFocusEffect(
     React.useCallback(() => {
-      utils.getSeries(malType).then(data => {
+      utils.getSeries(route.params.malType).then(data => {
         setLoading(false);
-        setSeries(data.filter(x => x.malType === malType));
+        setMalType(route.params.malType);
+        setSeries(data.filter(x => x.malType === route.params.malType));
       });
       return () => {
         setLoading(true);
       };
-    }, [malType]),
+    }, []),
   );
 
   React.useLayoutEffect(() => {
-    console.log('route', route);
-    console.log('navigation', navigation);
     navigation.setOptions({
       headerTitle: `My ${malType}`,
       headerRight: () => (
@@ -48,7 +45,7 @@ export default function({route, navigation}) {
             paddingLeft: 10,
           }}
           onPress={() => {
-            navigation.setOptions('SettingsSeriesAdd', {malType, series});
+            navigation.navigate('SettingsSeriesAdd');
           }}>
           <Text style={{color: '#000'}}>Add +</Text>
           {series.length === 0 && (
