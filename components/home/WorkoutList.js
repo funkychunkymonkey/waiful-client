@@ -4,6 +4,7 @@ import {ScrollView} from 'react-native-gesture-handler';
 import {ListItem, SearchBar} from 'react-native-elements';
 import LinearGradient from 'react-native-linear-gradient';
 import {Content} from 'native-base';
+import Icon from 'react-native-vector-icons/Entypo';
 
 import COLORS from '../../color';
 import {useZ} from '../../zustand';
@@ -80,7 +81,7 @@ export default function WorkoutList({navigation}) {
             <View
               key={i}
               style={{
-                opacity: filters[type].includes(x) ? 1.0 : 0.6,
+                opacity: 1.0,
               }}>
               <FilterButton
                 onPress={() => filter(type, x)}
@@ -132,6 +133,12 @@ export default function WorkoutList({navigation}) {
           source={SetImage(text)}
           resizeMode="contain"
         />
+        {filters[type].includes(text) ? (
+          <Icon name="check" style={styles.checkIcon} />
+        ) : (
+          <></>
+        )}
+
         <Text style={{color: '#fff'}}>{text}</Text>
       </TouchableOpacity>
     );
@@ -268,5 +275,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     height: 200,
+  },
+  checkIcon: {
+    color: 'seagreen',
+    fontSize: 42,
+    position: 'absolute',
+    zIndex: 10,
+    // backgroundColor: 'white',
+    // borderRadius: 15,
+    // overflow: 'hidden',
   },
 });
