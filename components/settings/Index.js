@@ -66,14 +66,6 @@ function Settings({navigation}) {
             <Icon name="arrow-forward" />
           </Right>
         </ListItem>
-        <ListItem onPress={() => navigation.navigate('Personalities')}>
-          <Left>
-            <Text>Dialogue Sets</Text>
-          </Left>
-          <Right>
-            <Icon name="arrow-forward" />
-          </Right>
-        </ListItem>
       </List>
     </Content>
   );
