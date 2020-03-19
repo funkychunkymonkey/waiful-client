@@ -26,7 +26,7 @@ export default function Collection({navigation}) {
           <DetailLevel waifu={waifu} />
           <DetailGallery waifu={waifu} />
           <DetailPersonality waifu={waifu} />
-          <Text style={{padding: 20, fontSize: 20}}>
+          <Text style={styles.dText}>
             {waifu.description.replace(/\\n/g, '\n')}
           </Text>
           <DetailFooter navigation={navigation} />

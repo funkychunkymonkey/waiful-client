@@ -32,7 +32,7 @@ export default function DetailHeader({navigation}) {
   return (
     <TouchableOpacity style={styles.footer} onPress={sell}>
       <Icon name="trash" color={'#fff'} />
-      <Text style={{color: '#fff', marginLeft: 10}}>Remove</Text>
+      <Text style={styles.dFText}>Remove</Text>
     </TouchableOpacity>
   );
 }

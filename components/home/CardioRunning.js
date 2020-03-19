@@ -1,27 +1,13 @@
 import * as React from 'react';
-<<<<<<< HEAD
 import {Text, View, TouchableOpacity} from 'react-native';
-=======
-import {
-  StyleSheet,
-  Text,
-  View,
-  TouchableOpacity,
-  Dimensions,
-} from 'react-native';
-import Geolocation from '@react-native-community/geolocation';
->>>>>>> b657949c89fd81a2a358c19d0bb327aad8ae4525
 
 import MapView from 'react-native-maps';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import LinearGradient from 'react-native-linear-gradient';
 
 import COLORS from '../../color';
-<<<<<<< HEAD
-import styles from '../style/Cardio';
-=======
 import {useCardioZ} from '../../zustand';
->>>>>>> b657949c89fd81a2a358c19d0bb327aad8ae4525
+import styles from '../style/Cardio';
 
 export default function Running({endRun}) {
   const location = useCardioZ(z => z.location);

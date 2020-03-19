@@ -1,14 +1,11 @@
 import * as React from 'react';
-import {StyleSheet, Text} from 'react-native';
+import {Text} from 'react-native';
 import {Picker} from 'native-base';
-import {
-  widthPercentageToDP as wp,
-  heightPercentageToDP as hp,
-} from 'react-native-responsive-screen';
 import LinearGradient from 'react-native-linear-gradient';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 
 import COLORS from '../../color';
+import styles from '../style/Collection';
 
 import {useZ} from '../../zustand';
 import utils from '../../utils';
@@ -30,33 +27,19 @@ export default function DetailPersonality({waifu}) {
   return (
     <LinearGradient
       colors={[COLORS.bgHighlight, COLORS.bgPrimary]}
-      style={{
-        width: wp(100),
-        height: 50,
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'center',
-      }}>
-      <Text
-        style={{color: COLORS.textSecondary, marginRight: 10, fontSize: 18}}>
-        Dialogue Set
-      </Text>
+      style={styles.dPersonality1}>
+      <Text style={styles.dPText1}>Dialogue Set</Text>
       <Picker
         note
         mode="dropdown"
-        style={{
-          backgroundColor: COLORS.bgSecondary,
-          width: wp(50),
-        }}
+        style={styles.dPersonality2}
         selectedValue={waifu.personalityId ? waifu.personalityId : 1}
         onValueChange={val => setPersonality(val)}>
         {user.personalities.map(x => (
           <Picker.Item label={x.name} value={x.id} />
         ))}
       </Picker>
-      <Icon name="angle-down" style={{position: 'relative', right: -10}} />
+      <Icon name="angle-down" style={styles.dPIcon} />
     </LinearGradient>
   );
 }
-
-const styles = StyleSheet.create({});

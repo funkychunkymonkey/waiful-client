@@ -47,7 +47,7 @@ export default function Collection({checked}) {
   }
 
   return (
-    <Content style={{position: 'relative', zIndex: 10}}>
+    <Content style={styles.content1}>
       <ScrollView contentContainerStyle={styles.gallery} horizontal={true}>
         {waifus.length !== 0 ? (
           pairCollection

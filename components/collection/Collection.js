@@ -14,7 +14,7 @@ export default function Collection({navigation}) {
   const waifus = useZ(z => z.waifus);
   if (waifus.length === 0) {
     return (
-      <Container style={{justifyContent: 'center', alignItems: 'center'}}>
+      <Container style={styles.container1}>
         <Text>Your collection's empty!</Text>
       </Container>
     );

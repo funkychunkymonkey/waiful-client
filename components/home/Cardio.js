@@ -1,18 +1,13 @@
 import * as React from 'react';
-import {useFocusEffect} from '@react-navigation/native';
 
 import NotRunning from './CardioNotRunning';
 import Running from './CardioRunning';
 import Loading from '../Loading';
 import utils from '../../utils';
 
-<<<<<<< HEAD
-import {useZ} from '../../zustand';
-=======
 import Geolocation from '@react-native-community/geolocation';
 
 import {useZ, useCardioZ} from '../../zustand';
->>>>>>> b657949c89fd81a2a358c19d0bb327aad8ae4525
 
 export default function CardioScreen({navigation}) {
   const currentRun = useCardioZ(state => state.currentRun);

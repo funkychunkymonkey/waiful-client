@@ -14,6 +14,10 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.bgSecondary,
     width: '100%',
   },
+  container1: {
+    justifyContent: 'center', 
+    alignItems: 'center',
+  },
   item: {
     flexDirection: 'row',
     justifyContent: 'center',
@@ -26,6 +30,15 @@ const styles = StyleSheet.create({
     left: 10,
     position: 'absolute',
     borderRadius: 15,
+  },
+  //Detail
+  dText: {
+    padding: 20, 
+    fontSize: 20,
+  },
+  dFText: {
+    color: '#fff', 
+    marginLeft: 10,
   },
   //CollectionDetail
   showView: {
@@ -91,6 +104,10 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   //CollectionGallery
+  content1: {
+    position: 'relative', 
+    zIndex: 10,
+  },
   header: {
     backgroundColor: COLORS.bgPrimary,
     borderBottomWidth: 0,
@@ -176,25 +193,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     marginTop: 5,
   },
-  detailLevelText1: {
-    color: COLORS.textHighlight,
-    fontSize: 18,
-    position: 'absolute',
-    top: 8,
-  },
-  detailLevelText2: {
-    color: COLORS.textSecondary,
-    fontSize: 48,
-  },
-  detailLevelText3: {
-    color: COLORS.textHighlight,
-    position: 'absolute',
-    bottom: 10,
-  },
-  detailLevelText4: {
-    color: COLORS.textSecondary, 
-    fontSize: 20,
-  },
   detailLevel3: {
     flex: 1,
     justifyContent: 'center',
@@ -219,6 +217,58 @@ const styles = StyleSheet.create({
     left: 0,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  detailLevelText1: {
+    color: COLORS.textHighlight,
+    fontSize: 18,
+    position: 'absolute',
+    top: 8,
+  },
+  detailLevelText2: {
+    color: COLORS.textSecondary,
+    fontSize: 48,
+  },
+  detailLevelText3: {
+    color: COLORS.textHighlight,
+    position: 'absolute',
+    bottom: 10,
+  },
+  detailLevelText4: {
+    color: COLORS.textSecondary, 
+    fontSize: 20,
+  },
+  //DetailPersonality
+  dPersonality1: {
+    width: wp(100),
+    height: 50,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  dPersonality2: {
+    backgroundColor: COLORS.bgSecondary,
+    width: wp(50),
+  },
+  dPText: {
+    color: COLORS.textSecondary, 
+    marginRight: 10, 
+    fontSize: 18,
+  },
+  dPIcon: {
+    position: 'relative', 
+    right: -10,
+  },
+  //FavButton
+  favTouchArea: {
+    width: wp('22%'),
+    height: '100%',
+    justifyContent: 'center',
+  },
+  fav: {
+    position: 'relative',
+    width: 300,
+    height: 300,
+    left: -wp('8%'),
   },
 
 });
