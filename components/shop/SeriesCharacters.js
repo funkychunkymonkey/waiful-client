@@ -40,18 +40,23 @@ export default function({route, navigation}) {
       });
   }, [route.params.malType, route.params.series.malId]);
 
-  function buy(malId) {
-    if (user.gems < 100) {
+  function buy(character) {
+    if (user.gems < character.price) {
       popUpWaifu({
         event: 'gems:insufficient',
       });
     }
     utils
-      .buyWaifu(route.params.malType, route.params.series.malId, malId)
+      .buyWaifu(
+        route.params.malType,
+        route.params.series.malId,
+        character.malId,
+        character.price,
+      )
       .then(res => {
         if (!res) return;
         setWaifus([res, ...waifus.filter(x => x.id !== res.id)]);
-        incrementGems(-100);
+        incrementGems(-1 * character.price);
         popUpWaifu({
           gacha: true,
           waifu: res,
@@ -73,11 +78,11 @@ export default function({route, navigation}) {
       </View>
       <Content>
         {characters.map((character, i) => (
-          <TouchableOpacity key={i} onPress={() => buy(character.malId)}>
-            <View style={styles.row}>
+          <TouchableOpacity key={i} onPress={() => buy(character)}>
+            <View style={{...styles.row, ...styles.characterRow}}>
               <Image
                 source={{uri: character.imageUrl}}
-                style={styles.rowCharacterImage}
+                style={styles.characterRowImage}
                 resizeMode="cover"
                 PlaceholderContent={<ActivityIndicator />}
               />
@@ -86,7 +91,7 @@ export default function({route, navigation}) {
               </View>
               <View style={styles.rowRight}>
                 <Icon name="heart" size={20} />
-                <Text>100</Text>
+                <Text>{character.price}</Text>
               </View>
             </View>
           </TouchableOpacity>
