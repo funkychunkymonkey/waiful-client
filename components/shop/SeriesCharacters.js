@@ -1,9 +1,14 @@
 import * as React from 'react';
-import {Text} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  ActivityIndicator,
+} from 'react-native';
 import {Content, View} from 'native-base';
 import LinearGradient from 'react-native-linear-gradient';
-import {ListItem} from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome5';
+import {Image} from 'react-native-elements';
 
 import utils from '../../utils.js';
 import Loading from '../Loading.js';
@@ -68,13 +73,23 @@ export default function({route, navigation}) {
       </View>
       <Content>
         {characters.map(character => (
-          <ListItem
-            leftAvatar={{source: {uri: character.imageUrl}}}
-            title={character.name}
-            rightAvatar={<Text>Buy for 100 Ikigai</Text>}
-            onPress={() => buy(character.malId)}
-            bottomDivider
-          />
+          <TouchableOpacity onPress={() => buy(character.malId)}>
+            <View style={styles.row}>
+              <Image
+                source={{uri: character.imageUrl}}
+                style={styles.rowCharacterImage}
+                resizeMode="cover"
+                PlaceholderContent={<ActivityIndicator />}
+              />
+              <View style={styles.rowContent}>
+                <Text style={styles.rowTitle}>{character.name}</Text>
+              </View>
+              <View style={styles.rowRight}>
+                <Icon name="heart" size={20} />
+                <Text>100</Text>
+              </View>
+            </View>
+          </TouchableOpacity>
         ))}
       </Content>
     </>
