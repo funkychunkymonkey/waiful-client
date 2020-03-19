@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {Text, TouchableOpacity, View} from 'react-native';
 import {useFocusEffect} from '@react-navigation/native';
 
 import Icon from 'react-native-vector-icons/FontAwesome5';
@@ -7,6 +7,7 @@ import LinearGradient from 'react-native-linear-gradient';
 
 import COLORS from '../../color';
 import {useZ} from '../../zustand';
+import styles from '../style/Home';
 
 export default function HomeScreen({navigation}) {
   const popUpWaifu = useZ(z => z.popUpWaifu);
@@ -46,26 +47,3 @@ export default function HomeScreen({navigation}) {
     </View>
   );
 }
-const styles = StyleSheet.create({
-  container: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    alignContent: 'center',
-    flexDirection: 'column',
-    height: '100%',
-  },
-  circle: {
-    margin: 10,
-    width: 200,
-    height: 200,
-    borderRadius: 200 / 2,
-    backgroundColor: COLORS.bgPrimary,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  text: {
-    fontSize: 28,
-    color: COLORS.textTitle,
-    textTransform: 'uppercase',
-  },
-});

@@ -1,4 +1,4 @@
-import {StyleSheet, Dimensions} from 'react-native';
+import {StyleSheet} from 'react-native';
 import COLORS from '../../color';
 
 const styles = StyleSheet.create({
@@ -76,7 +76,5 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     height: 200,
   },
-  //WorkoutLog
 });
-
-  export default styles;
+export default styles;

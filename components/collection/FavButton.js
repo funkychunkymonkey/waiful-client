@@ -1,10 +1,7 @@
 import * as React from 'react';
-import {StyleSheet, TouchableOpacity} from 'react-native';
+import {TouchableOpacity} from 'react-native';
 import LottieView from 'lottie-react-native';
-import {
-  widthPercentageToDP as wp,
-  heightPercentageToDP as hp,
-} from 'react-native-responsive-screen';
+import styles from '../style/Collection';
 
 function usePrevious(value) {
   const ref = React.useRef();
@@ -47,17 +44,3 @@ export default function FavButton(props) {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  favTouchArea: {
-    width: wp('22%'),
-    height: '100%',
-    justifyContent: 'center',
-  },
-  fav: {
-    position: 'relative',
-    width: 300,
-    height: 300,
-    left: -wp('8%'),
-  },
-});
