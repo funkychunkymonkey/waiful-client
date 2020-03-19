@@ -79,7 +79,7 @@ export default function WorkoutCustom({navigation}) {
           <TextInput
             placeholder="Exercise Description"
             onChangeText={x => setExerciseDescription(x)}
-            keyboardType="numeric"
+            keyboardType="ascii-capable"
             multiline
             style={styles.InputDescription}
           />
