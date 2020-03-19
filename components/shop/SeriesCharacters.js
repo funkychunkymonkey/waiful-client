@@ -73,8 +73,8 @@ export default function({route, navigation}) {
         </LinearGradient>
       </View>
       <Content>
-        {characters.map(character => (
-          <TouchableOpacity onPress={() => buy(character.malId)}>
+        {characters.map((character, i) => (
+          <TouchableOpacity onPress={() => buy(character.malId)} key={i}>
             <View
               style={{
                 flexDirection: 'row',

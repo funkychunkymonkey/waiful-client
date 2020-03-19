@@ -175,8 +175,8 @@ export default function WorkoutList({navigation}) {
             }}
             rightAvatar={
               <View style={{flexDirection: 'row'}}>
-                {exercise.muscleGroups.map(text => (
-                  <View style={{...styles.filterMus}}>
+                {exercise.muscleGroups.map((text, i) => (
+                  <View style={{...styles.filterMus}} key={i}>
                     <Image
                       style={styles.bigIcon}
                       source={SetImage(text)}
@@ -184,8 +184,8 @@ export default function WorkoutList({navigation}) {
                     />
                   </View>
                 ))}
-                {exercise.equipments.map(text => (
-                  <View style={{...styles.filterEq}}>
+                {exercise.equipments.map((text, i) => (
+                  <View style={{...styles.filterEq}} key={i}>
                     <Image
                       style={styles.bigIcon}
                       source={SetImage(text)}

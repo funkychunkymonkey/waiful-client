@@ -77,8 +77,8 @@ export default function({route, navigation}) {
     );
   return (
     <Content style={styles.body}>
-      {series.map(item => (
-        <View style={styles.wrapper}>
+      {series.map((item, i) => (
+        <View style={styles.wrapper} key={i}>
           <ListItem
             style={styles.item}
             leftAvatar={{source: {uri: item.imageUrl}}}

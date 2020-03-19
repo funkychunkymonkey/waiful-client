@@ -65,12 +65,13 @@ export default function({route, navigation}) {
           <Text>No {malType} found.</Text>
         </Content>
       ) : (
-        series.map(item => {
+        series.map((item, i) => {
           return (
             <TouchableOpacity
               onPress={() =>
                 navigation.navigate('SeriesCharacters', {series: item, malType})
-              }>
+              }
+              key={i}>
               <View
                 style={{
                   flexDirection: 'row',
