@@ -1,11 +1,5 @@
 import * as React from 'react';
-import {
-  StyleSheet,
-  Text,
-  ActivityIndicator,
-  View,
-  TouchableOpacity,
-} from 'react-native';
+import {Text, ActivityIndicator, View, TouchableOpacity} from 'react-native';
 import {Content} from 'native-base';
 import {useFocusEffect} from '@react-navigation/native';
 import {Image, SearchBar} from 'react-native-elements';
@@ -13,7 +7,7 @@ import Icon from 'react-native-vector-icons/FontAwesome5';
 
 import utils from '../../utils.js';
 import Loading from '../Loading.js';
-import COLORS from '../../color';
+import styles from '../style/Shop';
 
 export default function({route, navigation}) {
   const [malType] = React.useState(route.params.malType);
@@ -71,35 +65,21 @@ export default function({route, navigation}) {
               onPress={() =>
                 navigation.navigate('SeriesCharacters', {series: item, malType})
               }>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  backgroundColor: '#ffffff',
-                  shadowColor: '#000000ff',
-                  shadowOpacity: 0.8,
-                  shadowOffset: {width: 0, height: 2},
-                  elevation: 1,
-                  shadowRadius: 2,
-                  margin: 5,
-                  borderWidth: 1,
-                  borderRadius: 5,
-                  borderColor: '#ddd',
-                  overflow: 'hidden',
-                }}>
+              <View style={styles.row}>
                 <Image
                   source={{uri: item.imageUrl}}
-                  style={{width: 100}}
+                  style={styles.rowImage}
                   PlaceholderContent={<ActivityIndicator />}
                 />
-                <View style={{padding: 10, flex: 1}}>
-                  <Text style={{fontSize: 18}}>{item.name}</Text>
+                <View style={styles.rowContent}>
+                  <Text style={styles.rowContentTitle}>{item.name}</Text>
                   <Text>
                     {item.startedAt}
                     {item.startedAt ? ' - ' : ''}
                     {item.endedAt ? item.endedAt : 'Ongoing'}
                   </Text>
                   {item.description ? (
-                    <Text style={{fontSize: 12}}>
+                    <Text style={styles.rowContentDescription}>
                       {item.description.length > 100
                         ? item.description.substr(0, 100) + '...'
                         : item.description}
@@ -108,7 +88,7 @@ export default function({route, navigation}) {
                     <></>
                   )}
                 </View>
-                <View style={{padding: 10, alignItems: 'center'}}>
+                <View style={styles.rowRight}>
                   <Icon name="star" size={20} />
                   <Text>{item.score}</Text>
                 </View>
@@ -128,13 +108,3 @@ export default function({route, navigation}) {
     </Content>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: COLORS.bgSecondary,
-  },
-  body: {
-    backgroundColor: COLORS.bgSecondary,
-  },
-});
