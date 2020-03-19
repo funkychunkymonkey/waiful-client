@@ -1,13 +1,13 @@
 import * as React from 'react';
-import {StyleSheet, Text, View, TouchableOpacity, Image} from 'react-native';
+import {Text, View, TouchableOpacity, Image} from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
 import {ListItem, SearchBar} from 'react-native-elements';
-import LinearGradient from 'react-native-linear-gradient';
 import {Content} from 'native-base';
 import Icon from 'react-native-vector-icons/Entypo';
 
 import COLORS from '../../color';
 import {useZ} from '../../zustand';
+import styles from '../style/Workout';
 
 export default function WorkoutList({navigation}) {
   const allExercises = useZ(z => z.exercises);
@@ -228,78 +228,3 @@ export default function WorkoutList({navigation}) {
     return img;
   }
 }
-
-const styles = StyleSheet.create({
-  content: {
-    backgroundColor: COLORS.bgSecondary,
-    width: '100%',
-  },
-  titleText: {
-    color: COLORS.textTitle,
-    fontSize: 20,
-    margin: 5,
-  },
-  filtersEq: {
-    padding: 6,
-    margin: 2,
-    borderRadius: 15,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: COLORS.bgPrimary,
-  },
-  filtersMus: {
-    padding: 6,
-    margin: 2,
-    borderRadius: 15,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: COLORS.textHighlight,
-  },
-  bigIcon: {
-    width: 40,
-    height: 40,
-  },
-  filterEq: {
-    padding: 6,
-    margin: 2,
-    borderRadius: 15,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: COLORS.bgPrimary,
-  },
-  filterMus: {
-    padding: 6,
-    margin: 2,
-    borderRadius: 15,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: COLORS.textHighlight,
-  },
-  add: {
-    padding: 6,
-    // marginLeft: '50%',
-    margin: 2,
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: 200,
-    height: 65,
-  },
-  none: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    height: 200,
-  },
-  checkIcon: {
-    color: 'seagreen',
-    fontSize: 42,
-    position: 'absolute',
-    zIndex: 10,
-    // backgroundColor: 'white',
-    // borderRadius: 15,
-    // overflow: 'hidden',
-  },
-  bodyParts: {
-    flex: 1,
-  },
-});

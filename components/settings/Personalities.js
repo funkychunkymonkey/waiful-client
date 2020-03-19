@@ -9,6 +9,8 @@ import {useZ} from '../../zustand';
 import utils from '../../utils';
 
 import COLORS from '../../color';
+import styles from '../style/Setting';
+
 const PERSONALITIES = require('../../assets/personalities');
 
 export default function({route, navigation}) {
@@ -24,12 +26,7 @@ export default function({route, navigation}) {
   return (
     <>
       <View>
-        <View
-          style={{
-            backgroundColor: COLORS.textSecondary,
-            alignItems: 'center',
-            padding: 10,
-          }}>
+        <View style={styles.content2}>
           <Text style={{color: COLORS.textTitle}}>
             Purchase dialogue sets to customise your collection with!
           </Text>

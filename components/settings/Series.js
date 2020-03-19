@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {StyleSheet, Text, View, Image} from 'react-native';
+import {Text, View, Image} from 'react-native';
 import {Content, Button} from 'native-base';
 import {useFocusEffect} from '@react-navigation/native';
 import {ListItem} from 'react-native-elements';
@@ -9,9 +9,9 @@ import LottieView from 'lottie-react-native';
 
 import Loading from '../Loading.js';
 
-import COLORS from '../../color';
 import utils from '../../utils.js';
 import {useSettingsZ} from '../../zustand.js';
+import styles from '../style/Setting';
 
 export default function({route, navigation}) {
   const malType = useSettingsZ(z => z.malType);
@@ -39,11 +39,7 @@ export default function({route, navigation}) {
       headerTitle: `My ${malType}`,
       headerRight: () => (
         <Button
-          style={{
-            backgroundColor: 'transparent',
-            paddingRight: 20,
-            paddingLeft: 10,
-          }}
+          style={styles.seriesButton}
           onPress={() => {
             navigation.navigate('SettingsSeriesAdd');
           }}>
@@ -71,9 +67,8 @@ export default function({route, navigation}) {
   if (loading) return <Loading />;
   if (series.length === 0)
     return (
-      <Content style={styles.body}>
+      <Content style={styles.body2}>
         <Text style={styles.text}>No {malType} added.</Text>
-
         <Image
           source={require('../../assets/others/hand.png')}
           style={styles.hand}
@@ -82,7 +77,7 @@ export default function({route, navigation}) {
       </Content>
     );
   return (
-    <Content style={styles.body}>
+    <Content style={styles.body2}>
       {series.map((item, i) => (
         <View style={styles.wrapper} key={i}>
           <ListItem
@@ -95,9 +90,7 @@ export default function({route, navigation}) {
 
           <TouchableOpacity
             style={styles.trashcan}
-            onPress={() => {
-              removeSeries(item);
-            }}>
+            onPress={() => removeSeries(item)}>
             <Icon name="trash" color={'black'} size={22} />
           </TouchableOpacity>
         </View>
@@ -105,38 +98,3 @@ export default function({route, navigation}) {
     </Content>
   );
 }
-
-const styles = StyleSheet.create({
-  body: {
-    backgroundColor: COLORS.bgSecondary,
-    width: '100%',
-    position: 'relative',
-  },
-  text: {
-    fontSize: 20,
-    padding: 20,
-  },
-  add: {
-    width: 70,
-    position: 'absolute',
-    right: 2,
-  },
-  hand: {
-    right: 0,
-    top: -170,
-    width: 90,
-    position: 'absolute',
-    transform: [{rotate: '20 deg'}],
-  },
-  wrapper: {
-    flexDirection: 'row',
-    backgroundColor: 'white',
-  },
-  item: {flex: 7},
-  trashcan: {
-    flex: 3,
-    paddingRight: 15,
-    justifyContent: 'center',
-    alignContent: 'center',
-  },
-});

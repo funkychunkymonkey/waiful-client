@@ -1,5 +1,4 @@
 import React from 'react';
-import {StyleSheet} from 'react-native';
 import {createStackNavigator} from '@react-navigation/stack';
 
 import Series from './Series.js';
@@ -35,17 +34,3 @@ const App: () => React$Node = () => {
 };
 
 export default App;
-
-const styles = StyleSheet.create({
-  // top bar & screen
-  header: {
-    backgroundColor: COLORS.bgPrimary,
-    borderBottomWidth: 0,
-    shadowColor: 'transparent',
-  },
-  title: {
-    fontWeight: 'bold',
-    color: 'white',
-    fontSize: 24,
-  },
-});

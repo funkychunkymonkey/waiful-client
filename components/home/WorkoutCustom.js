@@ -1,12 +1,5 @@
 import * as React from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-  TouchableOpacity,
-  Image,
-  TextInput,
-} from 'react-native';
+import {Text, View, TouchableOpacity, Image, TextInput} from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
 import {Button, Input} from 'react-native-elements';
 import LinearGradient from 'react-native-linear-gradient';
@@ -16,6 +9,7 @@ import Loading from '../Loading.js';
 import utils from '../../utils.js';
 import COLORS from '../../color';
 import {useZ} from '../../zustand';
+import styles from '../style/Workout';
 
 export default function WorkoutCustom({navigation}) {
   const allExercises = useZ(z => z.exercises);
@@ -68,11 +62,11 @@ export default function WorkoutCustom({navigation}) {
       <RenderLinearGradient text="Exercise Name" />
 
       <View style={styles.form}>
-        <View style={styles.formItem}>
+        <View style={styles.formItemCustom}>
           <Input
             placeholder="Your Exercise Name"
             onChangeText={x => setExerciseName(x)}
-            keyboardType="numeric"
+            keyboardType="ascii-capable"
             leftIcon={<Icon name="running" style={styles.formIcon} />}
           />
         </View>
@@ -81,11 +75,11 @@ export default function WorkoutCustom({navigation}) {
       <RenderLinearGradient text="Exercise Description" />
 
       <View style={styles.form}>
-        <View style={{...styles.formItem, height: 80}}>
+        <View style={{...styles.formItemCustom, height: 80}}>
           <TextInput
             placeholder="Exercise Description"
             onChangeText={x => setExerciseDescription(x)}
-            keyboardType="numeric"
+            keyboardType="ascii-capable"
             multiline
             style={styles.InputDescription}
           />
@@ -95,7 +89,7 @@ export default function WorkoutCustom({navigation}) {
       <RenderLinearGradient text="Body parts" />
 
       <View style={styles.form}>
-        <View style={styles.formItem}>
+        <View style={styles.formItemCustom}>
           <Filters type="muscles" data={allData.muscles} />
         </View>
       </View>
@@ -103,7 +97,7 @@ export default function WorkoutCustom({navigation}) {
       <RenderLinearGradient text="Equipments" />
 
       <View style={styles.form}>
-        <View style={styles.formItem}>
+        <View style={styles.formItemCustom}>
           <Filters type="equipments" data={allData.equipments} />
         </View>
       </View>
@@ -138,7 +132,7 @@ export default function WorkoutCustom({navigation}) {
             ? {
                 ...styles.headerGradient,
                 ...styles.headerButt,
-                ...styles.formItem,
+                ...styles.formItemCustom,
               }
             : {...styles.headerGradient}
         }>
@@ -182,7 +176,9 @@ export default function WorkoutCustom({navigation}) {
     return (
       <TouchableOpacity
         style={
-          type === 'muscles' ? {...styles.filtersMus} : {...styles.filtersEq}
+          type === 'muscles'
+            ? {...styles.filtersMusCustom}
+            : {...styles.filtersEq}
         }
         onPress={onPress ? onPress : () => {}}>
         <Image
@@ -216,73 +212,3 @@ export default function WorkoutCustom({navigation}) {
     return img;
   }
 }
-
-const styles = StyleSheet.create({
-  wrapper: {
-    padding: 10,
-    marginBottom: 10,
-  },
-  headerGradient: {
-    paddingRight: 30,
-    paddingLeft: 30,
-    paddingTop: 15,
-    paddingBottom: 15,
-    alignContent: 'center',
-  },
-  headerHead: {
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
-  },
-  headerButt: {
-    borderBottomLeftRadius: 20,
-    borderBottomRightRadius: 20,
-  },
-  headerText: {
-    color: COLORS.textTitle,
-    fontSize: 24,
-  },
-  form: {
-    backgroundColor: COLORS.bgSecondary,
-    padding: 10,
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-  },
-  formItem: {
-    flex: 1,
-    marginBottom: 10,
-  },
-  formIcon: {
-    marginRight: 10,
-  },
-  description: {
-    backgroundColor: 'white',
-    padding: 20,
-  },
-  descriptionText: {
-    fontSize: 18,
-    color: COLORS.textSecondary,
-  },
-  filtersMus: {
-    padding: 6,
-    margin: 2,
-    borderRadius: 15,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#ffa175',
-  },
-  filtersEq: {
-    padding: 6,
-    margin: 2,
-    borderRadius: 15,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: COLORS.bgPrimary,
-  },
-  bigIcon: {
-    width: 40,
-    height: 40,
-  },
-  InputDescription: {
-    textAlignVertical: 'top',
-  },
-});
