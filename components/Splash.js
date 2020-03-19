@@ -6,7 +6,7 @@ export default function Splash() {
   return (
     <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
       <Image
-        source={require('../assets/loading.gif')}
+        source={require('../assets/loadingLogo.gif')}
         resizeMode="contain"
         style={{width: Dimensions.get('window').width}}
       />
