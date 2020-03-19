@@ -11,7 +11,7 @@ Let's use it for your life!
 ## URL
 
 You can try this app here.  
-// deploy's URL
+https://apps.apple.com/jp/app/waiful/id1502803346?mt=8
 
 # Setup
 
