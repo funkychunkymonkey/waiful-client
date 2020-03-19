@@ -72,8 +72,8 @@ export default function({route, navigation}) {
         </LinearGradient>
       </View>
       <Content>
-        {characters.map(character => (
-          <TouchableOpacity onPress={() => buy(character.malId)}>
+        {characters.map((character, i) => (
+          <TouchableOpacity key={i} onPress={() => buy(character.malId)}>
             <View style={styles.row}>
               <Image
                 source={{uri: character.imageUrl}}
