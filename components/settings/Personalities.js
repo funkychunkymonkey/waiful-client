@@ -64,7 +64,12 @@ function DialogueSet({personality, isOwned, buy}) {
     return (
       <ListItem
         title={personality.name}
-        rightAvatar={<Text>Buy for 200 Ikigai</Text>}
+        rightAvatar={
+          <View style={{alignItems: 'center'}}>
+            <Icon name="heart" size={20} />
+            <Text>200</Text>
+          </View>
+        }
         onPress={() => {
           buy(personality.id);
         }}
