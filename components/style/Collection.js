@@ -139,7 +139,88 @@ const styles = StyleSheet.create({
     width: hp('9%'),
     height: hp('9%'),
     position: 'relative',
-  }
+  },
+  detailHeader1: {
+    flexDirection: 'row', 
+    alignItems: 'center',
+  },
+  detailHeader2: {
+    flex: 1, 
+    justifyContent: 'center', 
+    padding: 10,
+  },
+  text1: {
+    color: COLORS.textTitle, 
+    fontSize: 28,
+  },
+  text2: {
+    color: COLORS.textTitle, 
+    fontSize: 20,
+  },
+  //DetailLevel
+  detailLevel1: {
+    width: wp(100),
+    justifyContent: 'center',
+    flexDirection: 'row',
+    padding: 10,
+    backgroundColor: COLORS.textSecondary,
+  },
+  detailLevel2: {
+    backgroundColor: COLORS.textTitle,
+    width: 100,
+    height: 100,
+    borderRadius: 100,
+    alignItems: 'center',
+    justifyContent: 'center',
+    position: 'relative',
+    flexDirection: 'row',
+    marginTop: 5,
+  },
+  detailLevelText1: {
+    color: COLORS.textHighlight,
+    fontSize: 18,
+    position: 'absolute',
+    top: 8,
+  },
+  detailLevelText2: {
+    color: COLORS.textSecondary,
+    fontSize: 48,
+  },
+  detailLevelText3: {
+    color: COLORS.textHighlight,
+    position: 'absolute',
+    bottom: 10,
+  },
+  detailLevelText4: {
+    color: COLORS.textSecondary, 
+    fontSize: 20,
+  },
+  detailLevel3: {
+    flex: 1,
+    justifyContent: 'center',
+    padding: 10,
+    alignItems: 'center',
+  },
+  detailLevel4: {
+    backgroundColor: COLORS.bgSecondary,
+    width: '100%',
+    height: 50,
+    borderRadius: 20,
+    overflow: 'hidden',
+    borderColor: COLORS.bgHighlight,
+    borderWidth: 1,
+    marginBottom: 10,
+  },
+  detailLevel5: {
+    height: '100%',
+    width: '100%',
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
 });
 
 export default styles;
