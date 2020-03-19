@@ -24,14 +24,6 @@ export default function({route, navigation}) {
   return (
     <>
       <View>
-        <LinearGradient
-          colors={[COLORS.bgPrimary, COLORS.bgHighlight]}
-          style={{padding: 10, alignItems: 'center'}}>
-          <Icon name="heart" size={60} color={COLORS.textTitle} />
-          <Text style={{color: COLORS.textTitle, fontSize: 20, marginTop: 10}}>
-            {user.gems} Ikigai
-          </Text>
-        </LinearGradient>
         <View
           style={{
             backgroundColor: COLORS.textSecondary,
@@ -72,7 +64,12 @@ function DialogueSet({personality, isOwned, buy}) {
     return (
       <ListItem
         title={personality.name}
-        rightAvatar={<Text>Buy for 200 Ikigai</Text>}
+        rightAvatar={
+          <View style={{alignItems: 'center'}}>
+            <Icon name="heart" size={20} />
+            <Text>200</Text>
+          </View>
+        }
         onPress={() => {
           buy(personality.id);
         }}
