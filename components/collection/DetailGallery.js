@@ -50,6 +50,7 @@ export default function DetailGallery({waifu}) {
         horizontal={true}>
         {images.map((x, i) => (
           <TouchableOpacity
+            key={i}
             style={{
               margin: 5,
             }}
