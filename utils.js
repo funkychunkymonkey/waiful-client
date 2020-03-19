@@ -216,7 +216,7 @@ const q = async function(query, variables = {}) {
     device_id: getUniqueId(),
   });
   const result = await axios.post(
-    //'http://localhost:3000/graphql',
+    // 'http://localhost:3000/graphql',
     'http://waiful-backend-dev3.ap-northeast-1.elasticbeanstalk.com/graphql',
     {
       query,
