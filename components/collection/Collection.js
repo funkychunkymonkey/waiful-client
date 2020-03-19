@@ -1,9 +1,7 @@
 import * as React from 'react';
-//import {Switch} from 'react-native-gesture-handler';
 import {
   StyleSheet,
   Text,
-  View,
   TouchableOpacity,
   Dimensions,
   Switch,
@@ -58,7 +56,7 @@ export default function Collection({navigation}) {
             value={checked}
           />
           <Text style={{color: COLORS.favHeart}}>♥ </Text>
-          <Text style={{color: 'black'}}>Favorites</Text>
+          <Text>Favorites</Text>
         </TouchableOpacity>
         <CollectionGallery checked={checked} />
       </Body>
