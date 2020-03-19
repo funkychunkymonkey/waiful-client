@@ -62,7 +62,7 @@ export default function DetailHeader() {
           <Text style={{color: COLORS.textTitle, fontSize: 28}}>
             {waifu.name}
           </Text>
-          <Text style={{colors: COLORS.textTitle, fontSize: 20}}>
+          <Text style={{color: COLORS.textTitle, fontSize: 20}}>
             {waifu.series.name}
           </Text>
         </View>
