@@ -1,9 +1,5 @@
 import * as React from 'react';
-<<<<<<< HEAD
 import {Text, View} from 'react-native';
-=======
-import {StyleSheet, Text, View, Image} from 'react-native';
->>>>>>> 1dde07fb938b8270917f2efbb92583aa30c43c8c
 import {Content, Button} from 'native-base';
 import {useFocusEffect} from '@react-navigation/native';
 import {ListItem} from 'react-native-elements';
@@ -103,41 +99,3 @@ export default function({route, navigation}) {
     </Content>
   );
 }
-<<<<<<< HEAD
-=======
-
-const styles = StyleSheet.create({
-  body: {
-    backgroundColor: COLORS.bgSecondary,
-    width: '100%',
-    position: 'relative',
-  },
-  text: {
-    fontSize: 20,
-    padding: 20,
-  },
-  add: {
-    width: 70,
-    position: 'absolute',
-    right: 2,
-  },
-  hand: {
-    right: 0,
-    top: -170,
-    width: 90,
-    position: 'absolute',
-    transform: [{rotate: '20 deg'}],
-  },
-  wrapper: {
-    flexDirection: 'row',
-    backgroundColor: 'white',
-  },
-  item: {flex: 7},
-  trashcan: {
-    flex: 3,
-    paddingRight: 15,
-    justifyContent: 'center',
-    alignContent: 'center',
-  },
-});
->>>>>>> 1dde07fb938b8270917f2efbb92583aa30c43c8c

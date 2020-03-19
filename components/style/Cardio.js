@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
     color: '#fff',
     textTransform: 'uppercase',
   },
-  //for map
+  //map container
   mapContainer: {
     height: Dimensions.get('window').height,
     width: Dimensions.get('window').width,

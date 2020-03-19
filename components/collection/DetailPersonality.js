@@ -28,7 +28,7 @@ export default function DetailPersonality({waifu}) {
     <LinearGradient
       colors={[COLORS.bgHighlight, COLORS.bgPrimary]}
       style={styles.dPersonality1}>
-      <Text style={styles.dPText1}>Dialogue Set</Text>
+      <Text style={styles.dPText}>Dialogue Set</Text>
       <Picker
         note
         mode="dropdown"

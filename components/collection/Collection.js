@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {Switch} from 'react-native-gesture-handler';
-import {Text, TouchableOpacity, Dimensions} from 'react-native';
+import {Text, TouchableOpacity} from 'react-native';
 import {Container, Body} from 'native-base';
 
 import CollectionDetail from './CollectionDetail';
