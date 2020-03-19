@@ -22,6 +22,7 @@ export default function DetailGallery({waifu}) {
       <ScrollView style={styles.body} horizontal={true}>
         {images.map((x, i) => (
           <TouchableOpacity
+            key={i}
             style={{
               margin: 5,
             }}

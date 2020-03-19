@@ -3,29 +3,35 @@ import {Text, View, Image} from 'react-native';
 import {Content, Button} from 'native-base';
 import {useFocusEffect} from '@react-navigation/native';
 import {ListItem} from 'react-native-elements';
-
-import LottieView from 'lottie-react-native';
-import utils from '../../utils.js';
-import Loading from '../Loading.js';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/FontAwesome5';
+import LottieView from 'lottie-react-native';
+
+import Loading from '../Loading.js';
+
+import utils from '../../utils.js';
+import {useSettingsZ} from '../../zustand.js';
 import styles from '../style/Setting';
 
 export default function({route, navigation}) {
-  const [malType] = React.useState(route.params.malType);
-  const [series, setSeries] = React.useState([]);
+  const malType = useSettingsZ(z => z.malType);
+  const setMalType = useSettingsZ(z => z.setMalType);
+  const series = useSettingsZ(z => z.series);
+  const setSeries = useSettingsZ(z => z.setSeries);
+
   const [loading, setLoading] = React.useState(true);
 
   useFocusEffect(
     React.useCallback(() => {
-      utils.getSeries(malType).then(data => {
+      utils.getSeries(route.params.malType).then(data => {
         setLoading(false);
-        setSeries(data.filter(x => x.malType === malType));
+        setMalType(route.params.malType);
+        setSeries(data.filter(x => x.malType === route.params.malType));
       });
       return () => {
         setLoading(true);
       };
-    }, [malType]),
+    }, []),
   );
 
   React.useLayoutEffect(() => {
@@ -35,7 +41,7 @@ export default function({route, navigation}) {
         <Button
           style={styles.seriesButton}
           onPress={() => {
-            navigation.navigate('SettingsSeriesAdd', {malType, series});
+            navigation.navigate('SettingsSeriesAdd');
           }}>
           <Text style={{color: '#000'}}>Add +</Text>
           {series.length === 0 && (
@@ -84,9 +90,7 @@ export default function({route, navigation}) {
 
           <TouchableOpacity
             style={styles.trashcan}
-            onPress={() => {
-              removeSeries(item);
-            }}>
+            onPress={() => removeSeries(item)}>
             <Icon name="trash" color={'black'} size={22} />
           </TouchableOpacity>
         </View>

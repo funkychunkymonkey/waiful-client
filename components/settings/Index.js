@@ -38,11 +38,7 @@ export default function() {
         component={SettingsSeries}
         initialParams={{malType: 'manga'}}
       />
-      <Stack.Screen
-        name="SettingsSeriesAdd"
-        component={SettingsSeriesAdd}
-        initialParams={{malType: 'anime'}}
-      />
+      <Stack.Screen name="SettingsSeriesAdd" component={SettingsSeriesAdd} />
     </Stack.Navigator>
   );
 }
