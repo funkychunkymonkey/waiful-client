@@ -1,8 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import AsyncStorage from '@react-native-community/async-storage';
 
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import Geolocation from '@react-native-community/geolocation';
 
 import HomeScreen from './components/home/Index';
 import GachaScreen from './components/gacha/Index';
@@ -14,7 +16,7 @@ import Splash from './components/Splash';
 import LoginBonus from './components/loginbonus/LoginBonus';
 
 import COLORS from './color';
-import {useZ} from './zustand';
+import {useZ, useCardioZ} from './zustand';
 
 const Tab = createBottomTabNavigator();
 const App: () => React$Node = () => {
@@ -26,9 +28,46 @@ const App: () => React$Node = () => {
 
   const reloadExercises = useZ(z => z.reloadExercises);
   const exercises = useZ(z => z.exercises);
-
+  const user = useZ(z => z.user);
   const reloadUser = useZ(z => z.reloadUser);
   const waifus = useZ(z => z.waifus);
+
+  const [cardioWatcher, setCardioWatcher] = useState(null);
+  const isRunning = useCardioZ(z => z.isRunning);
+  const setLocation = useCardioZ(z => z.setLocation);
+  const addCoords = useCardioZ(z => z.addCoords);
+  const setCurrentRun = useCardioZ(z => z.setCurrentRun);
+
+  AsyncStorage.removeItem('currentRun', null);
+  React.useEffect(() => {
+    let cardioCounter = 0;
+    if (isRunning) {
+      if (cardioWatcher !== null) return;
+      cardioCounter = 0;
+      const watchId = Geolocation.watchPosition(
+        function({coords}) {
+          if (cardioCounter >= 24) {
+            cardioCounter = 0;
+            addCoords([coords.latitude, coords.longitude]);
+          } else {
+            cardioCounter++;
+          }
+          setLocation([coords.latitude, coords.longitude]);
+        },
+        error => console.log('[watchPosition error]', error),
+        {
+          enableHighAccuracy: true,
+          timeout: 20000,
+          maximumAge: 1000,
+          distanceFilter: 1,
+        },
+      );
+      setCardioWatcher(watchId);
+    } else {
+      Geolocation.clearWatch(cardioWatcher);
+      setCardioWatcher(null);
+    }
+  }, [isRunning]);
 
   useEffect(() => {
     reloadExercises();
@@ -40,6 +79,16 @@ const App: () => React$Node = () => {
       setLoading(false);
     }
   }, [waifus, exercises]);
+
+  useEffect(() => {
+    if (user !== null) {
+      AsyncStorage.getItem('currentRun')
+        .then(data => (data ? JSON.parse(data) : null))
+        .then(data => {
+          setCurrentRun(data ? data : user.currentRun);
+        });
+    }
+  }, [user]);
 
   if (loading) return <Splash />;
 
@@ -106,7 +155,7 @@ const App: () => React$Node = () => {
             options={{
               tabBarLabel: 'Shop',
               tabBarIcon: ({color, size}) => (
-                <Icon name="heart" color={color} size={size} />
+                <Icon name="shopping" color={color} size={size} />
               ),
             }}
           />

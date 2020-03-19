@@ -12,8 +12,6 @@ export default function DailyDistance(props) {
   AppleHealthKit.initHealthKit(options, (err, results) => {
     if (err) {
       console.log('error initializing Healthkit: ', err);
-    } else {
-      console.log(results);
     }
   });
 

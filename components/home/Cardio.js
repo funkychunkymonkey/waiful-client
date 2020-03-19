@@ -1,46 +1,42 @@
 import * as React from 'react';
 import {useFocusEffect} from '@react-navigation/native';
 
-import Geolocation from '@react-native-community/geolocation';
-
 import NotRunning from './CardioNotRunning';
 import Running from './CardioRunning';
 import Loading from '../Loading';
 import utils from '../../utils';
 
+<<<<<<< HEAD
 import {useZ} from '../../zustand';
+=======
+import Geolocation from '@react-native-community/geolocation';
 
-export default function CardioScreen({navigation, route}) {
-  const [currentRun, setCurrentRun] = React.useState(null);
+import {useZ, useCardioZ} from '../../zustand';
+>>>>>>> b657949c89fd81a2a358c19d0bb327aad8ae4525
+
+export default function CardioScreen({navigation}) {
+  const currentRun = useCardioZ(state => state.currentRun);
+  const setCurrentRun = useCardioZ(state => state.setCurrentRun);
+  const addCoords = useCardioZ(z => z.addCoords);
+
   const [panel, setPanel] = React.useState('LOADING');
-  const [location, setLocation] = React.useState(null);
-  const [distance, setDistance] = React.useState(0);
-  const [routeData, setRouteData] = React.useState([]);
+
   const incrementGems = useZ(z => z.incrementGems);
   const popUpWaifu = useZ(z => z.popUpWaifu);
 
-  useFocusEffect(
-    React.useCallback(() => {
-      utils.getRun().then(data => {
-        if (data === null) {
-          setPanel('WAITING');
-        } else {
-          setPanel('RUNNING');
-          setCurrentRun(data);
-        }
-      });
-      return () => {
-        setPanel('LOADING');
-        setCurrentRun(null);
-      };
-    }, []),
-  );
+  React.useEffect(() => {
+    if (!currentRun) {
+      setPanel('WAITING');
+    } else {
+      setPanel('RUNNING');
+    }
+  }, [currentRun]);
 
   function endRun() {
     setPanel('LOADING');
-    utils.stopRun(distance, routeData).then(data => {
+    utils.stopRun(currentRun).then(data => {
       setPanel('WAITING');
-      setCurrentRun(data);
+      setCurrentRun(null);
       navigation.navigate('CardioLog');
       incrementGems(data.gems);
       popUpWaifu({
@@ -54,40 +50,16 @@ export default function CardioScreen({navigation, route}) {
   function startRun() {
     setPanel('LOADING');
     utils.startRun().then(data => {
-      setCurrentRun(data);
       setPanel('RUNNING');
-    });
-    Geolocation.getCurrentPosition(position => {
-      setLocation({
-        latitude: position.coords.latitude,
-        longitude: position.coords.longitude,
-        distanceTravelled: 0,
-        prevLatLng: {},
+      setCurrentRun(data);
+      Geolocation.getCurrentPosition(position => {
+        addCoords([position.coords.latitude, position.coords.longitude]);
+        error => {
+          console.log(error.code, error.message);
+        };
       });
-      error => {
-        console.log(error.code, error.message);
-      };
     });
   }
-
-  function addCoords(coords) {
-    setRouteData([...routeData, coords]);
-    setDistance(distance + 25);
-  }
-
-  Geolocation.watchPosition(
-    function({coords}) {
-      if (panel !== 'RUNNING') return;
-      addCoords([coords.latitude, coords.longitude]);
-    },
-    error => console.log('[watchPosition error]', error),
-    {
-      enableHighAccuracy: true,
-      timeout: 20000,
-      maximumAge: 1000,
-      distanceFilter: 25,
-    },
-  );
 
   switch (panel) {
     case 'LOADING':
@@ -95,10 +67,7 @@ export default function CardioScreen({navigation, route}) {
     case 'WAITING':
       return <NotRunning startRun={startRun} />;
     case 'RUNNING':
-      return (
-        <Running endRun={endRun} location={location} routeData={routeData} />
-      );
+      return <Running endRun={endRun} />;
   }
-
-  return currentRun ? <Running /> : <NotRunning />;
+  return <></>;
 }
