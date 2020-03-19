@@ -6,7 +6,6 @@ import {createStackNavigator} from '@react-navigation/stack';
 
 import SettingsSeries from './Series.js';
 import SettingsSeriesAdd from './SeriesAdd.js';
-import Personalities from './Personalities.js';
 
 import COLORS from '../../color';
 
@@ -43,11 +42,6 @@ export default function() {
         component={SettingsSeriesAdd}
         initialParams={{malType: 'anime'}}
       />
-      <Stack.Screen
-        name="Personalities"
-        component={Personalities}
-        options={{title: 'Quote Sets'}}
-      />
     </Stack.Navigator>
   );
 }
@@ -67,14 +61,6 @@ function Settings({navigation}) {
         <ListItem onPress={() => navigation.navigate('SettingsManga')}>
           <Left>
             <Text>Manga Settings</Text>
-          </Left>
-          <Right>
-            <Icon name="arrow-forward" />
-          </Right>
-        </ListItem>
-        <ListItem onPress={() => navigation.navigate('Personalities')}>
-          <Left>
-            <Text>Dialogue Sets</Text>
           </Left>
           <Right>
             <Icon name="arrow-forward" />

@@ -1,9 +1,14 @@
 import * as React from 'react';
-import {StyleSheet, Text} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  ActivityIndicator,
+} from 'react-native';
 import {Content, View} from 'native-base';
 import LinearGradient from 'react-native-linear-gradient';
-import {ListItem} from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome5';
+import {Image} from 'react-native-elements';
 
 import utils from '../../utils.js';
 import Loading from '../Loading.js';
@@ -69,13 +74,38 @@ export default function({route, navigation}) {
       </View>
       <Content>
         {characters.map(character => (
-          <ListItem
-            leftAvatar={{source: {uri: character.imageUrl}}}
-            title={character.name}
-            rightAvatar={<Text>Buy for 100 Ikigai</Text>}
-            onPress={() => buy(character.malId)}
-            bottomDivider
-          />
+          <TouchableOpacity onPress={() => buy(character.malId)}>
+            <View
+              style={{
+                flexDirection: 'row',
+                backgroundColor: '#ffffff',
+                shadowColor: '#000000ff',
+                shadowOpacity: 0.8,
+                shadowOffset: {width: 0, height: 2},
+                elevation: 1,
+                shadowRadius: 2,
+                margin: 5,
+                borderWidth: 1,
+                borderRadius: 5,
+                borderColor: '#ddd',
+                overflow: 'hidden',
+                alignItems: 'center',
+              }}>
+              <Image
+                source={{uri: character.imageUrl}}
+                style={{width: 80, height: 80}}
+                resizeMode="cover"
+                PlaceholderContent={<ActivityIndicator />}
+              />
+              <View style={{padding: 10, flex: 1}}>
+                <Text style={{fontSize: 18}}>{character.name}</Text>
+              </View>
+              <View style={{padding: 10, alignItems: 'center'}}>
+                <Icon name="heart" size={20} />
+                <Text>100</Text>
+              </View>
+            </View>
+          </TouchableOpacity>
         ))}
       </Content>
     </>
