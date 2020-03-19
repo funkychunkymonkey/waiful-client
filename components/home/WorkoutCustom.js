@@ -66,7 +66,7 @@ export default function WorkoutCustom({navigation}) {
           <Input
             placeholder="Your Exercise Name"
             onChangeText={x => setExerciseName(x)}
-            keyboardType="numeric"
+            keyboardType="ascii-capable"
             leftIcon={<Icon name="running" style={styles.formIcon} />}
           />
         </View>
@@ -79,7 +79,7 @@ export default function WorkoutCustom({navigation}) {
           <TextInput
             placeholder="Exercise Description"
             onChangeText={x => setExerciseDescription(x)}
-            keyboardType="numeric"
+            keyboardType="ascii-capable"
             multiline
             style={styles.InputDescription}
           />

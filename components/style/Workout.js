@@ -7,6 +7,12 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.bgSecondary,
     width: '100%',
   },
+  checkIcon: {
+    color: 'seagreen',
+    fontSize: 42,
+    position: 'absolute',
+    zIndex: 10,
+  },
   titleText: {
     color: COLORS.textTitle,
     fontSize: 20,
@@ -50,7 +56,7 @@ const styles = StyleSheet.create({
   },
   add: {
     padding: 6,
-    marginLeft: 70,
+    marginTop: 10,
     margin: 2,
     justifyContent: 'center',
     alignItems: 'center',
