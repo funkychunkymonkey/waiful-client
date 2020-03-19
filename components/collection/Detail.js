@@ -26,7 +26,7 @@ export default function Datail({navigation}) {
         <DetailLevel waifu={waifu} />
         <DetailGallery waifu={waifu} />
         <DetailPersonality waifu={waifu} />
-        <ScrollView>
+        <ScrollView style={{width: '100%'}}>
           <Text
             style={{
               padding: 20,
