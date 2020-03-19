@@ -9,6 +9,8 @@ import {useZ} from '../../zustand';
 import utils from '../../utils';
 
 import COLORS from '../../color';
+import styles from '../style/Setting';
+
 const PERSONALITIES = require('../../assets/personalities');
 
 export default function({route, navigation}) {
@@ -26,18 +28,11 @@ export default function({route, navigation}) {
       <View>
         <LinearGradient
           colors={[COLORS.bgPrimary, COLORS.bgHighlight]}
-          style={{padding: 10, alignItems: 'center'}}>
+          style={styles.content1}>
           <Icon name="heart" size={60} color={COLORS.textTitle} />
-          <Text style={{color: COLORS.textTitle, fontSize: 20, marginTop: 10}}>
-            {user.gems} Ikigai
-          </Text>
+          <Text style={styles.text1}>{user.gems} Ikigai</Text>
         </LinearGradient>
-        <View
-          style={{
-            backgroundColor: COLORS.textSecondary,
-            alignItems: 'center',
-            padding: 10,
-          }}>
+        <View style={styles.content2}>
           <Text style={{color: COLORS.textTitle}}>
             Purchase dialogue sets to customise your collection with!
           </Text>

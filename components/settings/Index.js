@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {StyleSheet, Text} from 'react-native';
+import {Text} from 'react-native';
 
 import {Content, List, ListItem, Icon, Left, Right} from 'native-base';
 import {createStackNavigator} from '@react-navigation/stack';
@@ -9,6 +9,7 @@ import SettingsSeriesAdd from './SeriesAdd.js';
 import Personalities from './Personalities.js';
 
 import COLORS from '../../color';
+import styles from '../style/Setting';
 
 const Stack = createStackNavigator();
 export default function() {
@@ -84,13 +85,3 @@ function Settings({navigation}) {
     </Content>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: COLORS.bgSecondary,
-  },
-  body: {
-    backgroundColor: COLORS.bgSecondary,
-  },
-});

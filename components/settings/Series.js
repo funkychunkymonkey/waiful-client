@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {Text, View} from 'react-native';
 import {Content, Button} from 'native-base';
 import {useFocusEffect} from '@react-navigation/native';
 import {ListItem} from 'react-native-elements';
@@ -7,9 +7,9 @@ import {ListItem} from 'react-native-elements';
 import LottieView from 'lottie-react-native';
 import utils from '../../utils.js';
 import Loading from '../Loading.js';
-import COLORS from '../../color';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/FontAwesome5';
+import styles from '../style/Setting';
 
 export default function({route, navigation}) {
   const [malType] = React.useState(route.params.malType);
@@ -55,7 +55,7 @@ export default function({route, navigation}) {
   if (loading) return <Loading />;
   if (series.length === 0)
     return (
-      <Content style={styles.body}>
+      <Content style={styles.body2}>
         <Text style={styles.text}>No {malType} added.</Text>
         <Text style={styles.add}>Add +</Text>
         <LottieView
@@ -68,7 +68,7 @@ export default function({route, navigation}) {
       </Content>
     );
   return (
-    <Content style={styles.body}>
+    <Content style={styles.body2}>
       {series.map(item => (
         <View style={styles.wrapper}>
           <ListItem
@@ -91,40 +91,3 @@ export default function({route, navigation}) {
     </Content>
   );
 }
-
-const styles = StyleSheet.create({
-  body: {
-    backgroundColor: COLORS.bgSecondary,
-    width: '100%',
-    position: 'relative',
-  },
-  text: {
-    fontSize: 20,
-    padding: 20,
-  },
-  add: {
-    fontSize: 15,
-    backgroundColor: COLORS.bgPrimary,
-    padding: 15,
-    margin: 5,
-    position: 'absolute',
-    right: 10,
-  },
-  hand: {
-    right: -25,
-    top: -18,
-    width: 300,
-    position: 'absolute',
-  },
-  wrapper: {
-    flexDirection: 'row',
-    backgroundColor: 'white',
-  },
-  item: {flex: 7},
-  trashcan: {
-    flex: 3,
-    paddingRight: 15,
-    justifyContent: 'center',
-    alignContent: 'center',
-  },
-});
