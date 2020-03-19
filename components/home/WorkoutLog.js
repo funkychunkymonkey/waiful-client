@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {StyleSheet, Text, View, Dimensions, ScrollView} from 'react-native';
+import {Text, View, Dimensions, ScrollView} from 'react-native';
 import {useFocusEffect} from '@react-navigation/native';
 import {ListItem} from 'react-native-elements';
 import moment from 'moment';
@@ -9,6 +9,7 @@ import Loading from '../Loading.js';
 
 import COLOR from '../../color';
 import {LineChart} from 'react-native-chart-kit';
+import styles from '../style/Workout';
 
 export default function WorkoutLog({navigation}) {
   const [logs, setLogs] = React.useState([]);
@@ -43,7 +44,7 @@ export default function WorkoutLog({navigation}) {
   if (loading) return <Loading />;
   if (logs.length === 0)
     return (
-      <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+      <View style={styles.none}>
         <Text>No workouts found.</Text>
       </View>
     );
@@ -95,13 +96,7 @@ export default function WorkoutLog({navigation}) {
           setActiveSections(dataIndex);
           changeListPlace(listPositions[dataIndex]);
         }}
-        style={{
-          marginTop: 20,
-          marginBottom: 20,
-          marginLeft: 10,
-          marginRight: 10,
-          borderRadius: 20,
-        }}
+        style={styles.log}
       />
       <ScrollView ref={scrollElement}>
         {logs.map((log, i) => (
@@ -126,5 +121,3 @@ export default function WorkoutLog({navigation}) {
     </View>
   );
 }
-
-const styles = StyleSheet.create({});

@@ -14,6 +14,7 @@ import utils from '../../utils.js';
 import Loading from '../Loading.js';
 import COLORS from '../../color';
 import {useZ} from '../../zustand';
+import styles from '../style/Shop';
 
 export default function({route, navigation}) {
   const [loading, setLoading] = React.useState(true);
@@ -65,42 +66,25 @@ export default function({route, navigation}) {
       <View style={styles.body}>
         <LinearGradient
           colors={[COLORS.bgPrimary, COLORS.bgHighlight]}
-          style={{padding: 10, alignItems: 'center'}}>
+          style={styles.content1}>
           <Icon name="heart" size={60} color={COLORS.textTitle} />
-          <Text style={{color: COLORS.textTitle, fontSize: 20, marginTop: 10}}>
-            {user.gems} Ikigai
-          </Text>
+          <Text style={styles.text1}>{user.gems} Ikigai</Text>
         </LinearGradient>
       </View>
       <Content>
         {characters.map((character, i) => (
-          <TouchableOpacity onPress={() => buy(character.malId)} key={i}>
-            <View
-              style={{
-                flexDirection: 'row',
-                backgroundColor: '#ffffff',
-                shadowColor: '#000000ff',
-                shadowOpacity: 0.8,
-                shadowOffset: {width: 0, height: 2},
-                elevation: 1,
-                shadowRadius: 2,
-                margin: 5,
-                borderWidth: 1,
-                borderRadius: 5,
-                borderColor: '#ddd',
-                overflow: 'hidden',
-                alignItems: 'center',
-              }}>
+          <TouchableOpacity key={i} onPress={() => buy(character.malId)}>
+            <View style={styles.row}>
               <Image
                 source={{uri: character.imageUrl}}
-                style={{width: 80, height: 80}}
+                style={styles.rowCharacterImage}
                 resizeMode="cover"
                 PlaceholderContent={<ActivityIndicator />}
               />
-              <View style={{padding: 10, flex: 1}}>
-                <Text style={{fontSize: 18}}>{character.name}</Text>
+              <View style={styles.rowContent}>
+                <Text style={styles.rowTitle}>{character.name}</Text>
               </View>
-              <View style={{padding: 10, alignItems: 'center'}}>
+              <View style={styles.rowRight}>
                 <Icon name="heart" size={20} />
                 <Text>100</Text>
               </View>
@@ -111,13 +95,3 @@ export default function({route, navigation}) {
     </>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: COLORS.bgSecondary,
-  },
-  body: {
-    backgroundColor: COLORS.bgSecondary,
-  },
-});

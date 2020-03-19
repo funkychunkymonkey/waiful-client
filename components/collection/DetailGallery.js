@@ -1,17 +1,7 @@
 import * as React from 'react';
-import {
-  StyleSheet,
-  ScrollView,
-  Image,
-  View,
-  TouchableOpacity,
-} from 'react-native';
-import {
-  widthPercentageToDP as wp,
-  heightPercentageToDP as hp,
-} from 'react-native-responsive-screen';
+import {ScrollView, Image, View, TouchableOpacity} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
-import COLORS from '../../color';
+import styles from '../style/Collection';
 
 export default function DetailGallery({waifu}) {
   const [selectedImageIndex, setSelectedImageIndex] = React.useState(0);
@@ -20,34 +10,16 @@ export default function DetailGallery({waifu}) {
   if (images.length === 0) return <></>;
 
   return (
-    <LinearGradient
-      colors={['#111', '#111']}
-      style={{
-        width: wp(100),
-        justifyContent: 'center',
-      }}>
-      <View
-        style={{
-          alignItems: 'center',
-          justifyContent: 'center',
-          padding: 10,
-        }}>
+    <LinearGradient colors={['#111', '#111']} style={styles.imageContainer}>
+      <View style={styles.imageView}>
         <Image
-          style={{
-            width: 225,
-            height: 350,
-          }}
+          style={styles.imageSize}
           source={{
             uri: images[selectedImageIndex].url,
           }}
         />
       </View>
-      <ScrollView
-        style={{
-          backgroundColor: COLORS.textSecondary,
-          width: '100%',
-        }}
-        horizontal={true}>
+      <ScrollView style={styles.body} horizontal={true}>
         {images.map((x, i) => (
           <TouchableOpacity
             style={{
@@ -55,12 +27,7 @@ export default function DetailGallery({waifu}) {
             }}
             onPress={() => setSelectedImageIndex(i)}>
             <Image
-              style={{
-                borderRadius: 10,
-                width: hp('8%'),
-                height: hp('8%'),
-                alignSelf: 'center',
-              }}
+              style={styles.imageThumbnail}
               source={{
                 uri: x.url,
               }}
@@ -72,4 +39,3 @@ export default function DetailGallery({waifu}) {
   );
 }
 
-const styles = StyleSheet.create({});

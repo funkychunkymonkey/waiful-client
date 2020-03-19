@@ -1,12 +1,10 @@
 import * as React from 'react';
-import {StyleSheet, TouchableOpacity, Text} from 'react-native';
-
+import {TouchableOpacity, Text} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 
-import COLORS from '../../color';
 import utils from '../../utils';
-
 import {useZ, useCollectionZ} from '../../zustand';
+import styles from '../style/Collection';
 
 export default function DetailHeader({navigation}) {
   const waifus = useZ(z => z.waifus);
@@ -32,20 +30,9 @@ export default function DetailHeader({navigation}) {
   }
 
   return (
-    <TouchableOpacity
-      style={{
-        backgroundColor: COLORS.favHeart,
-        width: '100%',
-        padding: 10,
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'center',
-      }}
-      onPress={sell}>
+    <TouchableOpacity style={styles.footer} onPress={sell}>
       <Icon name="trash" color={'#fff'} />
-      <Text style={{color: '#fff', marginLeft: 10}}>Remove</Text>
+      <Text style={styles.dFText}>Remove</Text>
     </TouchableOpacity>
   );
 }
-
-const styles = StyleSheet.create({});
