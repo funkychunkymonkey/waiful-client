@@ -9,14 +9,16 @@ import {useZ} from '../../zustand';
 import utils from '../../utils';
 
 import COLORS from '../../color';
+import styles from '../style/Setting';
+
 const PERSONALITIES = require('../../assets/personalities');
 
 export default function({route, navigation}) {
   const user = useZ(z => z.user);
   const reloadUser = useZ(z => z.reloadUser);
 
-  function buy(personalityId) {
-    utils.buyPersonality(personalityId).then(() => {
+  function buy(personalityId, price) {
+    utils.buyPersonality(personalityId, price).then(() => {
       reloadUser();
     });
   }
@@ -24,20 +26,7 @@ export default function({route, navigation}) {
   return (
     <>
       <View>
-        <LinearGradient
-          colors={[COLORS.bgPrimary, COLORS.bgHighlight]}
-          style={{padding: 10, alignItems: 'center'}}>
-          <Icon name="heart" size={60} color={COLORS.textTitle} />
-          <Text style={{color: COLORS.textTitle, fontSize: 20, marginTop: 10}}>
-            {user.gems} Ikigai
-          </Text>
-        </LinearGradient>
-        <View
-          style={{
-            backgroundColor: COLORS.textSecondary,
-            alignItems: 'center',
-            padding: 10,
-          }}>
+        <View style={styles.content2}>
           <Text style={{color: COLORS.textTitle}}>
             Purchase dialogue sets to customise your collection with!
           </Text>
@@ -72,9 +61,14 @@ function DialogueSet({personality, isOwned, buy}) {
     return (
       <ListItem
         title={personality.name}
-        rightAvatar={<Text>Buy for 200 Ikigai</Text>}
+        rightAvatar={
+          <View style={{alignItems: 'center'}}>
+            <Icon name="heart" size={20} />
+            <Text>{personality.price}</Text>
+          </View>
+        }
         onPress={() => {
-          buy(personality.id);
+          buy(personality.id, personality.price);
         }}
         bottomDivider
       />

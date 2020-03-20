@@ -1,12 +1,13 @@
 import * as React from 'react';
-import {StyleSheet, Text} from 'react-native';
+import {Text, ActivityIndicator, View, TouchableOpacity} from 'react-native';
 import {Content} from 'native-base';
 import {useFocusEffect} from '@react-navigation/native';
-import {ListItem, SearchBar} from 'react-native-elements';
+import {Image, SearchBar} from 'react-native-elements';
+import Icon from 'react-native-vector-icons/FontAwesome5';
 
 import utils from '../../utils.js';
 import Loading from '../Loading.js';
-import COLORS from '../../color';
+import styles from '../style/Shop';
 
 export default function({route, navigation}) {
   const [malType] = React.useState(route.params.malType);
@@ -58,20 +59,42 @@ export default function({route, navigation}) {
           <Text>No {malType} found.</Text>
         </Content>
       ) : (
-        series.map(item => {
+        series.map((item, i) => {
           return (
-            <ListItem
-              leftAvatar={{source: {uri: item.imageUrl}}}
-              key={item.malId}
-              title={item.name}
+            <TouchableOpacity
+              key={i}
               onPress={() =>
-                route.params.stackNavigation.navigate('SeriesCharacters', {
-                  series: item,
-                  malType: malType,
-                })
-              }
-              bottomDivider
-            />
+                navigation.navigate('SeriesCharacters', {series: item, malType})
+              }>
+              <View style={styles.row}>
+                <Image
+                  source={{uri: item.imageUrl}}
+                  style={styles.rowImage}
+                  PlaceholderContent={<ActivityIndicator />}
+                />
+                <View style={styles.rowContent}>
+                  <Text style={styles.rowContentTitle}>{item.name}</Text>
+                  <Text>
+                    {item.startedAt}
+                    {item.startedAt ? ' - ' : ''}
+                    {item.endedAt ? item.endedAt : 'Ongoing'}
+                  </Text>
+                  {item.description ? (
+                    <Text style={styles.rowContentDescription}>
+                      {item.description.length > 100
+                        ? item.description.substr(0, 100) + '...'
+                        : item.description}
+                    </Text>
+                  ) : (
+                    <></>
+                  )}
+                </View>
+                <View style={styles.rowRight}>
+                  <Icon name="star" size={20} />
+                  <Text>{item.score}</Text>
+                </View>
+              </View>
+            </TouchableOpacity>
           );
         })
       );
@@ -86,13 +109,3 @@ export default function({route, navigation}) {
     </Content>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: COLORS.bgSecondary,
-  },
-  body: {
-    backgroundColor: COLORS.bgSecondary,
-  },
-});

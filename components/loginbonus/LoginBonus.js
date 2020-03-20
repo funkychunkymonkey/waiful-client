@@ -56,7 +56,8 @@ export default function LoginBonus({loading}) {
   AppState.addEventListener('change', checkWalk);
   React.useEffect(checkWalk, [loading]);
 
-  function checkWalk() {
+  function checkWalk(nextAppState) {
+    if (nextAppState !== 'active') return;
     if (loading) return;
     setDoCheckWalk(true);
   }

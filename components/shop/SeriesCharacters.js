@@ -1,14 +1,20 @@
 import * as React from 'react';
-import {StyleSheet, Text} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  ActivityIndicator,
+} from 'react-native';
 import {Content, View} from 'native-base';
 import LinearGradient from 'react-native-linear-gradient';
-import {ListItem} from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome5';
+import {Image} from 'react-native-elements';
 
 import utils from '../../utils.js';
 import Loading from '../Loading.js';
 import COLORS from '../../color';
 import {useZ} from '../../zustand';
+import styles from '../style/Shop';
 
 export default function({route, navigation}) {
   const [loading, setLoading] = React.useState(true);
@@ -32,20 +38,25 @@ export default function({route, navigation}) {
         setCharacters(data.waifus);
         setLoading(false);
       });
-  }, []);
+  }, [route.params.malType, route.params.series.malId]);
 
-  function buy(malId) {
-    if (user.gems < 100) {
+  function buy(character) {
+    if (user.gems < character.price) {
       popUpWaifu({
         event: 'gems:insufficient',
       });
     }
     utils
-      .buyWaifu(route.params.malType, route.params.series.malId, malId)
+      .buyWaifu(
+        route.params.malType,
+        route.params.series.malId,
+        character.malId,
+        character.price,
+      )
       .then(res => {
         if (!res) return;
         setWaifus([res, ...waifus.filter(x => x.id !== res.id)]);
-        incrementGems(-100);
+        incrementGems(-1 * character.price);
         popUpWaifu({
           gacha: true,
           waifu: res,
@@ -60,34 +71,32 @@ export default function({route, navigation}) {
       <View style={styles.body}>
         <LinearGradient
           colors={[COLORS.bgPrimary, COLORS.bgHighlight]}
-          style={{padding: 10, alignItems: 'center'}}>
+          style={styles.content1}>
           <Icon name="heart" size={60} color={COLORS.textTitle} />
-          <Text style={{color: COLORS.textTitle, fontSize: 20, marginTop: 10}}>
-            {user.gems} Ikigai
-          </Text>
+          <Text style={styles.text1}>{user.gems} Ikigai</Text>
         </LinearGradient>
       </View>
       <Content>
-        {characters.map(character => (
-          <ListItem
-            leftAvatar={{source: {uri: character.imageUrl}}}
-            title={character.name}
-            rightAvatar={<Text>Buy for 100 Ikigai</Text>}
-            onPress={() => buy(character.malId)}
-            bottomDivider
-          />
+        {characters.map((character, i) => (
+          <TouchableOpacity key={i} onPress={() => buy(character)}>
+            <View style={{...styles.row, ...styles.characterRow}}>
+              <Image
+                source={{uri: character.imageUrl}}
+                style={styles.characterRowImage}
+                resizeMode="cover"
+                PlaceholderContent={<ActivityIndicator />}
+              />
+              <View style={styles.rowContent}>
+                <Text style={styles.rowTitle}>{character.name}</Text>
+              </View>
+              <View style={styles.rowRight}>
+                <Icon name="heart" size={20} />
+                <Text>{character.price}</Text>
+              </View>
+            </View>
+          </TouchableOpacity>
         ))}
       </Content>
     </>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: COLORS.bgSecondary,
-  },
-  body: {
-    backgroundColor: COLORS.bgSecondary,
-  },
-});

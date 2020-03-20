@@ -1,31 +1,37 @@
 import * as React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {Text, View, Image} from 'react-native';
 import {Content, Button} from 'native-base';
 import {useFocusEffect} from '@react-navigation/native';
 import {ListItem} from 'react-native-elements';
-
-import LottieView from 'lottie-react-native';
-import utils from '../../utils.js';
-import Loading from '../Loading.js';
-import COLORS from '../../color';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/FontAwesome5';
+import LottieView from 'lottie-react-native';
+
+import Loading from '../Loading.js';
+
+import utils from '../../utils.js';
+import {useSettingsZ} from '../../zustand.js';
+import styles from '../style/Setting';
 
 export default function({route, navigation}) {
-  const [malType] = React.useState(route.params.malType);
-  const [series, setSeries] = React.useState([]);
+  const malType = useSettingsZ(z => z.malType);
+  const setMalType = useSettingsZ(z => z.setMalType);
+  const series = useSettingsZ(z => z.series);
+  const setSeries = useSettingsZ(z => z.setSeries);
+
   const [loading, setLoading] = React.useState(true);
 
   useFocusEffect(
     React.useCallback(() => {
-      utils.getSeries(malType).then(data => {
+      utils.getSeries(route.params.malType).then(data => {
         setLoading(false);
-        setSeries(data.filter(x => x.malType === malType));
+        setMalType(route.params.malType);
+        setSeries(data.filter(x => x.malType === route.params.malType));
       });
       return () => {
         setLoading(true);
       };
-    }, [malType]),
+    }, []),
   );
 
   React.useLayoutEffect(() => {
@@ -33,15 +39,21 @@ export default function({route, navigation}) {
       headerTitle: `My ${malType}`,
       headerRight: () => (
         <Button
-          style={{
-            backgroundColor: 'transparent',
-            paddingRight: 20,
-            paddingLeft: 10,
-          }}
+          style={styles.seriesButton}
           onPress={() => {
-            navigation.navigate('SettingsSeriesAdd', {malType, series});
+            navigation.navigate('SettingsSeriesAdd');
           }}>
           <Text style={{color: '#000'}}>Add +</Text>
+          {series.length === 0 && (
+            <LottieView
+              style={styles.add}
+              autoPlay={true}
+              loop={true}
+              source={require('../../assets/lottie/click.json')}
+              speed={1.5}
+              progress={0.9}
+            />
+          )}
         </Button>
       ),
     });
@@ -55,22 +67,19 @@ export default function({route, navigation}) {
   if (loading) return <Loading />;
   if (series.length === 0)
     return (
-      <Content style={styles.body}>
+      <Content style={styles.body2}>
         <Text style={styles.text}>No {malType} added.</Text>
-        <Text style={styles.add}>Add +</Text>
-        <LottieView
+        <Image
+          source={require('../../assets/others/hand.png')}
           style={styles.hand}
-          source={require('../../assets/lottie/hand.json')}
-          autoPlay={true}
-          loop={true}
-          progress={0.3}
+          resizeMode="contain"
         />
       </Content>
     );
   return (
-    <Content style={styles.body}>
-      {series.map(item => (
-        <View style={styles.wrapper}>
+    <Content style={styles.body2}>
+      {series.map((item, i) => (
+        <View style={styles.wrapper} key={i}>
           <ListItem
             style={styles.item}
             leftAvatar={{source: {uri: item.imageUrl}}}
@@ -81,9 +90,7 @@ export default function({route, navigation}) {
 
           <TouchableOpacity
             style={styles.trashcan}
-            onPress={() => {
-              removeSeries(item);
-            }}>
+            onPress={() => removeSeries(item)}>
             <Icon name="trash" color={'black'} size={22} />
           </TouchableOpacity>
         </View>
@@ -91,40 +98,3 @@ export default function({route, navigation}) {
     </Content>
   );
 }
-
-const styles = StyleSheet.create({
-  body: {
-    backgroundColor: COLORS.bgSecondary,
-    width: '100%',
-    position: 'relative',
-  },
-  text: {
-    fontSize: 20,
-    padding: 20,
-  },
-  add: {
-    fontSize: 15,
-    backgroundColor: COLORS.bgPrimary,
-    padding: 15,
-    margin: 5,
-    position: 'absolute',
-    right: 10,
-  },
-  hand: {
-    right: -25,
-    top: -18,
-    width: 300,
-    position: 'absolute',
-  },
-  wrapper: {
-    flexDirection: 'row',
-    backgroundColor: 'white',
-  },
-  item: {flex: 7},
-  trashcan: {
-    flex: 3,
-    paddingRight: 15,
-    justifyContent: 'center',
-    alignContent: 'center',
-  },
-});

@@ -1,9 +1,7 @@
 import * as React from 'react';
 import {ScrollView} from 'react-native-gesture-handler';
-import {StyleSheet, Text} from 'react-native';
-import {Container, Body} from 'native-base';
-
-import COLORS from '../../color';
+import {Text} from 'react-native';
+import {Container, Content, View} from 'native-base';
 
 import DetailHeader from './DetailHeader.js';
 import DetailLevel from './DetailLevel.js';
@@ -12,8 +10,9 @@ import DetailPersonality from './DetailPersonality.js';
 import DetailFooter from './DetailFooter.js';
 
 import {useZ, useCollectionZ} from '../../zustand';
+import styles from '../style/Collection';
 
-export default function Collection({navigation}) {
+export default function Datail({navigation}) {
   const selectedIndex = useCollectionZ(z => z.selectedIndex);
   const waifus = useZ(z => z.waifus);
   const waifu = waifus[selectedIndex];
@@ -21,25 +20,18 @@ export default function Collection({navigation}) {
   if (!waifu) return <></>;
   return (
     <Container>
-      <Body style={styles.body}>
-        <ScrollView>
-          <DetailHeader />
-          <DetailLevel waifu={waifu} />
-          <DetailGallery waifu={waifu} />
-          <DetailPersonality waifu={waifu} />
-          <Text style={{padding: 20, fontSize: 20}}>
-            {waifu.description.replace(/\\n/g, '\n')}
-          </Text>
-          <DetailFooter navigation={navigation} />
-        </ScrollView>
-      </Body>
+      <View style={styles.bodyDetail}>
+        <DetailHeader />
+      </View>
+      <Content style={styles.bodyDetail}>
+        <DetailLevel waifu={waifu} />
+        <DetailGallery waifu={waifu} />
+        <DetailPersonality waifu={waifu} />
+        <Text style={styles.dText}>
+          {waifu.description.replace(/\\n/g, '\n')}
+        </Text>
+        <DetailFooter navigation={navigation} />
+      </Content>
     </Container>
   );
 }
-
-const styles = StyleSheet.create({
-  body: {
-    backgroundColor: COLORS.bgSecondary,
-    width: '100%',
-  },
-});

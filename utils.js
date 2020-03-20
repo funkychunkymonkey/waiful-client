@@ -40,9 +40,9 @@ const gacha = function() {
     'mutation{gacha(input:{}){ id level malId name personalityId imageUrl url description isFavorite waifuImages{url} series{id name imageUrl url} }}',
   ).then(data => data.gacha);
 };
-const buyWaifu = function(seriesMalType, seriesMalId, waifuMalId) {
+const buyWaifu = function(seriesMalType, seriesMalId, waifuMalId, waifuPrice) {
   return q(
-    `mutation{buyWaifu(input:{seriesMalType: "${seriesMalType}", seriesMalId: ${seriesMalId}, waifuMalId: ${waifuMalId}}){
+    `mutation{buyWaifu(input:{seriesMalType: "${seriesMalType}", seriesMalId: ${seriesMalId}, waifuMalId: ${waifuMalId}, price: ${waifuPrice}}){
       id level malId name personalityId imageUrl url description isFavorite waifuImages{url} series{id name imageUrl url}
     }}`,
   ).then(data => data.buyWaifu);
@@ -62,11 +62,12 @@ const setUnfavWaifu = function(malId) {
     data => data.unfavoriteWaifu,
   );
 };
-const buyPersonality = function(personalityId) {
+const buyPersonality = function(personalityId, price) {
   return q(
-    `mutation{buyPersonality(input:{personalityId: ${parseInt(
-      personalityId,
-    )}})}`,
+    `mutation{buyPersonality(input:{
+      personalityId: ${parseInt(personalityId)},
+      price: ${parseInt(price)}
+    })}`,
   );
 };
 const setPersonality = function(waifuId, personalityId) {
@@ -82,9 +83,9 @@ const setPersonality = function(waifuId, personalityId) {
  * SERIES
  **********************************************/
 const getSeries = function() {
-  return q('query{user{ series{id malId malType name imageUrl url} }}').then(
-    data => data.user.series,
-  );
+  return q(
+    'query{user{ series{id malId malType name imageUrl url score startedAt endedAt description} }}',
+  ).then(data => data.user.series);
 };
 const addSeries = function(malType, malId) {
   return q(
@@ -102,16 +103,27 @@ const removeSeries = function(malType, malId) {
 };
 const getTopSeries = function(malType, search) {
   return q(
-    `query($search: String!){ serieses(malType:"${malType}", search: $search){id malId name imageUrl url} }`,
+    `query($search: String!){ serieses(malType:"${malType}", search: $search){id malId name imageUrl url score startedAt endedAt} }`,
     {search},
   ).then(data => data.serieses);
 };
 const getFirstSeries = function(malType, malId) {
   return q(
-    `query{ series(malType:"${malType}", malId: ${parseInt(
-      malId,
-    )}){id malId name imageUrl url waifus {malId name imageUrl}} }`,
-  ).then(data => data.series);
+    `query{ series(
+      malType:"${malType}", 
+      malId: ${parseInt(malId)}
+    ){
+      id malId name imageUrl url score startedAt endedAt 
+      waifus {malId name imageUrl role}
+    }}`,
+  )
+    .then(data => data.series)
+    .then(data => {
+      data.waifus.forEach(x => {
+        x.price = x.role === 'Main' ? 160 : 80;
+      });
+      return data;
+    });
 };
 
 /**********************************************

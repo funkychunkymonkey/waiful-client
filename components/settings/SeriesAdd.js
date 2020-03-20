@@ -1,16 +1,19 @@
 import * as React from 'react';
-import {StyleSheet, Text} from 'react-native';
+import {Text} from 'react-native';
 import {Content} from 'native-base';
 import {useFocusEffect} from '@react-navigation/native';
 import {ListItem, SearchBar} from 'react-native-elements';
 
 import utils from '../../utils.js';
 import Loading from '../Loading.js';
-import COLORS from '../../color';
+import {useSettingsZ} from '../../zustand.js';
+import styles from '../style/Setting';
 
 export default function({route, navigation}) {
-  const [malType] = React.useState(route.params.malType);
-  const [favorites, setFavorites] = React.useState(route.params.series);
+  const malType = useSettingsZ(z => z.malType);
+  const favorites = useSettingsZ(z => z.series);
+  const setFavorites = useSettingsZ(z => z.setSeries);
+
   const [search, setSearch] = React.useState('');
   const [series, setSeries] = React.useState([]);
   const [loading, setLoading] = React.useState(true);
@@ -94,13 +97,3 @@ export default function({route, navigation}) {
     </Content>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: COLORS.bgSecondary,
-  },
-  body: {
-    backgroundColor: COLORS.bgSecondary,
-  },
-});

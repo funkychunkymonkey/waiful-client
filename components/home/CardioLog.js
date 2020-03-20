@@ -1,19 +1,15 @@
 import * as React from 'react';
-import {StyleSheet, Text, View, ScrollView, Dimensions} from 'react-native';
-import {ListItem, Tooltip} from 'react-native-elements';
+import {Text, View, ScrollView, Dimensions} from 'react-native';
+import {ListItem} from 'react-native-elements';
 import {useFocusEffect} from '@react-navigation/native';
 import moment from 'moment';
-import {
-  widthPercentageToDP as wp,
-  heightPercentageToDP as hp,
-} from 'react-native-responsive-screen';
+import Accordion from 'react-native-collapsible/Accordion';
+import MapView from 'react-native-maps';
+import {LineChart} from 'react-native-chart-kit';
 
 import utils from '../../utils.js';
 import Loading from '../Loading.js';
-import Accordion from 'react-native-collapsible/Accordion';
-import MapView from 'react-native-maps';
-
-import {LineChart} from 'react-native-chart-kit';
+import styles from '../style/Cardio';
 
 export default function WorkoutLog({navigation}) {
   const [logs, setLogs] = React.useState([]);
@@ -35,7 +31,7 @@ export default function WorkoutLog({navigation}) {
   if (loading) return <Loading />;
   if (logs.length === 0)
     return (
-      <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+      <View style={styles.none}>
         <Text>No runs found.</Text>
       </View>
     );
@@ -86,13 +82,7 @@ export default function WorkoutLog({navigation}) {
           const index = Math.min(7, logs.length) - data.index - 1;
           setActiveSections([index]);
         }}
-        style={{
-          marginTop: 20,
-          marginBottom: 20,
-          marginLeft: 10,
-          marginRight: 10,
-          borderRadius: 20,
-        }}
+        style={styles.log}
       />
       <Accordion
         style={{}}
@@ -106,7 +96,7 @@ export default function WorkoutLog({navigation}) {
             <View>
               <ListItem
                 leftAvatar={<Text>🏃</Text>}
-                title={`${day} ${timeOfTheDay} run!`}
+                title={`${day} ${timeOfTheDay} run`}
                 subtitle={`${log.distance}m`}
                 rightAvatar={<Text>{time.fromNow()}</Text>}
                 bottomDivider
@@ -120,7 +110,7 @@ export default function WorkoutLog({navigation}) {
           if (data.length <= 0)
             return <Text style={{padding: 10}}>No data logged.</Text>;
           return (
-            <View style={styles.mapContainer}>
+            <View style={styles.logMapContainer}>
               <MapView
                 style={styles.map}
                 initialRegion={{
@@ -158,12 +148,3 @@ export default function WorkoutLog({navigation}) {
   );
 }
 
-const styles = StyleSheet.create({
-  mapContainer: {
-    width: wp('100%'),
-    height: hp('40%'),
-  },
-  map: {
-    ...StyleSheet.absoluteFillObject,
-  },
-});
