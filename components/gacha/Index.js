@@ -115,8 +115,8 @@ export default function Gacha({route}) {
 
   function GachaPanel() {
     const gachaImages = [
-      require('../../assets/omikuji.png'),
-      require('../../assets/omikuji.gif'),
+      require('../../assets/others/omikuji.png'),
+      require('../../assets/others/omikuji.gif'),
     ];
     return (
       <View style={styles.columnContainer}>
@@ -146,6 +146,11 @@ export default function Gacha({route}) {
             </View>
             {user.gems >= 20 ? <ActiveGachaButton /> : <InactiveGachaButton />}
           </Animated.View>
+          <Image
+            source={require('../../assets/others/Shrine.png')}
+            style={styles.bg}
+            resizeMode="contain"
+          />
           <Image
             source={gachaStatus === 'GACHA' ? gachaImages[1] : gachaImages[0]}
             style={styles.gachaImage}
