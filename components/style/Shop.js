@@ -32,10 +32,13 @@ const styles = StyleSheet.create({
     borderColor: '#ddd',
     overflow: 'hidden',
   },
+  characterRow: {
+    alignItems: 'center',
+  },
   rowImage: {
     width: 100,
   },
-  rowCharacterImage: {
+  characterRowImage: {
     width: 80,
     height: 80,
   },

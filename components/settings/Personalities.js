@@ -17,8 +17,8 @@ export default function({route, navigation}) {
   const user = useZ(z => z.user);
   const reloadUser = useZ(z => z.reloadUser);
 
-  function buy(personalityId) {
-    utils.buyPersonality(personalityId).then(() => {
+  function buy(personalityId, price) {
+    utils.buyPersonality(personalityId, price).then(() => {
       reloadUser();
     });
   }
@@ -64,11 +64,11 @@ function DialogueSet({personality, isOwned, buy}) {
         rightAvatar={
           <View style={{alignItems: 'center'}}>
             <Icon name="heart" size={20} />
-            <Text>200</Text>
+            <Text>{personality.price}</Text>
           </View>
         }
         onPress={() => {
-          buy(personality.id);
+          buy(personality.id, personality.price);
         }}
         bottomDivider
       />
