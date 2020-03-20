@@ -206,7 +206,11 @@ function GachaOverlay({waifu}) {
   return (
     <View style={styles.overlayBody}>
       <Text style={styles.overlayBodyText}>You got</Text>
-      <Text style={styles.overlayBodyTitle}>{waifu.name}</Text>
+      <Text style={styles.overlayBodyTitle}>
+        {waifu.name.replace(/&#(\d+);/g, function(m, n) {
+          return String.fromCharCode(n);
+        })}
+      </Text>
       <View>
         <Text style={styles.overlayBodySubtitle}>{waifu.series.name} </Text>
         <Button
