@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Waiful</title>
+    <link
+      href="https://fonts.googleapis.com/css?family=Montserrat|Raleway&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        padding: 0;
+        margin: 0;
+        font-family: Raleway;
+      }
+      a {
+        text-decoration: none;
+        color: #000;
+      }
+      .banner {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        overflow: hidden;
+      }
+      .banner {
+        z-index: -1;
+      }
+      .banner {
+        background: #f7bf31 linear-gradient(to left, #ed591a, #f7bf31);
+      }
+      .banner::before,
+      .banner::after {
+        content: '';
+        position: absolute;
+        border-color: transparent;
+        border-style: solid;
+      }
+      .banner::before {
+        border-width: 80vh 40vh;
+        border-right-color: #fff;
+        border-top-color: #fff;
+        top: 0;
+        right: 0;
+      }
+      .banner::after {
+        border-width: 20vh 10vh;
+        border-left-color: #fff;
+        border-bottom-color: #fff;
+        bottom: 0;
+        left: 0;
+      }
+      .content {
+        padding: 20vh 0 0 10vw;
+        flex: 1;
+        color: #fff;
+        font-size: 32pt;
+        margin-right: 45vw;
+      }
+      .play-icon {
+        text-align: center;
+        margin-top: 5vh;
+      }
+      .play-icon-img {
+        height: 8vh;
+      }
+      .github {
+        text-align: center;
+        font-size: 0.8em;
+      }
+      .github-img {
+        height: 0.8em;
+      }
+      h1 {
+        font-size: 100pt;
+        color: #fff;
+        font-family: Montserrat;
+        margin: 0;
+      }
+      .mocks {
+        position: absolute;
+        height: 100vh;
+        width: 50vh;
+        top: 0;
+        right: 0;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-end;
+      }
+      .mocks-div {
+        height: 90%;
+        padding: 0 10vw;
+      }
+      .mocks-div img {
+        height: 100%;
+      }
+      @media only screen and (max-width: 1300px) {
+        h1 {
+          font-size: 70pt;
+        }
+        .content {
+          padding: 20vh 0 0 5vw;
+          margin-right: 55vw;
+          font-size: 24pt;
+        }
+      }
+      @media only screen and (max-width: 1100px) {
+        .content {
+          padding: 5vw;
+          width: 100%;
+          font-size: 24pt;
+        }
+        .banner::before {
+          border-right-color: transparent;
+          border-top-color: transparent;
+        }
+        .banner::after {
+          border-width: 20vh 90vh;
+        }
+        .mocks {
+          position: relative;
+          display: flex;
+          width: 100vw;
+          flex-direction: column;
+          align-items: center;
+        }
+        .mocks-div {
+          height: 100%;
+          padding: 0 10vw;
+        }
+        .mocks-div img {
+          height: 100%;
+        }
+      }
+      @media only screen and (max-width: 600px) {
+        .play-icon-img {
+          height: 6vh;
+        }
+        .content {
+          font-size: 18pt;
+        }
+        h1 {
+          font-size: 64pt;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="banner"></div>
+    <div class="content">
+      <h1>Waiful</h1>
+      Revolutionise your laifu with Waiful, a health and wellness app that
+      motivates you with your favourite waifus.
+      <div class="play-icon">
+        <a href="https://apps.apple.com/app/waiful/id1502803346">
+          <img src="./assets/appstore.svg" class="play-icon-img" />
+        </a>
+        <a href="https://apps.apple.com/jp/app/waiful/id1502803346">
+          <img src="./assets/appstore_jp.svg" class="play-icon-img" />
+        </a>
+      </div>
+      <div class="github">
+        <a href="https://github.com/funkychunkymonkey/waiful-client">
+          <img src="./assets/github.png" class="github-img" />
+          Find us on GitHub
+        </a>
+      </div>
+    </div>
+    <div class="mocks">
+      <div class="mocks-div">
+        <img src="./assets/mocks/0.gif" />
+      </div>
+    </div>
+  </body>
+</html>
