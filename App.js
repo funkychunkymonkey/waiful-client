@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import AsyncStorage from '@react-native-community/async-storage';
-import Orientation from 'react-native-orientation';
+import Orientation from 'react-native-orientation-locker';
 
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Geolocation from '@react-native-community/geolocation';
