@@ -229,7 +229,7 @@ function GachaOverlay({waifu}) {
               `https://twitter.com/intent/tweet?text=${encodeURI(
                 `I just got ${waifu.name} in Waiful! Check it out!`,
               )}&hashtags=WAIFUL&url=${encodeURI(
-                'https://github.com/funkychunkymonkey/waiful-client/',
+                'https://apps.apple.com/app/waiful/id1502803346',
               )}`,
             );
           }}
