@@ -21,11 +21,7 @@ export default function DailyDistance(props) {
       props.today.getMonth(),
       props.today.getDate() - 1,
     ).toISOString(),
-    endDate: new Date(
-      props.today.getFullYear(),
-      props.today.getMonth(),
-      props.today.getDate(),
-    ).toISOString(),
+    endDate: props.today.toISOString(),
   };
 
   AppleHealthKit.getDailyDistanceWalkingRunningSamples(
