@@ -119,6 +119,7 @@ const App: () => React$Node = () => {
             },
             labelStyle: {
               fontSize: 16,
+              fontWeight: '500',
             },
           }}>
           <Tab.Screen
