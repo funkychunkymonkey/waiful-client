@@ -2,7 +2,7 @@ import {StyleSheet, Dimensions} from 'react-native';
 import COLORS from '../../color';
 
 const styles = StyleSheet.create({
-// top bar & screen
+  // top bar & screen
   header: {
     backgroundColor: COLORS.bgPrimary,
     borderBottomWidth: 0,
@@ -17,6 +17,7 @@ const styles = StyleSheet.create({
   wrapper: {
     backgroundColor: COLORS.bgSecondary,
   },
+
   screen: {
     height: Dimensions.get('window').height,
     width: Dimensions.get('window').width,
@@ -26,7 +27,7 @@ const styles = StyleSheet.create({
     left: 0,
     zIndex: 10,
   },
-// content positioners
+  // content positioners
   columnContainer: {
     backgroundColor: 'transparent',
     position: 'relative',
@@ -40,13 +41,14 @@ const styles = StyleSheet.create({
   rowContainer: {
     flexDirection: 'row',
   },
-// gacha panel
+  // gacha panel
   gachaPanel: {
     position: 'relative',
     zIndex: 10,
     padding: 10,
     alignSelf: 'center',
-    width: 300,
+    top: 80,
+    width: 290,
   },
   gachaPanelHeader: {
     borderTopLeftRadius: 10,
@@ -86,13 +88,17 @@ const styles = StyleSheet.create({
     fontSize: 18,
     textAlign: 'center',
   },
-// gacha image
+  // gacha image
   gachaImage: {
     width: '100%',
     height: 400,
     position: 'absolute',
-    top: -100,
-    left: 80,
+    left: 100,
+  },
+  bg: {
+    width: '100%',
+    position: 'absolute',
+    top: -500,
   },
 });
 
