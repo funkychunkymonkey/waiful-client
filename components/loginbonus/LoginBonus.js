@@ -30,14 +30,7 @@ export default function LoginBonus({loading}) {
 
   function getToday() {
     const now = new Date();
-    // ToDo: remove now.getHours() and now.getMinutes(), this is for testing.
-    return new Date(
-      now.getFullYear(),
-      now.getMonth(),
-      now.getDate(),
-      now.getHours(),
-      now.getMinutes(),
-    );
+    return new Date(now.getFullYear(), now.getMonth(), now.getDate());
   }
   async function storeData(key, value) {
     try {
@@ -60,7 +53,9 @@ export default function LoginBonus({loading}) {
     }
   }
 
-  AppState.addEventListener('change', checkWalk);
+  React.useEffect(() => {
+    AppState.addEventListener('change', checkWalk);
+  }, []);
   React.useEffect(checkWalk, [loading]);
 
   function checkWalk(nextAppState) {

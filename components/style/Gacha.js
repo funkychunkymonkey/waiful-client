@@ -1,6 +1,5 @@
 import {StyleSheet, Dimensions} from 'react-native';
 import COLORS from '../../color';
-import {widthPercentageToDP} from 'react-native-responsive-screen';
 
 const styles = StyleSheet.create({
   // top bar & screen
@@ -100,7 +99,6 @@ const styles = StyleSheet.create({
     width: '100%',
     position: 'absolute',
     top: -500,
-    //justifyContent: 'center',
   },
 });
 
