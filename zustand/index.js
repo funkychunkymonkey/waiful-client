@@ -46,7 +46,7 @@ const [useZ] = create((set, get) => ({
     }
 
     // if it's a generic dialogue with no waifu, return immediately
-    if (!options.gems && !waifu) return;
+    if (!options.gems && !waifu && !options.force) return;
 
     // generate waifu image
     if (waifu && waifu.waifuImages && waifu.waifuImages.length > 1) {

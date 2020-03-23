@@ -17,7 +17,7 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0</string>
+	<string>$(MARKETING_VERSION)</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
@@ -44,9 +44,9 @@
 	<key>NSHealthUpdateUsageDescription</key>
 	<string>$(PRODUCT_NAME) would like to track your distance travelled every hour. This is used to reward in-game perks for exercising between app sessions.</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string/>
+	<string></string>
 	<key>NSLocationAlwaysUsageDescription</key>
-	<string/>
+	<string></string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>$(PRODUCT_NAME) would like to track your position while using the app. This is only used when tracking runs, to store your run routes.</string>
 	<key>UIAppFonts</key>
